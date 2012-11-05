@@ -1,0 +1,189 @@
+
+\section Branches
+
+Most tree formatting schemes format the array of labels, then
+connect them with branches.  The dimensions of the branches are
+determined by the location of the labels they must connect. A
+\jTree\ branch, on the other hand, has dimensions specified in
+its definition and determines the location of the material it
+points to. Branches are defined by giving their height and
+slope. The syntax is:\index*{+defbranch}
+
+\medskip
+\quad |\defbranch<«name\/»>(«height\/»)(«slope\/»)|
+\medskip
+
+The height can have Tex dimensions (pt, ex, em, in, cm, etc.), or
+it can be purely numerical. If numeric, it is taken to be the
+height measured in psyunits. The slope is the ratio of the
+vertical dimension measured in psyunits to the horizontal
+dimension measured in psxunits. Lines going from the lower left
+to the upper right have positive slopes and lines going from the
+upper left to the bottom right have negative slopes.  Usually,
+the slope can be expressed as a decimal number.  If the
+horizontal dimension is zero, as it is with a vertical line, a
+decimal slope is impossible (because division by zero is) and the
+slope must be expressed as a ratio.
+
+\exh
+\tac|
+\jtree[unit=2.5em]
+\defbranch<1;3/10>(1)(3/10)
+\defbranch<1;.5>(1)(.5)
+\defbranch<1;1/1>(1)(1/1)
+\defbranch<1;1/0>(1)(1/0)
+\defbranch<1;-1>(1)(-1)
+\defbranch<1;-1/2>(1)(-1/2)
+\! = <1;3/10>{$3/10$}
+   ^<1;.5>{$.5$}
+   ^<1;1/1>{$1/1$}
+   ^<1;1/0>{$1/0$}
+   ^<1;-1>{$-1$}
+   ^<1;-1/2>{$-1/2$}.
+\endjtree
+|endtac \hfil
+\jtree[unit=2.5em]
+\defbranch<1;3/10>(1)(3/10)
+\defbranch<1;.5>(1)(.5)
+\defbranch<1;1/1>(1)(1/1)
+\defbranch<1;1/0>(1)(1/0)
+\defbranch<1;-1>(1)(-1)
+\defbranch<1;-1/2>(1)(-1/2)
+\! = <1;3/10>{$3/10$}
+   ^<1;.5>{$.5$}
+   ^<1;1/1>{$1/1$}
+   ^<1;1/0>{$1/0$}
+   ^<1;-1>{$-1$}
+   ^<1;-1/2>{$-1/2$}.
+\endjtree
+\xe
+
+Note that the characters appearing in a branch name are not
+restricted to alphabetical characters.
+
+\medskip
+I have never found a use for defining branches with the height
+specified in physical units, but someone might.
+
+\exh
+\tac|
+\jtree[xunit=2em,yunit=1em]
+\defbranch<Right>(2em)(-1)
+\! = <left>{a} ^<Right>{b}
+   <left>{c} ^<right>{d}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=2em,yunit=1em]
+\defbranch<Right>(2em)(-1)
+\! = <left>{a} ^<Right>{b}
+   <left>{c} ^<right>{d}.
+\endjtree
+\xe
+
+Finally, note that the slope specification of a branch will not
+match the slope of the line which is drawn on paper unless the
+xunits and yunits are equal.  One is the ratio of psyunits to
+psxunits, the other is the ratio of physical units.  The branch
+|<right>| is specified to have slope $-1$, but:
+
+\exh
+\tac|
+\jtree[xunit=.5em,
+   yunit=2em]
+\! = {a}<right>{b}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=.5em,
+   yunit=2em]
+\! = {a}<right>{b}.
+\endjtree
+\bigskip
+\tac|
+\jtree[xunit=4em,
+   yunit=2em]
+\! = {a}<right>{b}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=4em,
+   yunit=2em]
+\! = {a}<right>{b}.
+\endjtree
+\xe
+
+\jTree\ specializes in binary trees, but \pstjtree\/ predefines
+some branches which make it relatively easy to make bushier
+trees. The entire inventory of predefined branches is:\medskip
+
+\cframe
+|\defbranch<left>(1)(1)
+\defbranch<right>(1)(-1)
+|medskip
+\defbranch<4wideleft>(1)(2/3)
+\defbranch<4left>(1)(2)
+\defbranch<4right>(1)(-2)
+\defbranch<4wideright>(1)(-2/3)
+|medskip
+\defbranch<wideleft>(1)(1/2)
+\defbranch<wideright>(1)(-1/2)
+|medskip
+\defbranch<bigleft>(2)(1)
+\defbranch<bigright>(2)(-1)
+|medskip
+\defbranch<vert>(1)(1/0)
+\defbranch<shortvert>(.5)(1/0)
+|medskip
+\defbranch<colonA>(1)(1)
+\defbranch<colonB>(1)(-1)
+|endcframe
+
+Of course, users can define whatever branches they find need for.
+|<colonA>| and |<colonB>| are the branches used by the colon
+macro.  They are defined to be the same as |<left>| and
+|<right>|, but can be redefined to be whatever is convenient.
+\medskip
+
+\exh \tac|
+\jtree
+\! = {X}
+   <left>{a} ^<vert>{b} ^<right>{c}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {X}
+   <left>{a} ^<vert>{b} ^<right>{c}.
+\endjtree
+
+\bigskip
+\tac|
+\jtree
+\! = {X}
+   <4wideleft>{a} ^<4left>{b}
+      ^<4right>{c} ^<4wideright>{d}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {X}
+   <4wideleft>{a} ^<4left>{b}
+      ^<4right>{c} ^<4wideright>{d}.
+\endjtree
+
+\bigskip
+\tac|
+\jtree
+\! = {X}
+   <wideleft>{a} ^<left>{b} ^<vert>{c}
+      ^<right>{c} ^<wideright>{d}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {X}
+   <wideleft>{a} ^<left>{b} ^<vert>{c}
+      ^<right>{c} ^<wideright>{d}.
+\endjtree
+\dc
+
+
+
+
+
+

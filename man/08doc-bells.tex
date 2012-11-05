@@ -1,0 +1,221 @@
+\section Bells and whistles
+
+\vskip-1ex
+\subsection {\sl baretopadjust}
+
+The baseline of the box created by |\jtree...\endjtree| is
+normally the baseline of the root label.  If, however, the root
+label is empty, that puts the baseline too low, at least for my
+taste.  Contrast the trees below:
+\bigskip
+\qquad a.\quad \jtree \start {A} :{B} {C}.\endjtree
+\hfil b.\quad \jtree[baretopadjust=0] \start :{B} {C}.\endjtree
+\bigskip
+\jTree\  takes corrective action by raising the tree diagram if
+the root label is empty by the amount specified by the parameter
+\index*{baretopadjust}|baretopadjust|.  The default setting is
+1.4ex, but you can set it to whatever you want.  With the default
+setting:
+\bigskip
+\qquad a.\quad \jtree \start {A} :{B} {C}.\endjtree
+\hfil b.\quad \jtree[baretopadjust=1.4ex] \start :{B} {C}.\endjtree
+
+\subsection {\sl treevshift}
+
+\jTree\ also provides the parameter
+\index*{treevshift}|treevshift|, which is set to 0 by default. It
+is independent of |baretopadjust| and can be used to move the
+tree diagram up and down, if desired.
+
+\cd \leavevmode\raise1.2em\hbox{\tac|
+$\to$\qquad
+\jtree[treevshift=1.2em]
+\! = {A} :{B} {C}.
+\endjtree
+|endtac}\hfil
+$\to$\qquad
+\jtree[treevshift=1.2em]
+\! = {A} :{B} {C}.\endjtree
+\dc
+
+\subsection {\sl \index{everytree}}
+
+If you say, for example,
+|\psset{everytree={\psset{style=treestyle}}}|, and if you have
+defined |treestyle| using PSTricks style definition, then
+your trees will done in that style.  Setting |everytree| sets a
+token list |\jteverytree| which is inserted at the beginning of
+every |\jtree|\dots|\endjtree| construction.  It is grouped, so
+that its scope is limited to the tree construction.
+\smallskip
+If you want, you can set |\jteverytree| directly.  The same is
+true, by the way, for |everylabel|, which uses the token list
+|\jteverylabel|.
+
+\subsection \index{Custom branches}
+
+\jTree\ ordinarily draws branches using the PSTricks macro
+|\psline|.  It does this in an indirect way.  It actually calls
+the macro |\branch@type| to do the drawing; and \jTree\ contains
+the line |\let\branch@type=\psline|.  If the user says
+|\psset{branch=\customline}|, then |\branch@type| is made
+|\customline| instead of |\psline| with the usual locality. If
+|\customline| is suitably defined then it will be
+used to draw branches.  A few alternative macros for drawing
+branches are included in \jTree.  The enterprising user might
+want to define appropriate zigzag or coil macros, following the
+PSTricks model.  \jTree\ provides |\blank|, |\brokenbranch|, and
+|\etcbranch|.\index*{branch}\index*{+blank}\index*{+brokenbranch}%,
+\index*{+etcbranch}
+
+\cd \tac|
+\jtree[xunit=3em,yunit=2em]
+\! = {root}
+<left>[branch=\blank]{A}
+^<right>[branch=\brokenbranch]{B}
+<right>[branch=\etcbranch].
+\endjtree
+|endtac \qquad\hfil
+\jtree[xunit=3em,yunit=2em] \start {root}
+<left>[branch=\blank]{A} ^<right>[branch=\brokenbranch]{B}
+<right>[branch=\etcbranch].
+\endjtree
+\dc
+
+The proportion of the ``etc branch'' that is dotted is controlled
+by a parameter index*{etcratio}|etcratio|.  \jTree\ says |\psset{etcratio=.75}|,
+but the user is free to change this if desired.  The style for
+the dotted portion is defined by
+\medskip
+\quad|\newpsstyle{etc}{nodesepB=0,nodesepA=1pt,linestyle=dotted,|\par
+\qquad |linewidth=1.2pt,dotsep=2pt}|
+\medskip
+The user can change (i.e. overwrite) this, if desired.
+
+\jTree\ has the macro definition:
+\medskip
+\quad |\def\etc{[branch=\etcbranch,scaleby=.7]}|
+\medskip
+So you can write:
+
+\cd \tac|
+\jtree \! = :{A} :{B}
+   <left>{C} ^<right>\etc.
+\endjtree
+|endtac \hfil
+\jtree \! = :{A} :{B} <left>{C} ^<right>\etc.
+\endjtree
+\dc
+
+
+\subsection The pseudo-parameters {\sl dirA\/} and {\sl dirB}
+
+\everymath={}%
+%
+\index*{dirA, dirB}%
+Suppose, for example, that you want to use |\nccurve| to draw a
+curve which leaves the point A in a direction towards the point
+which is displaced from A by $(1,-2)$ (ps-units).  You need to
+set |angleA| to the appropriate value.  This is complicated,
+because the x-scale and the y-scale may be different.  The
+pseudo-parameter |dirA| is provided to accomplish this.
+\hbox{|\psset{dirA=(1:-2)}|} will cause |angleA| to be set to the
+appropriate value.  It is called a pseudo-parameter (my
+terminology) because
+\hbox{|\psset{dirA=(1:-2)}|} is executed for its effect on the parameter
+|angleA|, not |dirA|.  Note the use of the colon, which keeps
+|\psset| from getting confused.
+\smallskip
+Use of |dirA| below ensures that the ``curved branch'' lines up
+with the straight ones.  Note that the curve is made fairly stiff
+(a high value of |ncurv|) so that it bows out sufficiently.
+
+\cd \tac|
+\jtree
+\! = @A1 <right> :{B} :{C} {D}@A2 .
+\nccurve[dirA=(-1:-1),angleB=200,
+   ncurv=2,nodesepB=.5ex]{A1}{A2}
+\endjtree
+|endtac \hfill
+\jtree \! = @A1 <right> :{B} :{C} {D}@A2 .
+\nccurve[dirA=(-1:-1),angleB=200,
+   ncurv=2,nodesepB=.5ex]{A1}{A2}
+\endjtree\kern1em
+\dc
+
+Of course, |dirB| works the same way for |angleB|.
+
+\def\andthen{\kern1pt:\enspace}
+
+\endinput
+
+\subsection Complete list of \jTree\ parameters
+
+|labelgapt|, |labelgapb|, |labelgap|\andthen The center of the
+top of the label box is placed a distance |labelgapt| below the
+previous termination point.  The termination point of the label
+box is placed a distance |labelgapb| below the bottom edge of the
+label box. |labelgap| is a pseudo-parameter, used for its effect.
+|\psset{labelgap=«x\/»}| has the effect
+|\psset{labelgapt=«x\/»,labelgapb=«x\/»}|.
+
+\medskip
+|scaleby|\andthen |\psset{scaleby=«x\enspace y\/»}| has the effect
+of scaling all branches, triangles, and vartriangles by {\sl x\/}
+horizontally and {\sl y\/} vertically.  If {\sl y\/} is omitted,
+scaling by {\sl x\/} in both directions is carried out.
+
+\medskip
+|everytree|\andthen
+The effect of
+|\psset{everytree=«$\alpha$»}| is
+|\jteverytree={«$\alpha$»}|.  This token list is inserted every
+time that |\jtree| is invoked.
+
+\medskip
+|everylabel|\andthen
+The effect of
+|\psset{everylabel=«$\alpha$»}| is
+|\jteverylabel={«$\alpha$»}|.  This token list is inserted every
+time that a label box is created, unless cancelled by |\omit|.
+
+\medskip
+|treevshift|, |baretopadjust|\thinspace:\enspace These parameters
+control the relation between the baseline of the assembled tree
+and the baseline of the root label.  The baseline of the root
+label is a distance $\sl d=v+b\mskip2mu$ above the baseline of
+the tree, where $\sl v$ is |treevshift|; and $\sl b$ is
+|baretopadjust| if the root label has 0 height, otherwise is~0.
+
+\medskip
+|triratio|\andthen This determines the termination point of
+triangles, and the skew of vartriangles.  See Chapter~5 for
+discussion.
+
+\medskip
+|branch|\andthen The control sequence |\branch@type| is used to
+draw the connections in branches.  {\sl pst-jtree\/} contains
+|\let\branch@type=\psline|.  The effect of
+|\psset{branch=\usermacro}| is |\let\branch@type=\usermacro|. It
+is assumed that |\usermacro| has the argument structure\smallskip
+\hfil|\def\usermacro(#1,#2)(#3,#4){|\dots
+\smallskip
+
+\medskip
+|etcratio|\andthen {\sl pst-jtree\/} provides the macro
+|\etcbranch| as an alternative to |\psline|.  It draws a line
+which begins as a solid line but ends as a dotted line.  Its use
+is to indicate an elided tree tail.  |etcratio| determines what
+fraction of the line is dotted.
+
+\medskip
+|dirA|, |dirB|\andthen These are pseudo-parameters, used to set
+the parameters |angleA| and |angleB|, respectively.
+|\psset{dirA=(«a\/»:«b\/»)}| sets angleA so that
+the direction corresponding to angleA is the same as the
+direction corresponding to the vector $\sl\langle a,b\rangle$.
+Setting |dirB| has a similar effect on |angleB|.
+
+
+
+

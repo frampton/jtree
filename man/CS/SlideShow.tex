@@ -1,0 +1,138 @@
+
+
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
+\def\stub{[scaleby=.5,arrows=-]}%
+\def\\#1{\rput[bl](.6ex,.4ex){#1}}%
+\psset{xunit=2.4em,yunit=1.2em,arrows=->,nodesep=0,
+   arrowlength=3.6,arrowsize=2pt,arrowinset=.4}
+\def\BEGIN{\leavevmode\vfill \line\bgroup\hfill}
+\def\END{\egroup\par\break}
+
+\vsize=3in
+\def\pstcommands{}
+
+\BEGIN
+\hbox{Before merger, there was a void.  Then\enspace \dots}
+\END
+
+% 1
+\BEGIN\jtree\start
+:{koi} {strani}.
+\endjtree\END
+% 2
+\BEGIN\jtree\start
+:{ot} :{koi} {strani}.
+\endjtree\END
+
+% 3
+\BEGIN\jtree\start
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\endjtree\END
+
+% 4
+\BEGIN\jtree\start
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\endjtree\END
+
+% 5
+\BEGIN\jtree\start
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\endjtree\END
+
+% 6
+\BEGIN\jtree\start
+<left> {$C_1$}  ^<right>\broken
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\endjtree\END
+
+% 7
+\BEGIN\jtree\start
+{\omit}@A3
+<right>\stub{\omit}@K3  ^<right>
+<left> {$C_1$}  ^<right>\broken
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
+%\nccurve{K1}{A5}
+%\nccurve{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
+%\nccurve{A1}{K1}
+%\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree\END
+
+% 8
+\BEGIN\jtree\start
+{\omit}@A2
+<right>\stub{\omit}@K2  ^<right> {\omit}@A3
+<right>\stub{\omit}@K3  ^<right>
+<left> {$C_1$}  ^<right>\broken
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
+%\nccurve{K1}{A5}
+\nccurve{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
+%\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree\END
+
+% 9
+\BEGIN\jtree\start
+<left>{$C_2$}  ^<right>\broken{\omit}@A2
+<right>\stub{\omit}@K2  ^<right> {\omit}@A3
+<right>\stub{\omit}@K3  ^<right>
+<left> {$C_1$}  ^<right>\broken
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
+%\nccurve{K1}{A5}
+\nccurve{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
+%\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree\END
+
+% 10
+\BEGIN\jtree\start
+{\omit}@A1
+<right>\stub{\omit}@K1  ^<right>{\omit}
+<left>{$C_2$}  ^<right>\broken{\omit}@A2
+<right>\stub{\omit}@K2  ^<right> {\omit}@A3
+<right>\stub{\omit}@K3  ^<right>
+<left> {$C_1$}  ^<right>\broken
+:{ubil} {\omit}@A4
+:{kolko} {\omit}
+:{studenti} {\omit}@A5
+:{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
+\nccurve{K1}{A5}
+\nccurve{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
+\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree\END
+
+

@@ -1,0 +1,91 @@
+
+\section The bounding box
+
+PSTricks creates dimensionless graphics, but \jTree\ goes to a
+lot of trouble to figure out the sizes of the trees that it
+generates and to put them in appropriately sized boxes.  For
+example:
+
+\exh \tac|
+\psframebox[framesep=0]{\jtree
+\! = {X} :{a} :{a} :{a}
+   {\multiline
+      this and\cr
+      that\endmultiline}.
+\endjtree}
+|endtac \hfil
+\psframebox[framesep=0]{\jtree
+\! = {X} :{a} :{a} :{a}
+   {\multiline
+      this and\cr
+      that\endmultiline}.
+\endjtree}
+\xe
+
+The sizing is not perfect.  \jTree\ is not clever enough to
+recognize the white space due to |labelgapt|, |labelgapb|,
+|labelstrutt|, and |labelstrutb|.  But it is not bad.
+
+\medskip
+If PSTricks is used to draw arrows, they often extend outside the
+\jTree\ bounding box.
+
+\exh \tac|
+\psframebox[framesep=0]{\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+|endtac \hfil
+\psframebox[framesep=0]{\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+\xe
+
+This has to be fixed by hand by inserting appropriate kerning.
+
+\exh \tac|
+\psframebox[framesep=0]{\kern2.4em
+\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+|endtac \hfil
+\psframebox[framesep=0]{\kern2.4em\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+\xe
+
+
+
+
+

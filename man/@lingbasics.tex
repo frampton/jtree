@@ -1,0 +1,57 @@
+
+\ifx\PSTricksLoaded\endinput \else \input pstricks \fi\relax
+\catcode`@=11
+\def\@enamedef#1{\expandafter\edef\csname #1\endcsname}
+\def\lingmkactive#1{%
+   \@enamedef{ling@restore\string#1}{\@makeaux#1=\the\catcode`#1}%
+   \catcode`#1=13\ignorespaces}
+\def\lingmkletter#1{%
+   \@enamedef{ling@restore\string#1}{\@makeaux#1=\the\catcode`#1}%
+   \catcode`#1=11\ignorespaces}
+\def\@makeaux{\noexpand\catcode\noexpand`\noexpand}
+\def\lingrestore#1{\edef\tempa{ling@restore\string#1}%
+   \expandafter\csname\tempa\endcsname}
+\catcode`@=12
+\lingmkletter @
+%%%%%%%%%% general utilities
+\def\writeln#1{\immediate\write16{#1}\ignorespaces}
+\def\@gobbleignore#1{\ignorespaces}
+\begingroup
+\def\:{\ling@gobblespace} \expandafter\gdef\: {}
+\endgroup
+%\def\ling@getpars#1{%
+%   \def\k@@p{#1}\@ifnextchar[\ling@getpars@a\ling@getpars@e}
+%\def\ling@getpars@a[#1]{\def\pst@pars{#1}\ling@getpars@b}
+%\def\ling@getpars@b{\futurelet\TTemp\ling@getpars@c}
+%\def\ling@getpars@c{\ifx\TTemp\@sptoken \let\next\ling@getpars@d
+%   \else \let\next\k@@p \fi \next}
+%\def\ling@getpars@d{\expandafter\k@@p\ling@gobblespace}
+%\def\ling@getpars@e{\let\pst@pars\@empty \k@@p}
+\def\get{\begingroup \get@A \get@B}
+\def\get@A{\bgroup \catcode`_=11 \catcode`~=11}
+\def\get@B #1 {\get@C #1 \endgroup}
+\def\getinput{\get@A \get@C}
+\def\get@C #1 {\gdef\@filename{#1}\egroup \mark{\@filename}
+   \input\@filename}
+%% public dimensions
+\newdimen\dimpuba
+\newdimen\dimpubb
+\newdimen\dimpubc
+\newdimen\dimpubd
+\newdimen\dimpube
+\newdimen\YA
+\newdimen\YB
+\newdimen\YC
+\def\interpolate(#1)(#2)#3#4{{\SpecialCoor
+   \pst@getcoor{#1}\pst@tempa%
+   \pst@getcoor{#2}\pst@tempb%
+   \pnode(!%
+     \pst@tempa /YA exch \pst@number\psyunit div def
+     /XA exch \pst@number\psxunit div def
+     \pst@tempb /YB exch \pst@number\psyunit div def
+     /XB exch \pst@number\psxunit div def
+     /dx XB XA sub def
+     /dy YB YA sub def
+     dx #3\space mul XA add dy #3\space mul YA add){#4}}\ignorespaces
+}
+\lingrestore @

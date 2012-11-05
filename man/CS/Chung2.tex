@@ -1,0 +1,129 @@
+\vfil\break
+% Chung example (p. 246)
+
+\example
+\ftag{\the\Exno}[Chung2]
+\vskip-1ex
+\hfil
+\jtree[xunit=2em,yunit=1.4em,labelgapb=0,triratio=0,
+   arrowscale=1.6 1]
+\deftriangle<tri>(1.8)(1)(-.5)
+\defbranch<colonB>(1)(-.5)
+\! = {CP}
+   :{\sc WH}@A {C$'$}
+   <tri>{\rlap{V}}@AA ^<tri>[triratio=.55]{CP}
+   :{\it t}@B {C$'$}
+   <tri>{\rlap{V}}@BB ^<tri>[triratio=.55]{CP}
+   :{\it t}@C {C$'$}
+   <tri>{\rlap{V}}@CC .
+\psset{linewidth=1pt,ncurvB=1.1,nodesepA=1ex,
+   angleA=-90,angleB=180,offsetA=.5ex}
+\nccurve{A}{AA}
+\nccurve{B}{BB}
+\nccurve{C}{CC}
+\psset{offsetA=-.5ex,arrows=->}
+\nccurve{A}{AA}
+\nccurve{B}{BB}
+\nccurve{C}{CC}
+\endjtree
+
+\vskip1.2em
+(Chung, Sandy. 1998. {\sl The Design of Agreement}, p.~246.)
+
+\medskip
+\codelines
+|\jtree[xunit=2em,yunit=1.4em,labelgapb=0,triratio=0]||1
+\deftriangle<tri>(1.8)(1)(-.5)
+\defbranch<colonB>(1)(-.5)
+\! = {CP}
+   :{\sc WH}@A {C$'$}
+   <tri>{\rlap{V}}@AA ^<tri>[triratio=.55]{CP}||2
+   :{\it t}@B {C$'$}
+   <tri>{\rlap{V}}@BB ^<tri>[triratio=.55]{CP}
+   :{\it t}@C {C$'$}
+   <tri>{\rlap{V}}@CC .
+\psset{linewidth=1pt,ncurvB=1.1,nodesepA=1ex,
+   angleA=-90,angleB=180,offsetA=.5ex}
+\nccurve{A}{AA}
+\nccurve{B}{BB}
+\nccurve{C}{CC}
+\psset{offsetA=-.5ex,arrows=->}
+\nccurve{A}{AA}
+\nccurve{B}{BB}
+\nccurve{C}{CC}
+\endjtree
+
+|endcodelines
+
+\bigskip
+1.\ Since all the node labels are uppercase, and therefore do not
+descend below the baseline, spacing is improved by |labelgapb=0|.
+|triratio| is set to 0 in order to properly position the
+instances of V.
+
+\medskip
+2.\ The triangle is overwritten so that both V and CP can be
+positioned independently, using different values of |triratio|.
+
+\bigskip
+Here is a less elegant approach which achieves the same effect without
+using an~offset.
+
+\medskip
+\codelines
+|\jtree[xunit=2em,yunit=1.4em,labelgapb=0,triratio=0]
+\deftriangle<tri>(1.8)(1)(-.5)
+\defbranch<colonB>(1)(-.5)
+\def\gap{\hskip1ex}%
+\def\\{[labelstrutb=0]}%
+\! = {CP}
+   :{\sc WH}\\({\pnode{A1}\gap\pnode{A2}}) {C$'$}||1
+   <tri>{\rlap{V}}@A ^<tri>[triratio=.55]{CP}
+   :{\it t}\\({\pnode{B1}\gap\pnode{B2}}) {C$'$}
+   <tri>{\rlap{V}}@B ^<tri>[triratio=.55]{CP}
+   :{\it t}\\({\pnode{C1}\gap\pnode{C2}}) {C$'$}
+   <tri>{\rlap{V}}@C .
+\psset{linewidth=1pt,ncurvB=1.1,nodesepA=1ex,
+   angleA=-90,angleB=180}
+\nccurve{A1}{A}
+\nccurve{B1}{B}
+\nccurve{C1}{C}
+\psset{arrows=->}
+\nccurve{A2}{A}
+\nccurve{B2}{B}
+\nccurve{C2}{C}
+\endjtree
+|endcodelines
+
+\medskip
+1.\ It is necessary to set |labelstrutb| to 0 (via |\\|) so that
+the inline adjunction is to the bottom of the label box.
+|labelgapb| is 0 throughout the tree.
+
+\endinput
+
+\jtree[xunit=2em,yunit=1.4em,labelgapb=0,triratio=0]
+\deftriangle<tri>(1.8)(1)(-.5)
+\defbranch<colonB>(1)(-.5)
+\def\gap{\hskip1ex}%
+\def\\{[labelstrutb=0]}%
+\! = {CP}
+   :{\sc WH}\\({\pnode{A1}\gap\pnode{A2}}) {C$'$}
+   <tri>{\rlap{V}}@A ^<tri>[triratio=.55]{CP}
+   :{\it t}\\({\pnode{B1}\gap\pnode{B2}}) {C$'$}
+   <tri>{\rlap{V}}@B ^<tri>[triratio=.55]{CP}
+   :{\it t}\\({\pnode{C1}\gap\pnode{C2}}) {C$'$}
+   <tri>{\rlap{V}}@C .
+\psset{linewidth=1pt,ncurvB=1.1,nodesepA=1ex,
+   angleA=-90,angleB=180}
+\nccurve{A1}{A}
+\nccurve{B1}{B}
+\nccurve{C1}{C}
+\psset{arrows=->}
+\nccurve{A2}{A}
+\nccurve{B2}{B}
+\nccurve{C2}{C}
+\endjtree
+
+
+

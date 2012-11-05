@@ -1,0 +1,69 @@
+
+\input @localsettings                % local
+\input pstricks
+%\input temp  \bye
+\input pst-node
+\input pst-xkey
+\input @lingbasics
+\input @standardpars
+%\Lingsetkeys{gatherftags=true}
+\input @timesfonts
+\input @lingdocument
+\input @code                          % local
+\input expex
+\input ../core/pst-jtree
+\input @jftreedoc                     % local
+%\mkindex
+%\mkcontents
+\sstitles
+
+%\input mkindex  \bye
+%\tracingmacros=1
+
+\catcode`@=11
+\let\ling@getpars=\@getoptionalarg
+\let\pst@pars=\@optionalarg
+\catcode`@=12
+
+%\get 000doc-cover
+%\get contents
+\get 00doc-intro
+\get 01doc-TDL
+\get 02doc-parameters
+\get 03doc-labels
+\get 04doc-branches
+\get 05doc-triangles
+\get 06doc-nodes
+\get 07doc-colon
+\get 08doc-eval
+\get 09doc-bells
+\get 10doc-incremental
+\get 11doc-boundingbox
+\get 12doc-nodesandhow
+\get 13doc-examples
+\get 14doc-issues
+%
+%\get appendix-env
+%\input ./index/doindex  \bye
+%
+%
+%\get 14doc-appendix2
+%\get 14doc-appendix
+%\get index
+%\closeout\indexfile
+
+\input pst-jtree-doc-add
+\bye
+
+%\get ./CS/cheese
+%\get ./CS/Ndayiragije
+%\get ./CS/qtree
+%\get 05doc-triangles
+%\get 04doc-branches-alt
+%\get 11doc-syntax
+%\get Append-aux
+%\get Appendix-syntax
+%\get parsing_examples
+%\get ./CS/Chung2
+%\get 13doc-nodesandhow         \bye
+

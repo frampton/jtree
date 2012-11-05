@@ -1,0 +1,56 @@
+
+
+% Schutze example
+
+\example
+
+\ftag{\the\Exno}[Schutze]%
+%% ACTIVE CODE
+\jtree[xunit=5em,yunit=2em]
+\! = {IP}
+   <tri>{\triline{sono stati\hfil}}  ^<tri>[triratio=.95]{FP}
+   :{F$_{\rlap{$\scriptstyle\rm [+strong]$}}$}!a
+      {Voice$_{\rlap{$\scriptstyle\rm Pass$}}$}
+   :{Voice\rlap{$_{\rm Pass}$}}@A2  {$\rm Agr_OP$}
+   :{DP}!b  {${\rm Agr_O}'$}
+   :[scaleby=.8 1]{$\rm Agr_O$}@A3  [scaleby=.8 1]{VP}
+   <tri>[scaleby=.4 .7]
+      {\rnode{A5}{$t_i$}\hskip1ex \rnode{A6}{$t_m$}}.
+\!a = <shortvert>{arrestati$_i$}@A1 .
+\!b = <shortvert>{alcuni uomini$_m$}@A4 .
+\psset{arrows=->}
+\nccurve[angleA=225,angleB=-45]{A2}{A1}
+\nccurve[angleA=200,angleB=-90,ncurv=1.5]{A3}{A2}
+\nccurve[angleA=-130,angleB=-70]{A5}{A3}
+\nccurve[angleA=-130,angleB=-70,linestyle=dashed]{A6}{A4}
+\endjtree
+%% END ACTIVE CODE
+
+\vskip3em
+(Caponigro, Ivano and Carson Sch\"utze.  2003. Parameterizing
+Passive Participle Movement, {\sl Linguistic Inquiry\/} 34.2,
+p.~300.)
+
+\medskip
+\codelines
+|\jtree[xunit=5em,yunit=2em]
+\! = {IP}
+   <tri>{\triline{sono stati\hfil}}  ^<tri>[triratio=.95]{FP}
+   :{F$_{\rlap{$\scriptstyle\rm [+strong]$}}$}!a
+      {Voice$_{\rlap{$\scriptstyle\rm Pass$}}$}
+   :{Voice\rlap{$_{\rm Pass}$}}@A2  {$\rm Agr_OP$}
+   :{DP}!b  {${\rm Agr_O}'$}
+   :[scaleby=.8 1]{$\rm Agr_O$}@A3  [scaleby=.8 1]{VP}
+   <tri>[scaleby=.4 .7]
+      {\rnode{A5}{$t_i$}\hskip1ex \rnode{A6}{$t_m$}}.
+\!a = <shortvert>{arrestati$_i$}@A1 .
+\!b = <shortvert>{alcuni uomini$_m$}@A4 .
+\psset{arrows=->}
+\nccurve[angleA=225,angleB=-45]{A2}{A1}
+\nccurve[angleA=200,angleB=-90,ncurv=1.5]{A3}{A2}
+\nccurve[angleA=-130,angleB=-70]{A5}{A3}
+\nccurve[angleA=-130,angleB=-70,linestyle=dashed]{A6}{A4}
+\endjtree
+|endcodelines
+
+

@@ -1,0 +1,235 @@
+
+\section Nodes and connections between them
+
+\ftag{\the\secno}[nodesandhow]%
+Nodes have a shape, a reference point, and a name. \pstnode\
+allows the user to define box, elliptical, circular, and point
+nodes.  In addition to a shape, nodes have a reference point.  It
+is at the center of an elliptical, circular, or point node.  It
+can be at the center of a box node, but there are other options
+for box nodes: the ends and centers of the edges and the
+baseline.  \pstnode\ has a number of commands for drawing curves
+of various kinds between nodes.  Various features of how these
+curves are rendered (linewidth, linestyle, arrows, etc.) can be
+specified.  The most useful curve drawing command for annotating
+tree structures is |\nccurve|.  The main point of this section is
+to explain how |\nccurve| works.
+
+\medskip
+Suppose there is a box node and a point node as shown below.  The
+dots are the reference points.
+\bigskip
+
+\def\templabel{\rput(0,1){\rput(0,2ex){A}}}
+\def\goop{\psframebox[boxsep=false,framesep=0,linecolor=gray]
+   {\vrule width0pt height1\psunit depth.5\psunit
+      \hskip\psunit \pnode{QQ}\templabel\hskip\psunit}}
+
+\psset{unit=1.2cm}
+\hfil \pspicture(0,0)(9,2.8)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput(8,0){\rput(0,02ex){B}}
+\rput[B](1,1){\rnode[B]{A}{\goop}}
+\SpecialCoor
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+
+\bigskip
+The diagram below illustrates how
+\medskip
+\hfil|\nccurve[angleA=50,angleB=110]{A}{B}|
+\medskip
+is drawn.
+\bigskip
+
+\let\templabel=\relax
+
+\hfil \pspicture(-.4,0)(8,3)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\goop}}
+\SpecialCoor
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\psset{nodesep=0}
+\nccurve[angleA=50,angleB=110]{A}{B}
+\psline[style=dotted](Q)([angle=110,nodesep=2.8]Q)
+\psline[style=dotted](QQ)([angle=50,nodesep=2.8]QQ)
+\psline[style=dotted](QQ)([angle=0,nodesep=.6]QQ)
+\psline[style=dotted](Q)([angle=0,nodesep=.6]Q)
+\psarc{->}(Q){.5}{0}{110}
+\psarc{->}(QQ){.5}{0}{50}
+\rput[bl]([angle=25,nodesep=.6]QQ){\tenpoint$50^\circ$}
+\rput[bl]([angle=55,nodesep=.6]Q){\tenpoint$110^\circ$}
+\endpspicture
+\bigskip
+
+
+
+
+This simple picture can be modified by a number of parameters. In
+addition to the usual parameters like |linewidth|, |linestyle|
+and |arrows| which determine how a geometrical curve is rendered,
+there are six parameters which modify the geometry of the curve
+itself: |ncurvA|, |ncurvB|, |nodesepA|, |nodesepB|, |offsetA|,
+and |offsetB|.  The parameters can be set individually or in
+pairs.  |\psset{nodesep=«x\/»}| induces
+|\psset{nodesepA=«x\/»,nodesepB=«x\/»}|.  |ncurv| and |offset|
+work the same way. We will examine the parameters in turn.
+
+\medskip |\psset{nodesepA=«x\/»}|
+causes the dimensions of the node box to be adjusted by {\sl
+x\/} before the curve is determined.
+
+\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,linecolor=gray]
+      {\goop}}
+%\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,style=dotted]
+%      {\goop}}
+%\dimpuba=.5\psunit
+\dimpubb=.2\psunit
+\bigskip
+\hfil \pspicture(-.2,0)(8,3)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\nccurve[angleA=50,angleB=110,%nodesepB=\dimpuba,
+   nodesepA=\dimpubb,nodesepB=0]{A}{B}
+\SpecialCoor
+\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
+\psline[style=dotted](QQ)([angle=50,nodesep=2.6]QQ)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+\bigskip
+
+The effect of |ncurv| is the most subtle.  One can imagine that
+the curve is ``pulled'' in the directions of the arrows below.
+You can think of |ncurv| as setting the strength of the pulls.
+The default is $.67$.  The picture below shows the curves that
+are drawn with various settings of |ncurv|.
+
+\bigskip
+\hfil \pspicture(-.2,0)(8,4.1)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\psset{angleA=50,angleB=110,nodesepA=\dimpubb,
+   nodesepB=0,labelsep=3pt}
+\nccurve[ncurv=.4]{A}{B}
+\bput(.35){\tenrm .4}
+\nccurve[ncurv=.67]{A}{B}
+\bput(.35){\tenrm .67}
+\nccurve[ncurv=1]{A}{B}
+\bput(.35){\tenrm 1}
+\nccurve[ncurv=1.4]{A}{B}
+\bput(.4){\tenrm 1.4}
+\SpecialCoor
+\psline[style=dotted]{->}(Q)([angle=110,nodesep=4]Q)
+\psline[style=dotted]{->}(QQ)([angle=50,nodesep=4]QQ)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+\bigskip
+
+Here is a simple illustration of the use of |ncurv|. There is a
+typesetting problem with the pointer below which must be fixed.\par\nobreak
+
+\exh
+\tac|
+\jtree[unit=2em]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80]{->}{C}{A}
+\endjtree
+|endtac \hfil
+\jtree[unit=2em]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80]{->}{C}{A}
+\endjtree
+\xe
+
+One way to fix the problem is to increase the value of the
+|ncurv| parameter.
+
+\exh
+\tac|
+\jtree[unit=2em,nodesep=.6ex]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80,
+   ncurv=1.1]{->}{C}{A}
+\endjtree
+|endtac \hfil
+\jtree[unit=2em,nodesep=.6ex]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80,
+   ncurv=1.1]{->}{C}{A}
+\endjtree
+\bigskip
+\xe
+
+|\psset{ncurv=«x\/»}| has the effect
+|\psset{ncurvA=«x\/»,ncurvB=«x\/»}|.
+Sometimes it is advantageous to set the parameters to different
+values.  Experimentation will quickly give you a feel for how
+this works.
+
+\medskip
+Finally, we come to the two |offset| parameters.
+|\psset{offsetA=«x\/»}| causes the starting point to be offset a
+distance {\sl x\/} perpindicular to the starting direction. The
+direction is to the left (looking in the starting direction) if
+{\sl x\/} is positive.
+
+%\dimpuba=.5\psunit
+%\dimpubb=.2\psunit
+\bigskip
+\hfil \pspicture(-.2,0)(8,3.4)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\SpecialCoor
+\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
+\pnode([angle=50,nodesep=3]QQ){L1}
+\psline[style=dotted](QQ)(L1)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\pnode(2.007,2.2){Z}
+\rput([angle=140,nodesep=.3]Z){\pnode{Z2}}
+\nccurve[angleA=50,angleB=110,nodesep=0]{Z2}{B}
+\psline[style=dotted](Z)([angle=140,nodesep=1]Z)
+\psline[style=dotted]([angle=140,nodesep=.3]L1)%
+   ([angle=140,nodesep=.3]QQ)
+\endpspicture
+\bigskip
+
+|\psset{offsetB=«x\/»}| causes the finishing point to be
+displaced a distance {\sl x\/} perpindicular to the finishing
+direction, to the left.  Remember that the finishing direction
+points toward the node, not back along the curve.
+
+\medskip
+Here is a simple application that might be appropriate for
+some special emphasis.\par\nobreak
+
+\exh
+\tac|
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+|endtac \hfil
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+\xe
+
+This construction is used several times in example \gettag[Chung2]
+in \exsec.
+
+

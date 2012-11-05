@@ -1,0 +1,104 @@
+
+\example
+
+\ftag{\the\Exno}[Frampton2]
+\bigskip
+\hfil
+\jtree[xunit=2.4em,yunit=1.2em,style=arrows2,nodesep=0]
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
+\def\stub{<right>[scaleby=.5,arrows=-]}%
+\def\\#1{\rput[bl](.6ex,.4ex){\it #1}}%
+\! = {\omit\\a}@A1
+   \stub @K1  ^<right>{\omit\\b}
+   :{C$_2$}()  \broken @A2
+   \stub @K2  ^<right>@A3
+   \stub @K3  ^<right>
+   :{C$_1$}()  \broken
+   :{ubil}  {\omit\\c}@A4
+   :{kolko}  {\omit\\d}
+   :{studenti}  {\omit\\e}@A5
+   :{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
+\nccurve{K1}{A5}
+\nccurve{-}{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
+\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree
+
+\vskip1.5em
+\codelines
+|\jtree[xunit=2.4em,yunit=1.2em,arrows=->,nodesep=0]
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%||1
+\def\stub{<right>[scaleby=.5,arrows=-]}%||2
+\def\\#1{\rput[bl](.6ex,.4ex){\it #1}}%||3
+\! = {\omit\\a}@A1
+   \stub @K1  ^<right>{\omit\\b}
+   :{C$_2$}()  \broken @A2
+   \stub @K2  ^<right>@A3
+   \stub @K3  ^<right>
+   :{C$_1$}()  \broken
+   :{ubil}  {\omit\\c}@A4
+   :{kolko}  {\omit\\d}
+   :{studenti}  {\omit\\e}@A5
+   :{ot} :{koi} {strani}.
+\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}||4
+\nccurve{K1}{A5}
+\nccurve{-}{K2}{A5}
+\nccurve{K3}{A4}
+\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}||5
+\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree
+|endcodelines
+
+\medskip
+1.\ See Section~\gettag[customsec] for information about the
+|branch| parameter.
+
+\smallskip
+2.\ |\stub| is used to position nodes halfway down certain right
+branches to facilitate drawing the complex (2~segment) pointers.
+
+\smallskip
+3.\ |\\| is used to position the tags {\sl a, b, c,} \dots
+
+\smallskip
+4.\ |dirA| is used in order to ensure that the complex pointers
+are parallel to left branches at the point that they cross the
+right branches.
+
+\smallskip
+5.\ A very high value of |ncurv| is used in order to get the loop
+to bow out sufficiently.
+\bigskip
+An alternate to using |\stub| to position the crossing points is
+|\psinterpolate|.
+
+\medskip
+\codelines
+|\jtree[xunit=2.4em,yunit=1.2em,arrows=->,nodesep=0,
+   arrowlength=3.6,arrowsize=2pt,arrowinset=.4]
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
+\def\\#1{\rput[bl](.6ex,.4ex){\it #1}}%
+\! = {\omit\\a}@A1
+   <right>{\omit\\b}@A1a
+   :{C$_2$}()  \broken @A2
+   <right>@A3
+   <right>@A3a
+   :{C$_1$}()  \broken
+   :{ubil}  {\omit\\c}@A4
+   :{kolko}  {\omit\\d}
+   :{studenti}  {\omit\\e}@A5
+   :{ot} :{koi} {strani}.
+\psinterpolate(A1)(A1a){.5}{K1}
+\psinterpolate(A2)(A3){.5}{K2}
+\psinterpolate(A3)(A3a){.5}{K3}
+|endcodelines
+\smallskip
+\dots\ continues as above
+
+

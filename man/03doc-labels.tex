@@ -1,0 +1,284 @@
+
+\section Labels
+
+In tree descriptions, material in |{|\dots|}| is typeset in an
+hbox, called a {\it label box}.  After the label box is added to
+a structure with current point $\cal P$, a new point $\cal P'$
+becomes the current point. The issues addressed in this section
+are the relative positions of $\cal P$, the label box, and $\cal
+P'$.  The position of the label box is specified by giving the
+position of the center of its baseline, called $\cal Q$ here. The
+relative positions depend upon the height $h$ and depth $d$ of
+the label box, and five different parameters: {\tt
+\index{labelgapt}}, {\tt \index{labelgapb}}, {\tt
+\index{labelstrutt}}, {\tt \index{labelstrutb}}, and {\tt
+\index{labeloffset}}. The beginning user should not be
+discouraged by the apparent complexity.  Various defaults are set
+in \pstjtree\/ and the issue can be largely ignored unless some
+special effect is desired.  When the time comes that a complex
+positioning problem arises, the flexibility will be both
+understandable and welcome. The positioning rules are given
+below, with \value{parameter} representing the value of the
+parameter.
+
+\ex \psset{unit=1em}
+\quad
+\pspicture[shift=-9](0,1.8)(10.2,12)%\psgrid
+\pspolygon(0,6)(8,6)(8,9)(0,9)
+\psline[linestyle=dashed](0,7)(8,7)
+\qdisk(4,7){2pt}
+\rput[lb](4.3,7.3){$\cal Q$}
+\qdisk(2,11){2pt}
+\rput[lb](2.3,11.3){$\cal P$}
+\qdisk(2,4){2pt}
+\rput[lb](2.3,4.3){$\cal P'$}
+\psset{nodesep=0}
+%
+\pcline{|<-|}(9,7)(9,4)
+\lput(.5){\rput(2ex,0){$y_2$}}
+\pcline{|<-}(9,11)(9,7)   %|
+\lput(.5){\rput(2ex,0){$y_1$}}
+%
+\pcline{|->|}(2,3)(4,3)
+\lput(.5){\rput(0,-2ex){$x_1$}}
+\endpspicture
+\hfil
+\vtop{\hsize=3in \openup.5ex
+$x_1=\vert|labeloffset|\vert$\smallskip
+$y_1=\mathop{\rm
+Max}(h,\vert|labelstrutt|\vert)$\par
+\hfill $+\vert|labelgapt|\vert$\smallskip
+$y_2=\mathop{\rm
+Max}(d,\vert|labelstrutb|\vert)$\par
+\hfill $+\vert|labelgapb|\vert$\smallskip
+}
+\xe
+
+A consequence of these rules is that the top of a label box will
+be at a distance of at least $\vert|labelgapt|\vert$ below the
+terminus of the branch or label that it follows, and the baseline
+of a label box will be at a distance
+$\vert|labelstrutt|\vert+\vert|labelgapt|\vert$ below that
+terminus unless the label box is unusually high (i.e.
+$h>\vert|labelstrutt|\vert$).  This means that label boxes never
+get too close to the branches or labels they follow, and the
+baselines of label boxes on different branches of the same height
+will be aligned, unless the label boxes are exceptionally high.
+The same considerations apply to the relative positions of the
+label box and $\cal P'$.
+
+\medskip
+There is also a parameter
+|normallabelstrut|\index*{normallabelstrut} which can be set to
+{\sl true\/} or {\sl false}.  If set to {\sl true\/}, every time
+that |\jtree| is executed the dimensions of the label strut are
+set to the dimensions of the current Tex strut. Specifically,
+\medskip
+\hfil |\psset{labelstrut={\the\ht\strutbox} {\the\dp\strutbox}}|
+\medskip
+is executed when |\jtree| is invoked. |\psset{labelstrut=«x\/»
+«y»}|\index*{labelstrut} is equivalent to
+|\psset{labelstrutt=«x\/»,|\allowbreak|labelstrutb=«y\/»}|. Users
+do not have to be concerned with setting label strut unless they
+desire some special effect since \pstjtree\/ sets
+|normallabelstrut| to {\sl true}.  The default settings for
+the top and bottom label gaps are $\rm .35\,ex$.
+|\psset{labelgap=«x\/»}|\index*{labelgap} is equivalent to
+|\psset{labelgapt=«x\/»,labelgapb=«x\/»}|.
+
+\medskip
+The effect of this scheme is shown below with |normallabelstrut|
+set to {\sl true\/} and |labelgapt| and
+|labelgapb| set to $\rm .6\,ex$.
+The size of the labels is as shown, with the baselines shown. If
+the height of the label does not exceed \value{labelstrutt}, the
+baselines of the labels are aligned, otherwise the top of the
+label box is at a distance \value{labelgapt} below the terminus
+of the branch it follows.
+
+\bigskip
+\dimpuba=.8ex
+\dimpubb=.5ex
+\dimpubc=.5ex
+\def\foop{\vrule width0pt height\dimpubb depth\dimpubc%
+   \pspolygon(-\dimpuba,-\dimpubc)(\dimpuba,-\dimpubc)%
+      (\dimpuba,\dimpubb)(-\dimpuba,\dimpubb)%
+   \psline(-\dimpuba,0)(\dimpuba,0)%
+   \global\advance\dimpubb by .68ex}%
+\hfil\jtree[xunit=2cm,yunit=1cm,labelgap=.6ex]
+\! =    <wideleft>{\foop}@A
+   ^<left>{\foop}
+   ^<vert>{\foop}
+   ^<right>{\foop}
+   ^<wideright>{\foop}.
+\SpecialCoor
+\pcline[style=dotted](-2.2,0|A)(2.2,0|A)
+\endjtree
+\bigskip
+
+Sometimes it is useful to set |labelstrutt| to 0.  In that case,
+the result is:
+
+\bigskip
+\hfil\jtree[xunit=2cm,yunit=1cm,labelgap=.6ex,normallabelstrut=false,
+   labelstrut=0pt 0pt]
+\dimpubb=.5ex
+\! =    <wideleft>{\foop}@A
+   ^<left>{\foop}
+   ^<vert>{\foop}
+   ^<right>{\foop}
+   ^<wideright>{\foop}.
+\SpecialCoor
+\endjtree
+
+
+\bigskip
+Many users will probably leave |normallabelstrut| set to {\sl
+true\/} and forget about it.  But most users will want to change
+the label gaps from time to time.  Contrast the following, for
+example.  In some applications,  the second might be preferable.
+
+\exh
+\tac|
+\jtree
+\! = {A}
+   <vert>{\psframebox{B}}
+   :{C}{D}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = {A}
+   <vert>{\psframebox{B}}
+   :{C}{D}.
+\endjtree
+\kern3em
+
+\bigskip
+\tac|
+\jtree
+\! = {A}
+   <vert>{\psframebox{B}}[labelgap=0]
+   :{C}{D}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = {A}
+   <vert>{\psframebox{B}}[labelgap=0]
+   :{C}{D}.
+\endjtree
+\kern3em
+\xe
+
+This is used in typesetting (\gettag[qtree]) in
+Section~\gettag[incremental].
+
+\medskip
+The following contrast is also interesting, in part because it
+uses a negative label gap.\par
+
+\exh
+\tac|
+\jtree
+\! = :({the}{(article)}) {dog}{(noun)}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :({the}{(article)}) {dog}{(noun)}.
+\endjtree
+\kern3em
+\bigskip
+\tac|
+\jtree
+\! = :({the}{(article)}[labelgapt=-3pt])
+   {dog}{(noun)}[labelgapt=-3pt].
+\endjtree
+|endtac \hfill
+\jtree
+\! = :({the}{(article)}[labelgapt=-3pt])
+   {dog}{(noun)}[labelgapt=-3pt].
+\endjtree
+\kern3em
+\xe
+
+See examples \gettag[Andrews] and \gettag[Merchant] in \exsec\
+for applications of this trick, which often eliminates the need
+for complex multiline labels.
+
+\medskip
+The label box can be positioned horizontally using |labeloffset|.
+
+\exh
+\tac|
+\jtree
+\! = {musketeer}
+   <vert>{musketeer}[labeloffset=1ex]
+   <vert>{musketeer}[labeloffset=2ex].
+\endjtree
+|endtac \hfil
+\jtree
+\! = {musketeer}
+   <vert>{musketeer}[labeloffset=1ex]
+   <vert>{musketeer}[labeloffset=2ex].
+\endjtree
+\xe
+
+See example \gettag[Dowty] in \exsec\ for an illustration of how
+changing |labeloffset| can solve certain spacing problems between
+labels.
+
+\medskip
+There is one other parameter that is relevant to labels. The
+material specified by |everylabel|\index*{everylabel} is put into
+a token list and the token list is inserted at the beginning of
+every label.
+
+\exh \tac|
+\jtree[everylabel=\sl]
+\! = {a}
+   :{a} {p}
+   :{a} {(e)}.
+\endjtree
+|endtac \hfil
+\jtree[everylabel=\sl]
+\! = {a}
+   :{a} {p}
+   :{a} {(e)}.
+\endjtree
+\xe
+
+\medskip
+If a label is |{\omit|\dots|}|\index*{+omit} or
+|{\pnode|\dots|}|, then the vertical positioning algorithm
+discussed above is bypassed and the label is positioned with its
+top edge at the level of $\cal P$ and $\cal P'$ is positioned
+directly under $\cal P$ at the level of the bottom edge of the
+label box.  |labeloffset| still operates. Contrast the following:
+
+\exh \tac|
+\jtree[everylabel=\strut,labelgap=3pt]
+\! = :{a} {\omit\psframebox{dog\strut}}
+   :{a} {\pnode{A1}}
+   :{a} {a}.
+\endjtree
+|endtac \hfil
+\jtree[everylabel=\strut,labelgap=3pt]
+\! = :{a} {\omit\psframebox{dog\strut}}
+   :{a} {\pnode{A1}}
+   :{a} {a}.
+\endjtree
+\bigskip
+\tac|
+\jtree[everylabel=\strut,labelgap=3pt]
+\! = :{a} {\psframebox{dog\strut}}
+   :{a} {}
+   :{a} {a}.
+\endjtree
+|endtac \hfil
+\jtree[everylabel=\strut,labelgap=3pt]
+\! = :{a} {\psframebox{dog\strut}}
+   :{a} {}
+   :{a} {a}.
+\endjtree
+\xe
+
+

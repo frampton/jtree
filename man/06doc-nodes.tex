@@ -1,0 +1,149 @@
+
+\section @tags
+
+\ftag{\the\secno}[nodesec]%
+\jTree\ includes direct support for PSTricks' powerful \pstnode\/
+package. Even in linear structures, \pstnode\/ is very useful to
+linguists. The ability to define nodes and to connect them with
+arrowed curves of various kinds allows the user to easily code
+things like:
+
+\exh
+\tac|
+\rnode{A1}{Who} \rnode{B1}{did}
+   Jack \rnode{B2}{\sl t\/}
+   see \rnode{A2}{\sl t\/}?}
+\psset{linearc=2pt}
+\ncbar[angle=-90]{->}{A2}{A1}
+\ncbar[angle=90]{->}{B2}{B1}
+|endtac \hfil
+\lower1em\hbox{\rnode{A1}{Who} \rnode{B1}{did}
+   Jack \rnode{B2}{\sl t\/}
+   see \rnode{A2}{\sl t\/}?}%
+\psset{linearc=2pt}
+\ncbar[angle=-90]{->}{A2}{A1}
+\ncbar[angle=90]{->}{B2}{B1}
+\xe
+
+In tree structures, the \pstnode\/ macro |\nccurve| is
+particularly useful. {\bf Careful}: Nodes refer to named
+structures defined by \pstnode\/ commands, not to tree nodes.
+
+\exh
+\tac|
+\jtree
+\! = :{\rnode{A1}{who}}
+   :{\rnode{B1}{did}} :{Jack}
+   :{\rnode{B2}{\sl t}} :{see}
+   {\rnode{A2}{\sl t}}.
+\psset{arrows=->,angleA=-150,
+   angleB=-90}
+\nccurve{A2}{A1}
+\nccurve{B2}{B1}
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{\rnode{A1}{who}}
+   :{\rnode{B1}{did}} :{Jack}
+   :{\rnode{B2}{\sl t}} :{see}
+   {\rnode{A2}{\sl t}}.
+\psset{arrows=->,angleA=-150,
+   angleB=-90}
+\nccurve{A2}{A1}
+\nccurve{B2}{B1}
+\endjtree
+\xe
+
+\jTree\ facilitates the use of \pstnode\/ by means of what are
+called @tags, as illustrated below.
+
+\exh
+\tac|
+\jtree
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=->,angleA=-150,
+   angleB=-90}
+\nccurve{A2}{A1}
+\nccurve{B2}{B1}
+\endjtree
+|endtac  \hfil
+\jtree
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=->,angleA=-150,
+   angleB=-90}
+\nccurve{A2}{A1}
+\nccurve{B2}{B1}
+\endjtree
+\xe
+
+A \jTree\ @tag consists of |@| followed by any sequence of
+characters that is a valid PSTricks node name, followed by a
+space.  If a @tag follows a label (parameters are part of the
+label), then three nodes are created. If the @tag is |@P2|, for
+example, point nodes named |P2:t|, |P2|, and |P2:b| are created.
+|P2:t| is at the point that was current before the label was
+added to the structure, and |P2:b| is at the point that becomes
+the current point after the label is added to the structure. |P2|
+is a box node consisting of the label box, with the reference
+point at its center.  With respect to |P2|, |{«stuff\/»}@P2 |is
+equivalent to |{\rnode{P2}{«\sl stuff\/»}}|. If a @tag does not
+follow a label, then a single point node is created at the
+current position~\Pcurr.
+
+\medskip
+These ideas are illustrated below:\par\nobreak
+
+\exh \tac|
+\jtree
+\! = @AA
+   <vert>{A}
+   <vert>{B}[labelgapt=12pt]@P2
+   <vert>{C}.
+\psset{arrows=->,angleA=0,angleB=0,
+   ncurv=1.4}
+\nccurve[nodesep=0]{AA}{P2:t}
+\nccurve[nodesepA=0]{AA}{P2}
+\nccurve[nodesep=0,ncurv=1.6]{AA}{P2:b}
+\endjtree
+|endtac \hfil
+\jtree
+\! = @AA
+   <vert>{A}
+   <vert>{B}[labelgapt=12pt]@P2
+   <vert>{C}.
+\psset{arrows=->,angleA=0,angleB=0,
+   ncurv=1.4}
+\nccurve[nodesep=0]{AA}{P2:t}
+\nccurve[nodesepA=0]{AA}{P2}
+\nccurve[nodesep=0,ncurv=1.6]{AA}{P2:b}
+\endjtree
+
+\medskip
+\hrule
+
+\bigskip
+\tac|
+\jtree[scaleby=1 2,labelgap=1.2ex]
+\! = :{and}@A
+   {whatever}[labeloffset=1em]@AA .
+\psset{linestyle=dashed,arrows=->}
+\ncline{A}{AA:t}
+\ncline{A}{AA:b}
+\nccurve[angleA=-90,angleB=-90,ncurv=1]{A}{AA}
+\endjtree
+|endtac \kern-2em\hfil
+\jtree[scaleby=1 2,labelgap=1.2ex]
+\! = :{and}@A
+   {whatever}[labeloffset=1em]@AA .
+\psset{linestyle=dashed,arrows=->}
+\ncline[nodesepB=0]{A}{AA:t}
+\ncline[nodesepB=0]{A}{AA:b}
+\nccurve[angleA=-90,angleB=-90,ncurv=1]{A}{AA}
+\endjtree
+\xe
+
+There is some further information about nodes and the use of
+|\nccurve| in Section~\gettag[nodesandhow].
+

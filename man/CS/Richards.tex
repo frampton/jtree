@@ -1,0 +1,103 @@
+
+
+\example
+\ftag{\the\Exno}[Richards]
+\ftagpage[Richardspage]
+
+\hfil
+\jtree[xunit=1.5em,yunit=1.1em,labelgap=0]
+\def\A#1{\pnode(0,.3){A#1}}%
+\def\B#1{\pnode(0,-.3){B#1}}%
+\! = :{car} {\omit\A1}
+   :({\omit\A0}{Op})
+   :{that}
+   :{I}
+   :{T}
+   :{know} {\omit\B1}
+   :({\omit\B0}{who})
+   :{C}
+   :{Pro}
+   :{to}() \jtjot
+   :{persuade}() \jtjot
+   :{V} {\omit\A2}
+   :\jtlong{\omit\A4}!a
+   :{Pro}
+   :{to}
+   :{talk} {\omit\B2}
+   :\jtlong{\omit\B3}!b
+   :{V}
+   :{about}() {\omit\A3}{\it t}.
+\!a = :{owners}() \jtjot
+   :{of} {\omit\A5}{\it t}.
+\!b = :{to} {\omit\B4}{\it t}.
+\psset{linestyle=dashed,linewidth=.3ex,linecolor=blue,nodesep=0}
+\def\fudge{.5}%
+\ncline[nodesepA=-\fudge]{A0}{A1}
+\ncline[nodesepB=-\fudge]{A1}{A3}
+\ncline{A2}{A4}
+\ncline[nodesepB=-\fudge]{A4}{A5}
+\psset{linestyle=dotted,linewidth=.5ex,linecolor=red}
+\ncline[nodesepA=\fudge]{B0}{B1}
+\ncline{B1}{B2}
+\ncline{B2}{B3}
+\ncline[nodesepB=\fudge]{B3}{B4}
+\endjtree
+
+\vskip1.5em
+(Richards, Norvin.  2001. {\sl Movement in Language: Interactions
+and Architectures}, p.~262.)
+
+\medskip
+\codelines
+|\jtree[xunit=1.5em,yunit=1.1em,labelgap=0]
+\def\A#1{\pnode(0,.3){A#1}}%
+\def\B#1{\pnode(0,-.3){B#1}}%
+\! = :{car} {\omit\A1}
+   :({\omit\A0}{Op})
+   :{that}
+   :{I}
+   :{T}
+   :{know} {\omit\B1}
+   :({\omit\B0}{who})
+   :{C}
+   :{Pro}
+   :{to}() \jtjot
+   :{persuade}() \jtjot
+   :{V} {\omit\A2}
+   :\jtlong{\omit\A4}!a
+   :{Pro}
+   :{to}
+   :{talk} {\omit\B2}
+   :\jtlong{\omit\B3}!b
+   :{V}
+   :{about}() {\omit\A3}{\it t}.
+\!a = :{owners}() \jtjot
+   :{of} {\omit\A5}{\it t}.
+\!b = :{to} {\omit\B4}{\it t}.
+\psset{linestyle=dashed,linewidth=.3ex,
+   linecolor=blue,nodesep=0}
+\def\fudge{.5}%
+\ncline[nodesepA=-\fudge]{A0}{A1}
+\ncline[nodesepB=-\fudge]{A1}{A3}
+\ncline{A2}{A4}
+\ncline[nodesepB=-\fudge]{A4}{A5}
+\psset{linestyle=dotted,linewidth=.5ex,linecolor=red}
+\ncline[nodesepA=\fudge]{B0}{B1}
+\ncline{B1}{B2}
+\ncline{B2}{B3}
+\ncline[nodesepB=\fudge]{B3}{B4}
+\endjtree
+|endcodelines
+
+\bigskip
+Some adjustments were made after the first proof was examined.
+|xunit| was adjusted so that the display was as wide as possible,
+|\jtjot| was used to slightly lengthen a few branches in order to
+improve the spacing, and |\fudge| was introduced in order to
+adjust the end points of the dotted and dashed paths.
+
+\medskip
+A solution using |offset| in drawing the paths is also possible,
+but it is much more difficult to ensure that the segments join
+smoothly.
+

@@ -1,0 +1,55 @@
+\global\pageno=1
+\parindent=2em
+
+\section Introduction
+
+Complex trees that linguists often need to display are difficult
+to represent linearly in a fashion that allows a human to readily
+grasp the intended hierarchical structure. This makes it
+difficult to write Tex code in such a way that it can be easily
+debugged or modified a year after it was first written, or that
+portions of it can be copied for use in a different environment.
+\jTree\ was designed to overcome these problems.
+
+As usual, it is much easier to design a good tool for a task if
+the task is fairly narrow. So my aim was to write a tree
+formatter that would be particularly good for the kind of trees
+that I most often encounter.  In the syntax that most interests
+me, trees are often fairly deep, with a depth of embedding at
+least~5. Example~\gettag[Richards] in \exsec\ has depth~19. Using
+parentheses or brackets to encode embedding is not a viable
+option if the Tex code is to have the desired characteristics. In
+spite of being deep, however, the trees I usually want to typeset
+are simple in some other ways; they are generally binary
+branching and tend strongly to have their complex branching to
+the right. \jTree\ is designed to be particularly good at
+typesetting such trees.  Obviously, this represents a particular
+point of view about syntactic theory.
+
+\jTree\ is based on the widely used {\sl pstricks\/} macro
+package. Many of the more advanced features of \jTree\ require a
+willingness to learn a certain amount of PSTricks.  Linguists
+will find much in PSTricks that is useful, even outside the
+context of displaying and annotating trees. Most of the commands
+take parameters which are defined and explained in the PSTricks
+documentation.  For information about PSTricks, see {\sl
+http://www.tug.org/applications/PSTricks/\/}. \jTree\
+%http://www.tug.org/applications/PSTricks/\/}\wiggle[3em]. \jTree\
+also requires the {\sl xkeyval\/} package, which has become the
+standard mechanism for handling parameters in {\sl pstricks\/}
+based packages.  See Appendix A for information on installing the
+PSTricks, XKeyVal, and \jTree\ packages.
+
+Some tree formatters attempt to make many decisions about
+placement automatically, in order to make the formater easy and
+foolproof to use.  The downside is that complex trees are
+generally quite difficult to typeset because some effort is
+required to undo the automatic help provided by the formatter.
+The approach of \jTree\  is to do very little automatically, but
+to make what is done very transparent and very easy to adjust.
+Many features of tree construction in \jTree\ are controlled by
+parameters, whose default settings usually suffice, but which are
+available for fine-grained control when necessary. The core of
+\jTree\ is a tree description language.  We begin by discussing
+that language.
+

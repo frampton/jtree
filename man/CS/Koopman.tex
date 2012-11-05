@@ -1,0 +1,122 @@
+\vfil\break
+
+\example\hfil
+
+\vskip-1em
+\hfil
+\def\scaleA{[scaleby=1.6 1]}%
+\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
+\def\mkovalnode{\rput(-1ex,-.8)
+   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
+\jtree[xunit=3em,yunit=1.5em]
+\def\scaleA{[scaleby=1.6 1]}%
+\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
+\def\mkovalnode{\rput(-1ex,-.8)
+   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
+\! = {$\rm Agr'$}
+   :\scaleA{Agr}!a \scaleA{\bf VP}
+   <vert>[linestyle=dashed,linewidth=1pt]{\bf V}
+   :{${\rm [_V\,e]}_i$}@A1 {T}.
+\!a = :{V$_i$}!b {Agr}
+   <vert>{[e]$_j$}@A2 .
+\!b = {\omit\mkovalnode}
+   :\scaleB{${\rm [_{Agr}\,Agr]}_j$}@A3 \scaleB{$\rm [_T\,T]$}.
+\psset{angleA=-90,angleB=-45,arrows=->}
+\nccurve[nodesepB=0]{A1}{K}
+\nccurve[ncurv=1.3]{A2}{A3}
+\endjtree
+
+\vskip5em
+
+(Koopman, Hilda. 1995.  On Verbs That Fail to Undergo V-Second,
+{\sl Linguistic Inquiry\/} 26.1:150.)
+
+\medskip
+\codelines
+|\jtree[xunit=3em,yunit=1.5em]
+\def\scaleA{[scaleby=1.6 1]}%
+\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
+\def\mkovalnode{\rput(-1ex,-.8)
+   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
+\! = {$\rm Agr'$}
+   :\scaleA{Agr}!a \scaleA{\bf VP}
+   <vert>[linestyle=dashed,linewidth=1pt]{\bf V}
+   :{${\rm [_V\,e]}_i$}@A1 {T}.
+\!a = :{V$_i$}!b {Agr}
+   <vert>{[e]$_j$}@A2 .
+\!b = {\omit\mkovalnode}
+   :\scaleB{${\rm [_{Agr}\,Agr]}_j$}@A3 \scaleB{$\rm [_T\,T]$}.
+\psset{angleA=-90,angleB=-45,arrows=->}
+\nccurve[nodesepB=0]{A1}{K}
+\nccurve[ncurv=1.3]{A2}{A3}
+\endjtree
+|endcodelines
+
+\bigskip
+The difficulty in this problem is drawing the oval and making it
+a node, so that a node connection can point to the oval.
+|\mkovalnode|, which is evaluated at the apex of the |!b|
+subtree, does all the work.  |\rput(-1ex,-.8)| positions the
+center of the oval slightly to the left of the apex and 80\% of
+the way to the bottom of the two branches from the apex (since
+they have height 1).  The size of the oval is determined by
+\value{framesep} and box |\hbox{\hskip2em}|.  It required some
+trial and error to get the various settings in |\mkovalnode|
+adjusted to values which produced a suitable oval.
+
+\bigskip
+It is worth noting that this tree formatting can be adjusted to
+different sizes and fonts without difficulty. This makes it
+fairly easy to resize the tree to make the transition from a
+draft paper to a book manuscript, or to move the tree from the
+text to a footnote with a smaller font.
+
+\smallskip
+|\twelvepoint\jtree[xunit=4.8em,yunit=2em]|, without altering any
+other code, produces\medskip
+\hfill
+\twelvepoint
+\jtree[xunit=4.8em,yunit=2em]
+\def\mkovalnode{\rput(-1ex,-.8){\ovalnode[framesep=\psxunit]{K}
+   {\hskip2em}}}%
+\! = {$\rm Agr'$}
+   :\scaleA{Agr}!a \scaleA{\bf VP}
+   <vert>[linestyle=dashed,linewidth=1pt]{\bf V}
+   :{${\rm [_V\,e]}_i$}@A1 {T}.
+\!a = :{V$_i$}!b {Agr}
+   <vert>{[e]$_j$}@A2 .
+\!b = {\omit\mkovalnode}
+   :\scaleB{${\rm [_{Agr}\,Agr]}_j$}@A3 \scaleB{$\rm [_T\,T]$}.
+\psset{angleA=-90,angleB=-45,arrows=->}
+\nccurve[nodesepB=0]{A1}{K}
+\nccurve[ncurv=1.3]{A2}{A3}
+\endjtree
+
+\vskip6em
+|\tenpoint\jtree[xunit=2.6em,yunit=1em]|, again
+without altering any other code, produces:\bigskip
+
+\hfil \begingroup\tenpoint
+\jtree[xunit=2.6em,yunit=1em]
+\def\mkovalnode{\rput(-1ex,-.8){\ovalnode[framesep=\psxunit]{K}
+   {\hskip2em}}}%
+\! = {$\rm Agr'$}
+   :\scaleA{Agr}!a \scaleA{\bf VP}
+   <vert>[linestyle=dashed,linewidth=1pt]{\bf V}
+   :{${\rm [_V\,e]}_i$}@A1 {T}.
+\!a = :{V$_i$}!b {Agr}
+   <vert>{[e]$_j$}@A2 .
+\!b = {\omit\mkovalnode}
+   :\scaleB{${\rm [_{Agr}\,Agr]}_j$}@A3 \scaleB{$\rm [_T\,T]$}.
+\psset{angleA=-90,angleB=-45,arrows=->}
+\nccurve[nodesepB=0]{A1}{K}
+\nccurve[ncurv=1.3]{A2}{A3}
+\endjtree
+\vskip4em
+\endgroup
+
+The oval is somewhat too small, but that is easily fixed by
+increasing |framesep|.
+
+
+

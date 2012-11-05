@@ -1,0 +1,287 @@
+
+
+\section The colon construction in more detail
+
+There are some details of the syntax of the colon construction
+that have been left vague to this point.  The idea of the colon
+construction is simple enough; the colon is replaced by the
+branch |<colonA>| and then, after some material has been
+processed, |^<colonB>| is inserted.  But some precision is needed
+in specifying exactly where this later insertion takes place. For
+example, where is |^<colonB>| inserted in the expression below?
+
+\medskip
+\qquad |:{a} [labelgap=0] @AA !a @BB {c}|
+
+\medskip
+The rule is this. The template below is filled out a fully as
+possible, then |:| is replaced by |<colonA>| and |^<colonB>| is
+inserted after the target.
+
+\def\\#1{\psframebox[framesep=1pt]{\vrule
+   height8.4pt depth2.5pt width0pt #1}}%
+\setbox\tmpbox=\hbox{$|{«stuff\/»}|\quad
+|[|{\sl pars\/}|]|\quad @tag\quad
+\left(\matrix{|(|\;\ldots\;|)|\cr
+\noalign{\smallskip}\hbox{\sl !tag}\cr}\right)$}
+%\psframebox[framesep=1pt]{\vrule
+%   height8.4pt depth2.5pt width0pt ;}$}
+%
+\ex \quad $\sl
+|:|\quad |[|{\sl pars\/}|]|\quad
+\underbrace{\vrule width0pt depth1.5em\box\tmpbox}_{\textstyle\rm target}$
+\xe
+
+There are two restrictions.  First, the target cannot be
+completely empty.  |:<left>|\dots\ or |::|\dots, for example, is
+impossible.  Second, since parameters must be parameters of
+something, the |[«pars\/»]| term in the target can only be
+present if there is a |{«stuff\/»}| term.
+
+\medskip
+Consider the following examples:
+
+\pex
+\a
+\tac|
+\jtree
+\! = :[scaleby=2]{a} {b}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :[scaleby=2]{a} {b}.
+\endjtree
+\kern1em
+%
+\a
+\tac|
+\jtree
+\! = :{a} [scaleby=2]{b}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a} [scaleby=2]{b}.
+\endjtree
+\kern1em
+\xe
+
+You might expect the right branch to be scaled in (\lastx b). The
+reason that it is not is that |[scaleby=2]| goes into the target.
+It is parsed, according to (\blastx), as label parameters and
+|<colonB>| is inserted after the target.  As label parameters, it
+has no effect.  In Section~\gettag[ExamplesSec], the following
+idiom is frequently used to ensure that parameters are not
+interpreted as label parameters.
+
+\pex
+\tac|
+\jtree
+\! = :{a}() [scaleby=2]{b}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a}() [scaleby=2]{b}.
+\endjtree
+\xe
+
+The template (\bblastx) is filled out with target |{a}()|, so
+|<colonB>| is inserted before |[scaleby=2]|.
+
+\medskip
+The following contrast is interesting.  In (\nextx a), the target
+is |{a}(:{b}{c})|, so inline adjunction occurs on the left
+branch.  In (\nextx b), on the other hand, |!a| fills the
+adjunction slot in the template, so the target is |{a}!a| and the
+adjunction is on the right branch.
+
+\pex[interpartskip=1em]
+\a \tac|
+\jtree
+\! = :{a} (:{b}{c}) {d}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a}(:{b}{c}){d}.
+\endjtree\kern2em
+%
+\a \tac|
+\jtree
+\! = :{a}!a (:{b}{c}){d}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a}!a (:{b}{c}){d}.
+\endjtree
+\kern2em
+%
+\xe
+
+Note in (\lastx b) that the inline adjunction leaves the current
+point \Pcurr\ unchanged, so it is overwritten by the label which
+follows.
+
+\medskip
+A target can consist entirely of a @tag.
+
+\ex
+%
+\tac|
+\jtree
+\! = :@A @B .
+\nccurve[angleA=-60,
+   angleB=240]{->}{A}{B}
+\endjtree
+|endtac \hfill
+\jtree
+\! = :@A @B .
+\nccurve[angleA=-60,angleB=240]{->}{A}{B}
+\endjtree\kern3em
+\xe
+
+For the sake of completeness, a full account of the tree
+description grammar follows.
+
+\subsection The syntax of the tree description language
+
+\ftagpage[syntaxpage]%
+The well formed tree descriptions are specified by a context free
+grammar and some assumptions about how the parser operates.  We
+first consider the grammar.  The term {\sl string\/} which occurs
+in a number of expansions is a string of characters which can be
+put into a Tex control sequence.  Various conditions on the
+strings which can appear in different contexts are discussed
+below.
+
+\begingroup
+\def\ttbox{\ttverbatim \spaceskip=.5em \ttboxA}
+\def\ttboxA#1{\psframebox[framesep=1pt]{\vrule
+   height8.4pt depth2.5pt width0pt #1}\endgroup}
+\def\plus{+}
+\catcode`\+=\active
+\let+=\ttbox
+\def\TTbox{\setbox\tmpbox\hbox\bgroup}
+\def\endTTbox{\egroup \psframebox[framesep=1pt]{\vrule
+   height8.4pt depth2.5pt width0pt \box\tmpbox}}
+\leftskip=2em
+\edef\normalspaceskip{\noindent\spaceskip=\the\spaceskip}
+\spaceskip=1.6ex \jot=.7ex \openup\jot
+\catcode`_=\active
+\def\TO{ $\to$ }%
+\def\opt#1{\hbox{$(\,\sl #1\,)$}}%
+\def\optpars{\opt{+[\,pars\,+]}}%
+\def\dagnote{\hskip1ex$^{\dag}$}
+\sl
+
+\medskip
+tree\_description\TO
+   simple\_tree\_description \opt{tree\_description}
+
+{\sl simple\_tree\_description\/}\TO \TTbox|\!|\kern-1pt\endTTbox
+   {\sl string\/}\TTbox\kern.5em\endTTbox\kern1pt +=
+   \opt{tree\_body} +.
+
+tree\_body\TO tree\_item \opt{tree\_body}
+
+tree\_item\TO  sprout, target, vartri\_group,
+colon\_group, operator\kern1em
+
+sprout\TO +<{\sl string\/}+> \optpars
+
+target\TO $\sl \pmatrix{label\cr \hbox{\sl @tag}\cr}$
+$\sl \pmatrix{\hbox{\sl !tag}\cr \hbox{\sl inline\_adjunction}\cr}$
+
+\smallskip
+label\TO $\sl +{\,stuff\,+}$ \optpars\ \opt{@tag}
+
+inline\_adjunction\TO $\sl +(\,tree\_body\,+)$
+
+vartri\_group\TO +<{\sl string\/}+> \opt{parameters}
+   {\sl label}
+
+colon\_group\TO +: \optpars\ target \optpars
+
+@tag\TO +@{\sl string\/}+ \relax
+
+!tag\TO +!{\sl string\/}+ \relax
+
+operator\TO +^
+
+pars\TO {\rm\normalspaceskip valid PSTricks parameter settings},
+$\emptyset$
+
+\bigskip
+\endgroup
+
+The boxed characters above are symbols in the tree description
+language, not the grammar description language. ``Stuff'' is
+anything that will go in a Tex |\hbox|. Note that an empty
+parameter specification |[]| is permitted, and is actually useful
+at times.  This is an extension of the PSTricks parameter system,
+which disallows empty parameters.
+
+\medskip
+The string which follows |\!| must be such that {\sl !string\/}
+is the name of an adjunction point that has already been defined,
+either by |\jtree| or by a !tag in a previously parsed target.
+The |<«\sl string\/»>| which occurs in a sprout must be the name
+of a branch or triangle, and the |<«\sl string\/»>| which occurs
+in a vartri group must be the name of a vartriangle. A name with
+an empty string or a string containing spaces is permitted, but
+not advised. The string which occurs in a @tag must be a valid
+PSTricks node name, with the additional restriction that it
+cannot contain a space.  The string which occurs in a !tag,
+preceded by |!|, becomes the name of an adjunction point. It
+cannot contain a space. Note that !tags and @tags must be
+followed by a space. Otherwise, \jTree\ is tolerant of spaces or
+their absence between items.
+
+\medskip
+Parsing is unique under the assumption that targets and labels
+are always maximized in left to right parsing and are never
+empty. Labels are never empty in any event since they contain |{|
+and |}|.
+
+
+
+\endinput
+
+
+%
+%\a \tac|
+%\jtree
+%\! = :@A !a @B !b .
+%\nccurve[angleA=90,angleB=90,
+%   ncurv=1]{->}{B}{A}
+%\!a = {a}(@AA ).
+%\!b = {b}@BB .
+%\ncline[linestyle=dashed,
+%   nodesep=0]{->}{AA}{BB}
+%\endjtree
+%|endtac \hskip-2em\hfill
+%\jtree[treevshift=-1em]
+%\! = :@A !a @B !b .
+%\nccurve[angleA=90,angleB=90,
+%   ncurv=1]{->}{B}{A}
+%\!a = {a}(@AA ).
+%\!b = {b}@BB .
+%\ncline[linestyle=dashed,nodesep=0]{->}{AA}{BB}
+%\endjtree\kern2em
+%
+%\a \tac|
+%\jtree
+%\! = :({a}<vert>{b}) {c}.
+%\endjtree
+%|endtac \hfill
+%\jtree
+%\! = :({a}<vert>{b}) {c}.
+%\endjtree
+%\kern2em
+%
+%\kern2em
+%\xe
+
+Note: It is likely that there are some errors or inconsistencies
+in the description of the grammar and/or its implementation. If
+you find any, I would greatly appreciate it if you let me know at
+{\sl j.frampton@neu.edu}.
+

@@ -1,0 +1,111 @@
+
+\vfil\break
+
+\example
+
+\ftag{\the\Exno}[Zubi]
+\hfil
+%% ACTIVE CODE
+\jtree[xunit=2.5em,yunit=2em]
+\def\ovalstuff{\vtop{\hbox{arg$^3$}%
+   \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
+\! = {V}@B1
+   <left>{face}({arg$^1$}@B2 )
+      ^<right>{$\rm [_V\,$leggere]}({arg$^2$,})
+      ^<right>[scaleby=3 1,branch=\blank]
+         {}{\ovalnode[framesep=1ex,boxsep=false]{K}{\ovalstuff}}.
+\psset{arrows=->,nodesepA=0}
+\nccurve[angleA=150,angleB=180,ncurv=1.2]{B2}{B1}
+\nccurve[angleA=90,angleB=0,ncurv=.8]{K}{B1}
+\endjtree
+%% END ACTIVE CODE
+\kern6em
+
+\vskip2.5em
+(Zubizaretta, Maria Luisa. 1985.
+Morphology and Morphosyntax: Romance Causatives,
+{\sl Linguistic Inquiry\/} 16.2, p.~276.)
+
+\medskip
+\codelines
+|\jtree[xunit=2.5em,yunit=2em]
+\def\ovalstuff{\vtop{\hbox{arg$^3$}%
+   \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
+\! = {V}@B1
+   <left>{face}({arg$^1$}@B2 )
+   ^<right>{$\rm [_V\,$leggere]}({arg$^2$,})
+   ^<right>[scaleby=3 1,branch=\blank]
+      {}{\ovalnode[framesep=1ex,boxsep=false]{K}{\ovalstuff}}.
+\psset{arrows=->,nodesepA=0}
+\nccurve[angleA=150,angleB=180,ncurv=1.2]{B2}{B1}
+\nccurve[angleA=90,angleB=0,ncurv=.8]{K}{B1}
+\endjtree
+|endcodelines
+\medskip
+In order to see how this tree is put together, consider first:
+\medskip
+\hfil\jtree[xunit=2.5em,yunit=2em]
+\! = {V}
+   <left>{face}({arg$^1$})
+   ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
+   ^<right>[scaleby=3 1]
+      {X}{arg$^3$}.
+\endjtree
+\bigskip
+\codelines
+|\jtree[xunit=2.5em,yunit=2em]
+\! = {V}
+   <left>{face}({arg$^1$})
+   ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
+   ^<right>[scaleby=3 1]{X}
+   {arg$^3$}.
+\endjtree
+|endcodelines
+\medskip
+Then:
+\medskip
+\hfil
+\jtree[xunit=2.5em,yunit=2em]
+\def\ovalstuff{\vtop{\hbox{arg$^3$}%
+   \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
+\! = {V}
+   <left>{face}({arg$^1$})
+   ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
+   ^<right>[scaleby=3 1,branch=\blank]{}
+      {\ovalstuff}.
+\endjtree
+
+\medskip
+\codelines
+|\jtree[xunit=2.5em,yunit=2em]
+\def\ovalstuff{\vtop{\hbox{arg$^3$}%
+   \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
+\! = {V}
+   <left>{face}({arg$^1$})
+   ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
+   ^<right>[scaleby=3 1,branch=\blank]{}
+      {\ovalstuff}.
+\endjtree
+|endcodelines
+
+\medskip
+Finally, the oval node is built around |\ovalstuff| using
+|\ovalnode|.  The syntax is:
+\smallskip \hfil
+|\ovalnode[«pars\/»]{«name\/»}{«stuff\/»}|
+\smallskip
+with the parameters optional.  The box is enlarged on all sides
+by \value{framesep} and an oval drawn through the four corners of
+the resulting box.  If \value{boxsep} is {\sl false},
+the node construction is invisible to Tex, otherwise |\ovalnode|
+creates a Tex box the size of the oval.
+
+\medskip
+The parameter settings in the use of |\ovalnode| in the example
+are crucial.  If \value{boxsep} were not {\sl false}, the
+alignment would be disrupted.
+%
+$\vert \sl framesep\vert=\rm 1\,ex$ means that the oval is drawn
+around the box with a separation of $\rm 1\,ex$, leaving a
+visually important gap between the oval and the box it surrounds.
+

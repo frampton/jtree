@@ -1,0 +1,48 @@
+
+\example
+
+
+
+\hfil
+%% ACTIVE CODE
+\jtree[xunit=3em,yunit=1.4em]
+\def\what{[which claim]$_k$}%
+\! = {CP$_1$}
+   <left>[scaleby=1.7]{CP$_2$}!a ^<right>[scaleby=2.5]{C$'$}
+   :{$\rm was+Q$} {TP}
+   <vartri>[scaleby=1.6,triratio=.4]
+      {he$_i$ willing to discuss \what}.
+\!a = :{\what} {CP$_2$}
+   <vartri>[scaleby=1.6,triratio=.6]
+      {that John$_i$ made \what}.
+\endjtree
+%% END ACTIVE CODE
+
+\bigskip
+(Nunes, Jairo. 2004.  {\sl Linearization of Chains
+and Sideward Movement}, p.~149.)
+\medskip
+
+\codelines
+|\jtree[xunit=3em,yunit=1.4em]
+\def\what{[which claim]$_k$}%
+\! = {CP$_1$}
+   :[scaleby=1.7]{CP$_2$}!a [scaleby=2.5]{C$'$}||1
+   :{$\rm was+Q$} {TP}
+   <vartri>[scaleby=1.6,triratio=.4]||2
+      {he$_i$ willing to discuss \what}.
+\!a = :{\what} {CP$_2$}
+   <vartri>[scaleby=1.6,triratio=.6]||2
+      {that John$_i$ made \what}.
+\endjtree
+|endcodelines
+
+\medskip
+1.\ The two legs are not scaled equally because the structure
+is not (linguistically) symmetrical.  Keeping the left branch
+shorter helps visually to identify the high C-specifier.
+
+\medskip
+2.\ The settings of |triratio| allow for a much more compact
+display.
+

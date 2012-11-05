@@ -1,0 +1,45 @@
+
+\example
+\ftag{\the\Exno}[Dowty]
+
+\hfil
+\jtree[xunit=4em,yunit=2em,everylabel=\strut\it]
+\! = {John walks from Boston to Detroit\rm, t, 4}
+   :{John\rm, T} {walk from Boston
+                     to Detroit\rm, IV,7}[labeloffset=1.5em]
+   :\jtlong{walk from Boston\rm, IV,7}!a
+      {to Detroit\rm, IV/IV, 5}
+   :[scaleby=.8]{to\rm, IAV/T}() [scaleby=.8]{Detroit\rm, T}.
+\!a = :{walk\rm, IV} {from Boston\rm, IV/IV, 5}
+   :{from\rm, IAV/T} {Boston\rm, T}.
+\endjtree
+\vskip1.5em
+
+(Dowty, David.  1979.  {\sl Word Meaning and Montague Grammar},
+p.~215.)
+
+\medskip
+\codelines
+|\jtree[xunit=4em,yunit=2em,everylabel=\strut\it]
+\! = {John walks from Boston to Detroit\rm, t, 4}
+   :{John\rm, T} {walk from Boston
+                     to Detroit\rm, IV,7}[labeloffset=1.5em]||1
+   :\jtlong{walk from Boston\rm, IV,7}!a
+      {to Detroit\rm, IV/IV, 5}
+   :[scaleby=.8]{to\rm, IAV/T}() [scaleby=.8]{Detroit\rm, T}.||2
+\!a = :{walk\rm, IV} {from Boston\rm, IV/IV, 5}
+   :{from\rm, IAV/T} {Boston\rm, T}.
+\endjtree
+|endcodelines
+
+\vfil
+\bigskip
+1. The label is offset to improve the spacing.  The
+label is off center, but not so much as to be a
+distraction.
+\medskip
+
+2. The null inline adjunction |()| keeps
+|[scaleby=.8]| from being interpreted as a
+parameter associated with the preceding label.
+

@@ -1,0 +1,178 @@
+
+\section Parameters
+
+Many \jTree\ items take which control various aspects of
+typesetting.  \pstjtree\/ contains the definitions:
+\cframe|\defbranch<left>(1)(1)
+\defbranch<right>(1)(-1)
+|endcframe
+(Quotations from {\sl pst-jtree\/} will be displayed in a box,
+as above.)
+This defines |<left>| to be a branch with height 1 psyunit and
+slope is 1, and |<right>| to be a branch with height 1 psyunit
+and slope $-1$.  The specification of branches will be discussed
+in more detail in Section~4, but for now it is sufficient to know
+that |<left>| and |<right>| are drawn as shown below:
+
+\ex\quad
+\psset{unit=2cm}
+\pspicture[shift=-1.5](0,-.55)(1.3,1.25)%\psgrid
+\psline[style=dotted](0,0)(1,0)(1,1)
+\psline(1,1)(0,0)
+\rput(.5,-.8em){\tenpoint 1 psxunit}
+\rput(1,.5){\rput{90}(.8em,0){\tenpoint 1 psyunit}}
+\rput(.5,-2.2em){|<left>|}
+\endpspicture
+\hskip4em
+\pspicture[shift=-1.5](0,-.55)(1.3,1.25)%\psgrid
+\psline[style=dotted](0,1)(1,1)(1,0)
+\psline(0,1)(1,0)
+\rput(.5,1){\rput(0,.8em){\tenpoint 1 psxunit}}
+\rput(1,.5){\rput{90}(.8em,0){\tenpoint 1 psyunit}}
+\rput(.5,-2.2em){|<right>|}
+\endpspicture
+\xe
+
+The fact that the dimensions of branches can be specified in
+psunits, with the xunits independent of the yunits, coupled with
+the fact that branches are rendered in physical (Tex) units,
+produces a great deal of flexibility.  The three trees below were
+produced with exactly the same \jTree\ code, but with
+|\psset{unit=1em}|, |psset{unit=2em}|, and
+|psset{xunit=2em,yunit=1em}|.
+
+\ex
+\psset{unit=1em}
+a.\quad \jtree
+\! = {VP} <left>{Bill} ^<right>{V$'$}
+<left>{saw} ^<right>{Mary}.
+\endjtree
+\psset{unit=2em}
+\hfil b. \jtree
+\! = {VP} <left>{Bill} ^<right>{V$'$}
+<left>{saw} ^<right>{Mary}.
+\endjtree
+\psset{xunit=2em,yunit=1em}
+\hfil c. \jtree
+\! = {VP} <left>{Bill} ^<right>{V$'$}
+<left>{saw} ^<right>{Mary}.
+\endjtree
+\xe
+
+|\jtree| accepts parameters directly, so you can say:
+
+\exh \tac|
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>{V$'$}
+   <left>{saw} ^<right>{Mary}.
+\endjtree
+|endtac
+\hfil
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>{V$'$}
+   <left>{saw} ^<right>{Mary}.
+\endjtree
+\xe
+
+Individual branches also take parameters, so you can say:
+
+\exh \tac|
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>[xunit=3em]{V$'$}
+   <left>{saw} ^<right>{Mary}.
+\endjtree
+|endtac \hfill
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>[xunit=3em]{V$'$}
+   <left>{saw} ^<right>{Mary}.
+\endjtree\kern2em
+\xe
+
+The parameters |unit|, |xunit|, and |yunit| are defined by
+PSTricks.  \jTree\ defines some of its own parameters.  A
+parameter |scaleby| \index*{scaleby}is provided.
+|\psset{scaleby=«x\/» «y»}| causes branches to be drawn
+as if
+\medskip\hfil
+|\psset{xunit=«x\/»\psxunit,yunit=«y\/»\psyunit}|
+\medskip
+had been executed (but the psunits are not actually changed).
+
+\medskip
+|\psset{scaleby=«x\/»}| is equivalent to
+|\psset{scaleby=«x\/» «x\/»}|.
+\medskip
+The following are then possible:
+
+\exh
+\tac|
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   :[scaleby=2]{Bill} {V$'$}
+   :{saw} {Mary}.
+\endjtree
+|endtac \hfill
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   :[scaleby=2]{Bill} {V$'$}
+   :{saw} {Mary}.
+\endjtree
+\kern1ex
+\bigskip
+\tac|
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>[scaleby=2 1]{V$'$}
+   :{saw} {Mary}.
+\endjtree
+|endtac \hfill
+\jtree[xunit=1.5em,yunit=1em]
+\! = {VP}
+   <left>{Bill} ^<right>[scaleby=2 1]{V$'$}
+   :{saw} {Mary}.
+\endjtree
+\kern1ex
+\xe
+
+\jTree\ defines a dozen or so parameters in all.  They can be
+set by |\psset|, but more importantly, can be attached to
+particular instances of |\jtree| and the branches and labels that
+appear inside |\jtree| environments.
+
+\medskip
+Modifying branches by standard PSTricks parameters is often
+useful.\par\nobreak
+\exh
+\tac|
+\jtree[xunit=3em,yunit=3em]
+\! = <left>[scaleby=2 1,
+            arrows=->]{a}
+   ^<left>[linewidth=2pt]{b}
+   ^<right>[scaleby=1 2,
+      linestyle=dashed]{c}
+   ^<right>[scaleby=1.5 1,
+      linestyle=dotted,linewidth=1pt]{d}
+   ^<right>[scaleby=2 .5,doubleline=true]{e}.
+\endjtree
+|endtac \kern-4em\hfill
+\jtree[xunit=3em,yunit=3em]
+\! = <left>[scaleby=2 1,
+            arrows=->]{a}
+   ^<left>[linewidth=2pt]{b}
+   ^<right>[scaleby=1 2,
+      linestyle=dashed]{c}
+   ^<right>[scaleby=1.5 1,
+      linestyle=dotted,linewidth=1pt]{d}
+   ^<right>[scaleby=2 .5,doubleline=true]{e}.
+\endjtree
+\kern1em
+\xe
+
+The PSTricks documentation can be consulted for many other line
+and arrow parameters which offer further control over how
+branches are drawn.
+

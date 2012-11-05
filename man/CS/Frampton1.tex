@@ -1,0 +1,183 @@
+
+\example
+
+\ftag{\the\Exno}[Frampton1]
+%% ACTIVE CODE
+\def\\#1\par{\bigskip #1\par\nobreak\vskip1.5em \hfil}
+\def\Vj{V$\mskip-5mu _j$}
+\psset{xunit=3.4em,yunit=1.5em,treevshift=1.3em}
+
+\leavevmode\vskip-2em
+\hfil Theories of verb raising
+\medskip
+\\Trace theory
+
+\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr} !a
+   :{$t_i$}
+   :{$t_j$}() \etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}
+   :{Tns} {\Vj}.
+\endjtree
+\\Copy theory
+
+\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr}!a [scaleby=1.45]
+   :{Tns$_i$}!b
+   :{\Vj}() \etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}
+   :{Tns} {\Vj}.
+\!b = :{Tns} {\Vj}.
+\endjtree
+\\Shared structure
+
+\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr}@A1 !a
+   :{Tns}@A2 !b
+   :{V}@A3 \etc.
+\psset{scaleby=.3 .4,angleA=-35,angleB=125,ncurv=1.5,nodesep=0}
+\!a = <left>{Agr}.
+\!b = <left>{Tns}.
+\nccurve{->}{A1:b}{A2:t}
+\nccurve{->}{A2:b}{A3:t}
+\endjtree
+%% END ACTIVE CODE
+\vskip1.5em
+
+\codelines
+|\def\Vj{V$\mskip-5mu _j$}
+\psset{xunit=3.4em,yunit=1.5em,treevshift=1.3em}
+|endcodelines
+\medskip
+{\it Trace theory}
+\smallskip
+\codelines
+|\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.||1
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr} !a
+   :{$t_i$}
+   :{$t_j$}() \etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}
+   :{Tns} {\Vj}.
+\endjtree
+|endcodelines
+\medskip
+1.\ See page \gettag[etcpage] for a discussion of |\etc|.
+\medskip
+{\it Copy theory}\par\nobreak
+\smallskip
+
+\codelines
+|\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr}!a [scaleby=1.45]
+   :{Tns$_i$}!b
+   :{\Vj}() \etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}
+   :{Tns} {\Vj}.
+\!b = :{Tns} {\Vj}.
+\endjtree
+|endcodelines
+
+\medskip
+{\it Shared structure}
+\smallskip
+
+\codelines
+|\jtree
+\! = :{Agr} :{Tns} :{V}() \etc.
+\endjtree
+\quad $\longrightarrow$\quad
+\jtree
+\! = :{Agr}@A1 !a
+   :{Tns}@A2 !b
+   :{V}@A3 \etc.
+\psset{scaleby=.3 .4,angleA=-35,angleB=125,ncurv=1.5,nodesep=0}
+\!a = <left>{Agr}.
+\!b = <left>{Tns}.
+\nccurve{->}{A1:b}{A2:t}
+\nccurve{->}{A2:b}{A3:t}
+\endjtree
+|endcodelines
+
+\endinput
+\code|
+\def\\#1\par{\bigskip #1\par\nobreak\vskip1.5em \hfil}
+\def\Vj{V$\mskip-5mu _j$}
+\psset{arrows=-,xunit=3.4em,yunit=1.5em,treevshift=1.3em}|
+\morecode|
+\hfil Theories of verb raising
+\medskip
+\\Trace theory
+
+\jtree
+\! = :{Agr} :{Tns} <left>{V} ^<right>\etc.
+\endjtree|
+\morecode|
+\quad $\longrightarrow$\quad|
+\vfil\break
+\morecode|
+\jtree
+\! = :{Agr} !a :{$t_i$} <left>{$t_j$} ^<right>\etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}:{Tns} {\Vj}.
+\endjtree|
+\morecode|
+\\Copy theory
+
+\jtree
+\! = :{Agr} :{Tns} <left>{V} ^<right>\etc.
+\endjtree|
+\morecode|
+\quad $\longrightarrow$\quad|
+\morecode|
+\jtree
+\! = :{Agr}!a [scaleby=1.45]
+   :{Tns$_i$}!b <left>{\Vj} ^<right>\etc.
+\psset{scaleby=.3 .4}
+\!a = :{Agr} {Tns$_i$}:{Tns} {\Vj}.
+\!b = :{Tns} {\Vj}.
+\endjtree|
+\morecode|
+\\Shared structure
+
+\jtree
+\! = :{Agr} :{Tns} <left>{V} ^<right>\etc.
+\endjtree|
+\morecode|
+\quad $\longrightarrow$\quad|
+\morecode|
+\jtree
+\! = :{Agr}@A1 !a :{Tns}@A2 !b :{V}@A3 \etc.
+\psset{scaleby=.3 .4,angleA=-35,angleB=125,ncurv=1.5,nodesep=0}
+\!a = <left>{Agr}.
+\!b = <left>{Tns}.
+\nccurve{->}{A1:b}{A2:t}
+\nccurve{->}{A2:b}{A3:t}
+\endjtree|
+
+\endgroup
+
+

@@ -1,0 +1,81 @@
+
+
+\newbox\indexbox
+\newbox\leftcol
+\newbox\rightcol
+
+\splittopskip=0pt
+\newdimen\dimtempa
+\dimtempa=\vsize  \advance\dimtempa by -10pt
+\dimpubb=4.3in
+
+\def\firstpage{\setbox\leftcol=\vsplit\indexbox to \dimpubb
+   \setbox\rightcol=\vsplit\indexbox to \dimpubb
+   \line{\vtop{\vskip\splittopskip\unvbox\leftcol}\hfil
+      \vtop{\unvbox\rightcol}}%
+   \vfil\break}
+
+\def\fullpage{\setbox\leftcol=\vsplit\indexbox to \dimtempa
+   \setbox\rightcol=\vsplit\indexbox to \dimtempa
+   \line{\vtop{\vskip\splittopskip\unvbox\leftcol}\hfil
+      \vtop{\unvbox\rightcol}}\vfil\break}
+
+\def\lastpage{\setbox\leftcol=\vsplit\indexbox to .52\ht\indexbox
+   \setbox\rightcol=\vsplit\indexbox to \ht\indexbox
+   \line{\vtop{\vskip\splittopskip\unvbox\leftcol}\hfil
+      \vtop{\unvbox\rightcol}}}
+
+\def\beginindexbox{%
+   \setbox\indexbox=\vbox\bgroup\parskip=0pt plus .4pt
+      \everypar={\hangindent=1em \hangafter=1}%
+      \linepenalty=200 \hsize=.45\hsize \rightskip=0pt plus 1em
+      \parindent=0pt
+      \obeylines}
+\let\endindexbox\egroup
+
+\catcode`@=11
+\def\printindex{\loop
+   \ifdim\ht\indexbox>2\dimtempa \fullpage \repeat \lastpage}
+
+\def\readandapply#1#2{\ifeof#1\let\next\relax\else
+   \def\next{\readandapply#1#2}\read#1 to\thisline
+   \expandafter#2\thisline\@nil \fi \next}
+\def\inputandapply#1#2#3{\immediate\openin#1=#2
+   \readandapply#1#3%
+   \closein#1}
+
+\def\docontseq{\@ifnextchar\contseq\@include\@discard}
+\def\dopars{\@ifnextchar\parameter\@include\@discard}
+\def\@include#1\@nil{#1}
+\def\@discard#1\@nil{}
+
+\def\contseq#1{{\tt \char"5C#1}}
+\def\parameter#1{{\tt #1}}
+
+\catcode`@=12
+
+\vfil\break
+\newread\indexin
+
+\centerline{\titlefont{sec} Index of control sequences,
+parameters, and special characters}
+\medskip
+\beginindexbox
+Control sequences\smallskip
+\inputandapply\indexin{!index}\docontseq
+\medskip
+Parameters\smallskip
+\inputandapply\indexin{!index}\dopars
+\endindexbox
+
+\printindex
+
+\bigskip
+The characters |=|, |<|, |>|, |^|, |[|, |]|, |{|, |}|, |(|, |)|,
+|:|, |@|, and |!| have special meaning in parsing tree
+descriptions.  See the discussion of the syntax of tree
+description on page \gettag[syntaxpage].
+
+
+\bye
+

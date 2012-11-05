@@ -1,0 +1,186 @@
+
+\section Triangles and vartriangles
+
+Triangles can be defined. The definition syntax is:
+
+\medskip\index*{+deftriangle}
+\qquad|\deftriangle<«name\/»>(«height\/»)(«%
+   \sl slopeA\/»)(«slopeB\/»)|
+
+\medskip
+One triangle comes predefined.
+
+\cframe
+|\deftriangle<tri>(1)(1)(-1)
+|endcframe
+
+|<tri>| can be used like any other branch.
+
+\exh \tac|
+\jtree
+\! = :{a} <tri>{b} <vert>{c}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} <tri>{b} <vert>{c}.
+\endjtree
+\xe
+
+\pstjtree\/ defines the parameter |triratio|\index*{triratio (for
+triangles)},
+which can be used to adjust where the new current point is
+positioned along the bottom edge of the triangle. If $\sl width$
+is the width of the triangle, the new current point is at
+distance $\sl x=triratio\times width$ to the right of the left
+corner of the triangle. The display above is set with |triratio=.5|,
+the default, which puts the current point in the center of the
+bottom edge.
+
+\exh \tac|
+\jtree
+\! = :{a} <tri>[triratio=.8]{b} <vert>{c}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} <tri>[triratio=.8]{b} <vert>{c}.
+\endjtree
+\xe
+
+When a triangle is evaluated, its width is computed and a macro
+|\triwd| \index*{+triwd}is defined which evaluates to this width.  {\sl
+pst-jtree\/} contains:\par\nobreak
+
+\medskip
+\index*{+triline}%
+\cframe|\def\triline#1{\hbox to\triwd{#1}}|endcframe
+
+A construction like the following is sometimes
+useful:\par\nobreak
+\exh \tac|
+\jtree
+\! = :{a} <tri>{\triline{e\hfil f}}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} <tri>{\triline{e\hfil f}}.
+\endjtree
+\xe
+
+Remember as well that branches can be overwritten.
+Something along the lines of the following is sometimes
+useful.\par\nobreak
+
+\exh \tac|
+\jtree
+\! = :{a} <tri> ^:{e} {f} <vert>{c}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} <tri> ^:{e} {f} <vert>{c}.
+\endjtree
+\xe
+
+\subsection Vartriangles
+
+Vartriangles adjust their width to fit the
+label that they point to. A vartriangle is specified by giving a
+height. The definition syntax is:
+
+\medskip
+\qquad|\defvartriangle<«name\/»>(«height\/»)|
+\medskip\index*{+defvartriangle}
+
+\jTree\ predefines
+one vartriangle.
+
+\medskip
+\quad |\defvartriangle<vartri>(1)|
+
+\exh \tac|
+\jtree
+\! = :{a} <vartri>{whatever width}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} <vartri>{whatever width}.
+\endjtree
+\xe
+
+The parameter |triratio|\index*{triratio (for vartriangles)} has a
+different meaning for vartriangles than it has for ordinary
+triangles.  It determines where the center of the bottom edge of
+the vartriangle is with respect to the top vertex. The center of
+the bottom edge is a distance $\sl triratio\times width$ to the
+right of its left edge. It is easier to illustrate (done below)
+than to give the formula.
+
+\exh
+\tac|
+\jtree
+\! = :{a} <vartri>
+   [triratio=.3]{whatever width}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a} <vartri>
+   [triratio=.3]{whatever width}.
+\endjtree
+\kern1ex
+
+\bigskip
+
+\tac|
+\jtree
+\! = :{a}
+   <vartri>[triratio=0]{whatever width}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a}
+   <vartri>[triratio=0]{whatever width}.
+\endjtree
+\kern1ex
+
+\bigskip
+
+\tac|
+\jtree
+\! = :{a}
+   <vartri>[triratio=-.1,scaleby=2]
+      {whatever width}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{a}
+   <vartri>[triratio=-.1,scaleby=2]
+      {whatever width}.
+\endjtree
+\kern1ex
+\xe
+
+Generally, there is no branching from the label following a
+vartriangle, so no provision is made for adjusting the
+termination point of the label that follows vartriangles.  It is
+at the center of the base.\par\nobreak
+
+\exh \tac|
+\jtree
+\! = :{a} <vartri>
+      [triratio=.1]{whatever width}
+   <vert>{b}.
+\endjtree
+|endtac \quad \hfil
+\jtree
+\! = :{a} <vartri>
+      [triratio=.1]{whatever width}
+   <vert>{b}.
+\endjtree
+\xe
+
+Another branch can follow a branch, but since the width of a
+vartriangle depends on the width of the label which follows it, a
+vartriangle (with optional parameters) must be followed
+immediately by a label.  An error results if it is not.
+
+
+

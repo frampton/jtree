@@ -1,0 +1,126 @@
+\def\jTree{\j\kern-1.8pt Tree}
+\def\Pcurr{$\cal P$}
+\def\Pprev{$\cal Q$}
+
+\lingmkletter @
+
+\def\cd{\ling@getpars\cd@a}
+\def\cd@a{\vbox\bgroup\bigskip
+   \ifx\pst@pars\@empty \else \hsize=\pst@pars \fi
+   \let\xe=\dc
+   \hrule\par\nobreak\bigskip}
+\def\dc{\par\nobreak\bigskip\hrule\bigskip\egroup}
+\let\exh=\cd
+
+\def\wiggle{\ling@getpars\wiggle@a}
+\def\wiggle@a{\ifx\pst@pars\@empty \def\@temp{2em}\else
+      \let\@temp\pst@pars \fi
+   \kern-\@temp\penalty0\kern\@temp}
+
+
+\newbox\tmpbox
+
+\font\titlefont=cmr10 scaled\magstep2
+\font\titlefontit=cmtt10 scaled\magstep2
+
+\parindent=0pt
+\rightskip=0pt plus 2em
+%\everypage={\rput(3in,\vsize){8}}
+
+\def\plainoutput{\shipout\vbox{\pstcommands\pagebody}
+   \advancepageno
+   \ifnum\outputpenalty>-20000 \else\dosupereject\fi}
+\def\pstcommands{\hbox to0pt{\the\psteverypage}}
+\newtoks\psteverypage   % pst commands only
+\psteverypage={{\advance\vsize by3em\rput(3in,-\vsize)
+   {\ifnum\pageno>1 \tenrm\the\pageno\fi}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\writecontents#1#2#3{\write\contentsfile{\noexpand#3{#1} {#2}
+         \noexpand\writefill \the\pageno \noexpand\par}}
+\def\writefill{\leaders\hbox to 2ex{\hfil.\hfil}\hfill\enspace}
+
+\outer\def\section #1\par{%
+   \global\advance\secno by 1  \global\subsecno=0
+      \global\subsubsecno=0
+   \vskip0pt plus.4\vsize\penalty-20
+   \vskip0pt plus-.4\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{sec}
+       \the\secno.\enskip #1\par}\nobreak
+   \ifcontents \edef\temp{{\the\secno}}%
+      \expandafter\writecontents\temp{#1}\sec\fi \nobreak
+   \medskip\nobreak\noindent}
+\outer\def\subsection #1 \par{%
+   \global\advance \subsecno by 1 \global\subsubsecno=0
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{sub}
+      \the\secno .\the\subsecno. \enskip #1}\par\nobreak
+   \ifcontents \edef\temp{{\the\secno.\the\subsecno}}%
+      \expandafter\writecontents\temp{#1}\subsec\fi \nobreak
+   \medskip\nobreak\noindent}
+
+
+\newcount\Exno
+
+\outer\def\appendix#1\par{\vskip0pt plus.4\vsize\penalty-20
+   \vskip0pt plus-.4\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{sec} Appendix #1\par}\nobreak
+   \medskip\nobreak\noindent}
+
+
+
+
+\def\example{\vskip.5\vsize \penalty-100 \vskip-.5\vsize
+   \vskip1.5em
+   \global\advance\Exno by 1
+   \noindent  {\titlefont{sub}Example \the\Exno}
+   \bigskip }
+\def\runonexample{\vskip1.5em
+   \global\advance\Exno by 1
+   \noindent  Example \the\Exno
+   \bigskip }
+
+\everymath={}
+
+\def\another{\vskip-1.7em}
+
+\newif\ifindex
+\indexfalse
+\newwrite\indexfile
+\def\mkindex{\indextrue  \immediate\openout\indexfile=!index}
+\def\index{\@ifnextchar*\@indexA\@indexB}
+\def\@indexA#1#2{\ifindex \write\indexfile{#2, \the\pageno}\fi}
+\def\@indexB#1{#1\ifindex \write\indexfile{#1, \the\pageno}\fi}
+
+
+\newif\ifcontents
+\contentsfalse
+\newwrite\contentsfile
+\def\mkcontents{\contentstrue
+   \immediate\openout\contentsfile=!contents}
+
+\lingrestore @
+
+\def\pstnode{{\sl pst-node}}
+\def\pstjtree{{\sl pst-jtree}}
+
+\def\NormalLabelStrut{%
+   \psset{labelstrut={\the\ht\strutbox} {\the\dp\strutbox}}}
+\NormalLabelStrut
+\psset{labelgap=.35ex,nodesep=.6ex,everylabel=}
+
+\def\ftagEx{\ftag{\the\Exno}}
+\def\See{\gettag[ExamplesSec].\gettag}
+\newpsstyle{dotted}{linestyle=dotted,linewidth=1pt,dotsep=2.2pt}
+
+
+\def\value#1{\hbox{$\vert|#1|\vert$}}
+\def\exsec{Section~\gettag[ExamplesSec]}
+
+\def\vtopmarkup{%
+   \vtop\bgroup\advance\hsize by -\leftskip \leftskip=0pt
+   \markupmode \parindent=1.2em
+   \openup1ex \obeylines}
+\def\endvtopmarkup{\egroup}
+

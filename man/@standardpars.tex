@@ -1,0 +1,101 @@
+
+\lingmkletter @
+
+%%%%%%%%%%%  parameters
+
+\def\@lingvalue#1#2#3\@nil{\ifx#2!%
+   \pssetlength\pst@dimb{#3}
+   \expandafter\pst@dima\csname ling@#1\endcsname
+   \advance\pst@dima by \pst@dimb
+   \else
+      \pssetlength\pst@dima{#2#3}\fi
+}
+% examples
+\pst@addfams{ling}
+\define@key[lingset]{ling}{exhsize}%
+   {\edef\ASR@exhsize{#1}}
+\def\newlingkey{\@ifnextchar!\newlingkey@a\newlingkey@b}
+\def\newlingkey@a#1#2{\define@key[lingset]{ling}{#2}%
+   {\@lingvalue{#2}##1\@nil
+   \@enamedef{ling@#2}{\the\pst@dima}}}
+\def\newlingkey@b#1{\define@key[lingset]{ling}{#1}%
+   {\@enamedef{ling@#1}{##1}}}
+\newlingkey!{numoffset}
+\newlingkey!{letteroffset}
+\newlingkey!{exoffset}
+\newlingkey!{interpartskip}
+\newlingkey!{headlinelevel}
+\setkeys[lingset]{ling}{numoffset=0pt,letteroffset=1em,exoffset=1em,
+   interpartskip=.5em,headlinelevel=.5truein}
+\newlingkey{exhsize}
+\setkeys[lingset]{ling}{exhsize=\the\hsize}
+\define@cmdkeys[lingset]{ling}[ling@]%
+   {beforeexskip,afterexskip,pextextadjust}
+\setkeys[lingset]{ling}{%
+   beforeexskip=1.2em plus .1em,
+   afterexskip=1.2em plus .1em,
+   pextextadjust=1.7em}
+\define@boolkey[lingset]{ling}[ling@]{pexnumbers}{}
+\define@boolkey[lingset]{ling}[ling@]{printnotes}{}
+\define@boolkey[lingset]{ling}[ling@]{printrefs}{}
+\newwrite\notesfile
+\define@boolkey[lingset]{ling}[ling@]{gathernotes}%
+   {\ifling@gathernotes \immediate\openout\notesfile=!notes.tex
+      \else \immediate\closeout\notesfile \fi}
+\define@boolkey[lingset]{ling}[ling@]{gatherftags}{}
+\define@boolkey[lingset]{ling}[ling@]{gathercitations}{}
+\define@boolkey[lingset]{ling}[ling@]{extextadjust}{}
+\setkeys[lingset]{ling}{pexnumbers=false,printnotes=true,printrefs=false,
+   gathernotes=false,gatherftags=false,gathercitations=false}
+\define@cmdkeys[lingset]{ling}[ling@]%
+   {exsplitvfil,exbeginsplitpenalty,exparpenalty,
+   exgoodparpenalty,smalltextnormalBLS,smalltextdoubleBLS,
+   exsmallBLS,normaltextnormalBLS,normaltextdoubleBLS,
+   exnormalBLS
+}
+\setkeys[lingset]{ling}{exsplitvfil=0pt plus .3\vsize,
+   exbeginsplitpenalty=150,
+   exparpenalty=100,
+   exgoodparpenalty=-200,
+   smalltextnormalBLS=12pt,
+   smalltextdoubleBLS=26pt plus 2pt minus 2pt,
+   exsmallBLS=12pt plus 1pt minus 1pt,
+   normaltextnormalBLS=14pt,
+   normaltextdoubleBLS=30pt plus 3pt minus 3pt,
+   exnormalBLS=14pt plus 1pt minus 1pt
+}
+\define@boolkey[lingset]{ling}[ling@]{doublespace}%
+   {\writeln{+Double in effect+}}
+% styles
+\def\lingsetkeys{\setkeys[lingset]{ling}}
+\def\Lingsetkeys#1{\setkeys*[lingset]{ling}{#1}%
+   \ifx\XKV@rm\@empty \else
+   \expandafter\psset\expandafter{\XKV@rm}\fi}
+\define@key[lingset]{ling}{style}{%
+   \edef\temp{\csname ling@#1style\endcsname}%
+      \expandafter\lingsetkeys\expandafter{\temp}}
+\def\newlingstyle#1#2{%
+   \expandafter\def\csname ling@#1style\endcsname{#2}}
+% headlines
+\def\fulldate{{\the\day} {%
+   \ifcase\month \or January\or February\or March\or
+   April\or May\or June\or July\or August\or September\or
+   October\or November\or December\fi} \the\year
+}
+\def\HLpageonly{\hfil\ifnum\pageno>1 \the\pageno\fi}
+\def\HLpageonlybb{\ifodd\pageno\hfill\fi
+      \ifnum\pageno>1 Page \the\pageno\fi \hfil}
+\def\HLdateandpage{\ifnum\pageno>1
+   \fulldate\hfil \the\pageno \else \hfil\fulldate\fi}
+\def\HLfilename{\fulldate\qquad
+   \edef\temp{\topmark}\edef\Temp{\botmark}%
+   [ {\ifx\temp\Temp\else
+      \ifx\temp\@empty\else
+         \temp\ / \fi\fi\Temp} ]\hfill Page \the\pageno
+}
+\define@cmdkeys[lingset]{ling}[ling@]{headline,titles}
+\setkeys[lingset]{ling}{headline=\HLfilename,titles=ss}
+
+
+\lingrestore @
+

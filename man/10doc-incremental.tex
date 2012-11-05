@@ -1,0 +1,173 @@
+
+\section How to build complex trees
+
+\ftag{\the\secno}[incremental]%
+\jTree\ has several features which make it easy to build trees
+incrementally.  In complex trees, this is a big advantage,
+because the software does not make it easy to pinpoint the source
+of errors in the code.  Consider, for example, the tree that is
+used to illustrate the features of |qtree|, a popular
+tree-drawing macro package (available on CTAN).
+
+\ex
+\def\GO#1#2#3{$\rm GO\bigl({#1},[_{Path}\,
+   FROM({#2}),TO({#3})]\bigr)$}%
+\jtree[xunit=3em,yunit=1em]
+\defstuff[a]{\multiline
+   \it The cup slid from John to Mary\cr
+   \GO{\bf cup}{\bf John}{\bf Mary}\cr
+   IP\endmultiline}
+\defstuff[b]{\multiline
+   \it The cup\cr
+   \bf cup\cr
+   NP\endmultiline}
+\defstuff[c]{\multiline
+   \it slid from John to Mary\cr
+   \GO{\mit x}{\bf John}{\bf Mary}\cr
+   IP\endmultiline}
+\defstuff[d]{\multiline
+   \it The\cr
+   $\perp$\cr
+  \quad N$\rm _{SPEC}$\endmultiline}
+\defstuff[e]{\multiline
+   \it cup\cr
+   \bf cup\cr
+   N\endmultiline}
+\def\Fracture{<vert>{\omit\psframebox[framesep=.4ex]
+   {Fracture$\vphantom j$}}}%
+\! = {\stuff[a]}
+   \Fracture
+   :\jtbig{\stuff[b]}!a \jtbig{\stuff[c]}
+   \Fracture
+   :{$\vdots$} {$\vdots$}.
+\!a = \Fracture
+   :{\stuff[d]} {\stuff[e]}.
+\endjtree
+\xe
+\ftagex[qtree]
+
+We proceed, as usual, by starting with the right branching spine
+of the tree, putting in adjunction points for complex material on
+left branches that must be added.  Similar to adjunction points,
+\jTree\ allows for tags to be inserted for ``stuff'' that can be
+filled in later.  Macros |\stuff| and |\defstuff| are defined in
+\pstjtree\/ and used as shown
+below.\index*{+stuff}\index*{+defstuff}
+
+\exh \tac|
+\jtree
+\def\fracture{\psframebox{Fracture}}
+\! = {\stuff[a]}
+   <vert>{\fracture}
+   :\jtbig{\stuff[b]}!a
+      \jtbig{\stuff[c]}
+   <vert>{\fracture}
+   :{$\vdots$} {$\vdots$}.
+\endjtree
+|endtac \hfil
+\jtree
+\def\fracture{\psframebox{Fracture}}
+\! = {\stuff[a]}
+   <vert>{\fracture}
+   :\jtbig{\stuff[b]}!a \jtbig{\stuff[c]}
+   <vert>{\fracture}
+   :{$\vdots$} {$\vdots$}.
+\endjtree
+\xe
+
+We then proceed to complete the structure at the tagged
+positions, fill in the missing stuff, and to make whatever other
+changes are needed to get a good looking tree.  Some things are
+already apparent: there is too much whitespace under ``Fracture''
+inside the box; the tree branches do not meet the ``fracture
+box'', and the tree needs to be stretched in the x-direction.  We
+delay filling in most of the missing stuff until the end, and
+concentrate on fixing the problems noted above and
+getting the tree structure right. This produces:
+
+\exh \tac|
+\jtree[xunit=3em,yunit=1em]
+\def\Fracture{<vert>{\omit\psframebox[framesep=.4ex]
+   {Fracture$\vphantom j$}}}%
+\! = {\stuff[a]}
+   \Fracture
+   :\jtbig{\stuff[b]}!a
+      \jtbig{\stuff[c]}
+   \Fracture
+   :{$\vdots$}
+      {$\vdots$}.
+\!a = \Fracture
+   :{\stuff[d]}
+      {\stuff[e]}.
+\endjtree
+|endtac \hfill \kern-30em
+\jtree[xunit=3em,yunit=1em,treevshift=-3.5em]
+\def\Fracture{<vert>{\omit\psframebox[framesep=.4ex]
+   {Fracture$\vphantom j$}}}%
+\! = {\stuff[a]}
+   \Fracture
+   :\jtbig{\stuff[b]}!a
+      \jtbig{\stuff[c]}
+   \Fracture
+   :{$\vdots$}
+      {$\vdots$}.
+\!a = \Fracture
+   :{\stuff[d]}
+      {\stuff[e]}.
+\endjtree
+\kern1ex
+\xe
+
+We now are ready to fill in the stuff.  Since the go-path
+construction is complicated, appears twice, and is probably
+useful for this kind of work, it has been generalized to a macro.
+\pstjtree\/ contains the |\multiline| \index*{+multiline}and
+|\endmultiline| \index*{+endmultiline}macros to help construct
+complex multiline labels.  |\multiline| starts a vbox and begins
+|\halign{\hfil#\hfil\cr|. |\endmultiline| closes up the
+construction.  Some care is taken with the vertical spacing. The
+full code for (\lastx) is:
+\medskip
+
+\goodbreak
+\codelines
+|\def\GO#1#2#3{$\rm GO\bigl({#1},[_{Path}\,
+   FROM({#2}),TO({#3})]\bigr)$}
+|endcodelines
+
+\def\Goodbreak#1{\goodbreak}
+\medskip
+\codelines
+|\jtree[xunit=3em,yunit=1em]
+\defstuff[a]{\multiline
+   \it The cup slid from John to Mary\cr
+   \GO{\bf cup}{\bf John}{\bf Mary}\cr
+   IP\endmultiline}|Goodbreak|
+\defstuff[b]{\multiline
+   \it The cup\cr
+   \bf cup\cr
+   NP\endmultiline}
+\defstuff[c]{\multiline
+   \it slid from John to Mary\cr
+   \GO{\mit x}{\bf John}{\bf Mary}\cr
+   IP\endmultiline}
+\defstuff[d]{\multiline
+   \it The\cr
+   $\perp$\cr
+  \quad N$\rm _{SPEC}$\endmultiline}|Goodbreak|
+\defstuff[e]{\multiline
+   \it cup\cr
+   \bf cup\cr
+   N\endmultiline}
+\def\Fracture{<vert>{\omit\psframebox[framesep=.4ex]
+   {Fracture$\vphantom j$}}}%
+\! = {\stuff[a]}
+   \Fracture
+   :\jtbig{\stuff[b]}!a \jtbig{\stuff[c]}
+   \Fracture
+   :{$\vdots$} {$\vdots$}.
+\!a = \Fracture
+   :{\stuff[d]} {\stuff[e]}.
+\endjtree
+|endcodelines
+

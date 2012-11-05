@@ -1,0 +1,61 @@
+
+% Chung examples
+
+\example
+
+%% ACTIVE CODE
+\psset{xunit=4em,yunit=1.6em}
+\qquad a.\quad
+\jtree
+\! = {CP}
+   <left>@A1 ^<tri>[triratio=.65]{CP}
+   <left>@A2 ^<tri>[triratio=.65]{CP}
+   <tri>{\it wh}@A3 .
+\psset{angleB=-90,arrows=->}
+\nccurve[angleA=190,ncurv=1.3]{A3}{A2}
+\nccurve[angleA=160]{A2}{A1}
+\endjtree
+\hfil b.\quad
+\jtree
+\! = {CP}
+   <left>@A1 ^<tri>[triratio=.65]{CP}
+   <tri>[triratio=.65]{CP}
+   <tri>{\it wh}@A3 .
+\nccurve[angleA=190,angleB=-90,ncurv=1.3]{->}{A3}{A1}
+\endjtree
+%% END ACTIVE CODE
+
+\vskip1.5em
+(Chung, Sandy. 1998. {\sl The Design of Agreement}, p.~365.)
+
+\medskip
+\codelines
+|\jtree
+\! = {CP}
+   <left>@A1 ^<tri>[triratio=.65]{CP}||1
+   <left>@A2 ^<tri>[triratio=.65]{CP}
+   <tri>{\it wh}@A3 .
+\psset{angleB=-90,arrows=->}
+\nccurve[angleA=190,ncurv=1.3]{A3}{A2}
+\nccurve[angleA=160]{A2}{A1}
+\endjtree
+|endcodelines
+\bigskip
+\codelines
+|\jtree
+\! = {CP}
+   <left>@A1 ^<tri>[triratio=.65]{CP}
+   <tri>[triratio=.65]{CP}
+   <tri>{\it wh}@A3 .
+\nccurve[angleA=190,angleB=-90,ncurv=1.3]{->}{A3}{A1}
+\endjtree
+|endcodelines
+
+\bigskip
+1.\ The |<left>...^<tri>| construction is used so that the @tag
+following |<left>| and the label following |<tri>| can be
+independently positioned.  The triangle simply overwrites the
+left branch.  In other situations, something like
+|<left>[branch=\blank]| might be appropriate.
+
+

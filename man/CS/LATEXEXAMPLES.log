@@ -1,0 +1,143 @@
+This is TeX, Version 3.14159 (Web2c 7.3.2x) (format=latex 2002.4.3)  8 APR 2006 11:16
+**C:/LING/TEX/PST-JTREE/LATEX/LATEXEXAMPLES.TEX
+(c:/LING/TEX/PST-JTREE/LATEX/LATEXEXAMPLES.TEX
+LaTeX2e <1999/12/01> patch level 1
+Babel <v3.6Z> and hyphenation patterns for english, french, german, ngerman, du
+mylang, nohyphenation, loaded.
+(c:/TeX/texmf/tex/latex/base/article.cls
+Document Class: article 1999/09/10 v1.4a Standard LaTeX document class
+(c:/TeX/texmf/tex/latex/base/size12.clo
+File: size12.clo 1999/09/10 v1.4a Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(c:/TeX/texmf/tex/latex/pstricks/pstricks.sty
+Package: pstricks 1997/03/25 package wrapper for PSTricks pstricks.tex
+
+(c:/TeX/texmf/tex/generic/pstricks/pstricks.tex
+`PSTricks' v1.14a  <2006/02/06> (tvz)
+\pst@dima=\dimen103
+\pst@dimb=\dimen104
+\pst@dimc=\dimen105
+\pst@dimd=\dimen106
+\pst@dimg=\dimen107
+\pst@dimh=\dimen108
+\pst@hbox=\box26
+\pst@boxg=\box27
+\pst@cnta=\count87
+\pst@cntb=\count88
+\pst@cntc=\count89
+\pst@cntd=\count90
+\pst@cntg=\count91
+\pst@cnth=\count92
+\pst@toks=\toks14
+(c:/TeX/texmf/tex/generic/pstricks/pstricks.con)
+\psunit=\dimen109
+\psxunit=\dimen110
+\psyunit=\dimen111
+\pslinewidth=\dimen112
+\pst@customdefs=\toks15
+\pslinearc=\dimen113
+\everypsbox=\toks16
+\psframesep=\dimen114
+\pslabelsep=\dimen115
+\psk@shift=\dimen116
+\pst@shift=\dimen117
+\theoverlaybox=\box28
+))
+(c:/TeX/texmf/tex/latex/xkeyval/pst-xkey.sty
+Package: pst-xkey 2005/11/25 v1.6 package wrapper for pst-xkey.tex (HA)
+
+(c:/TeX/texmf/tex/generic/xkeyval/pst-xkey.tex
+File: pst-xkey.tex 2005/11/25 v1.6 PSTricks specialization of xkeyval (HA)
+
+(c:/TeX/texmf/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2005/11/25 v2.5e package option processing (HA)
+
+(c:/TeX/texmf/tex/generic/xkeyval/xkeyval.tex
+\XKV@toks=\toks17
+\XKV@depth=\count93
+File: xkeyval.tex 2005/11/25 v2.5e key=value parser (HA)
+
+(c:/TeX/texmf/tex/generic/xkeyval/keyval.tex)))))
+(c:/TeX/texmf-local/tex/latex/ling/pst-jtree.sty
+Package: pst-jtree 2006/01/24 package wrapper for PSTricks pst-jtree.tex
+
+(c:/TeX/texmf-local/tex/ling/pst-jtree.tex  v2.2, 2006/02/14
+(c:/TeX/texmf/tex/generic/pstricks/pst-node.tex  v97 patch 10, 1999/09/03
+\psrow=\count94
+\pscol=\count95
+\psmatrixcnt=\count96
+\psrowsep=\skip43
+\pscolsep=\skip44
+)
+\@xpos=\dimen118
+\@ypos=\dimen119
+\@@xpos=\dimen120
+\@@ypos=\dimen121
+\max@left=\dimen122
+\max@right=\dimen123
+\max@down=\dimen124
+\jt@dima=\dimen125
+\jt@dimb=\dimen126
+\jt@dimc=\dimen127
+\jt@dimd=\dimen128
+\jt@dime=\dimen129
+\tree@box=\box29
+\@nodebox=\box30
+\tmpbox=\box31
+\jtEverytree=\toks18
+\jteverytree=\toks19
+\jteverylabel=\toks20
+\@CurrState=\count97
+))
+No file LATEXEXAMPLES.aux.
+\openout1 = `LATEXEXAMPLES.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+[1
+
+]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 31.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 31.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 31.
+
+Overfull \hbox (32.09091pt too wide) in paragraph at lines 28--42
+[] []\OT1/cmr/m/n/12 (Nunes,
+ []
+
+[2] (./LATEXEXAMPLES.aux) ) 
+Here is how much of TeX's memory you used:
+ 1910 strings out of 10872
+ 21235 string characters out of 71566
+ 84083 words of memory out of 263001
+ 4857 multiletter control sequences out of 10000+0
+ 7075 words of font info for 25 fonts, out of 200000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 44i,4n,71p,262b,326s stack positions out of 300i,100n,500p,200000b,4000s
+
+Output written on LATEXEXAMPLES.dvi (2 pages, 6820 bytes).

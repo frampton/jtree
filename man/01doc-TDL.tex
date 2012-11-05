@@ -1,0 +1,423 @@
+
+\font\bigtt=txtt at 18pt
+\def\\#1{\psframebox{\hbox to .75em{\hfil#1\hfil}%
+   \vrule width0pt depth.3ex}}%
+\def\Hat{\leavevmode\lower4pt\hbox{\bigtt\char`\^}}
+\def\Period{\leavevmode\hbox{\bigtt.}}
+\def\Langle{$\langle$}
+\def\Rangle{$\rangle$}
+\def\branch#1{$\langle #1\rangle$}
+{\catcode`<=\active \catcode`>=\active
+\gdef\markupmode{\catcode`<=\active
+   \catcode`>=\active \let<=\Langle \let>=\Rangle
+   \spaceskip=1.6ex}}
+
+\section The \jTree\  description language (JTDL)
+
+There are two components: 1.~a simple way to describe right
+branching trees (which I take to be trees whose left branches do
+not branch); and 2.~a mechanism for adjoining one tree onto
+another.  Consider the following tree, for example:
+\bigskip
+\hfil
+\jtree[xunit=2.2em,yunit=1em]
+\def\:{:[scaleby=2.3]}%
+\! = \:!a :{is} {rotten}.
+\!a = :{the} :{cheese} :{that } \:!b :{ate} {\it t}.
+\!b = :{the} :{rat} :{that } :{John \ } :{killed} {\it t}.
+\endjtree
+\bigskip
+
+This tree can be described by a sequence of three right branching
+trees and instructions for how to combine them.
+
+\ex \vtop{\hsize=4in
+\def\Bigskip{\vskip1.5em minus .2em}
+\def\:{:[scaleby=2.3]}
+
+\settabs\+ 2.\enspace adjoin at $P_1$:\qquad&\cr
+\+1. & \jtree[baretopadjust=0]
+\! = \:{\tenpoint$\mit P_1$}[labelgapt=-1pt] :{is} {rotten}.
+\endjtree\cr
+
+\Bigskip
+\+ 2.\enspace adjoin at $P_1$:&
+\jtree
+\! = :{the} :{cheese} :{that }
+   \:{\tenpoint$\mit P_2$}[labelgapt=-1pt]!b
+   :{ate} {\it t}.
+\endjtree\cr
+
+\Bigskip
+\+ 3.\enspace adjoin at $P_2$:&
+\jtree
+\! = :{the} :{rat} :{that }
+   :{John \ } :{killed} {\it t}.
+\endjtree\cr }\xe
+
+We first address the question of describing right branching
+trees, then a mechanism for combining them.
+
+\subsection The description of right branching trees
+
+Some trees are essentially a linear sequence of branches and
+nodes.\par\nobreak
+
+\ex \quad
+a.\quad \jtree[labelgap=0,everylabel={}]
+\! = {\\A}
+<left>{\\B} <right>{\\C}
+<right>{\\D} <right>{\\E}.
+\endjtree
+\hfil
+b.\quad \jtree[labelgap=0,everylabel={}]
+\! = {\\A}
+<left>{\\B}{\\C}
+<right>{\\D}.
+\endjtree
+\hfil
+c.\quad
+\jtree[labelgap=0,everylabel={}]
+\! = {\\A} <left> <right> <left>{\\B}<right>{\\C}.
+\endjtree
+\xe
+
+Such a tree can be described as a sequence of branches and
+labels, each one simply attached to the one before it in the
+obvious way.
+\bigskip
+
+\begingroup\leftskip=1.5em
+a.\quad{\markupmode \\A <left> \\B
+   <right> \\C <right> \\D  <right> \\E .}\medskip
+b.\quad {\markupmode \\A <left> \\B \\C <right> \\D  .}\medskip
+c.\quad {\markupmode \\A <left> <right> <left>
+\\B <right> \\C .}\par\endgroup
+\bigskip
+
+If this language is extended by adding an operator
+\Hat\ which shifts the attachment point to
+the start of the previous branch, then right branching trees can
+be described.  The trees (\nextx) are described by the sequences
+(\anextx).
+\bigskip
+
+\ex a.\quad \jtree[labelgap=0,everylabel={}]
+\! = {\\A}
+:{\\B} {\\C}
+:{\\D} {\\E}.
+\endjtree
+\hfil
+b.\quad \jtree[labelgap=0,everylabel={}]
+\! = {\\A}
+<left>{\\B} ^<vert>{\\C} ^<right>{\\D}
+<left>{\\E} ^<vert>{\\F} ^<right>{\\G}
+<left>{\\H} ^<vert>{\\I} ^<right>{\\J}.
+\endjtree
+\xe
+
+\def\A#1{\leavevmode\llap{\hbox to 1.5em{#1.\hfil}}\ignorespaces}
+
+\vskip-1.5em
+\pex
+\a \vtopmarkup
+\noindent \\A
+<left> \\B \Hat\ <right> \\C
+<left> \\D \Hat\ <right> \\E .
+\endvtopmarkup
+\a \vtopmarkup
+\noindent \\A
+<left> \\B \Hat\ <vert> \\C \Hat\ <right> \\D
+<left> \\E \Hat\ <vert> \\F \Hat\ <right> \\G
+<left> \\H \Hat\ <vert> \\I \Hat\ <right> \\J .
+\endvtopmarkup
+\xe
+
+A parser for such descriptions needs to keep track of just two
+positions.  At the start, \Pcurr\ and \Pprev\ are both
+set to some default starting point.  After a label or branch
+is parsed, \Pcurr\ is updated to be the current point.  When a
+branch is parsed, \Pprev\ is updated to be its starting point.
+When \Hat\ is parsed, \Pcurr\  is set to \Pprev.
+
+\subsection Tree adjunction
+
+This language can be extended by adding the notion of an adjunction
+point, and the syntax for adjoining one tree to another at a
+specified adjunction point. The decomposition (\nextx b) of the
+tree (\nextx a) is described by (\nextx c).
+
+\pex[interpartskip=1em]
+\a \quad
+\jtree[labelgap=0]
+\! = {\\A}
+   <wideleft>{\\B}(:{\\D}{\\E})
+   ^<wideright>{\\C} :{\\F}{\\G}.
+\endjtree
+\medskip
+\a \quad
+\jtree[labelgap=0]
+\! = {\\A}
+   <wideleft>{\\B}@A1
+      {\omit\qdisk(0,0){.4ex}}
+      {\omit \rput(-1,-1.5){\rnode{A2}{!a}}}
+   ^<wideright>{\\C} :{\\F}{\\G}.
+\nccurve[angleA=0,angleB=-100,linewidth=.3pt,ncurvB=1]{->}{A2}{A1:b}
+\endjtree
+\qquad
+\jtree[labelgap=0,everylabel={}]
+\! = {adjoin at !a}[labelgapb=1ex]:{\\D}{\\E}.\endjtree
+\a \vtopmarkup
+\noindent \\A
+   <wideleft> \\B !a \Hat\ <wideright> \\C
+   <left> \\F \Hat\ <right> \\G .
+\noindent !a $=$ <left> \\D \Hat\ <right> \\E .
+\endvtopmarkup
+\xe
+
+When the parser encounters an adjunction point, it records
+\Pcurr\ and names it so that it can be accessed in the future. In
+the \jTree\ implementation of this tree description language, the
+names of adjunction points, called !tags, are character strings
+beginning with |!| and followed by a space.  The tree that is
+described is a physical tree, not an abstract tree.  Branches are
+objects which have dimensions and are identified by a name.  The
+branch denoted by |<wideleft>| above, for example, has different
+dimensions than the branch denoted by |<left>|.
+
+\medskip
+\jTree\ is based on this tree description language. Facilities
+are provided for defining and naming branches of various kinds
+and for drawing trees specified in JTDL format.  How a tree is
+rendered will depend not only on its description, but on numerous
+parameter settings, font choices, etc.  The Tex code for
+rendering a tree has the form:
+\medskip
+{\leftskip=1.5em
+|\jtree|\index*{+jtree}\par
+{\sl preliminary definitions. parameter settings\/}\par
+|\! = | {\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\!a = | {\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\!b = | {\sl simple tree description}|.|\par
+{\sl dimensionless graphics}\par
+|\endjtree|\index*{+endjtree}\par}
+\medskip
+
+When |\jtree| is executed, it establishes an adjunction point
+named |!|.  The macro |\!|\index*{+!} is defined so that
+executing |\!xxx = |sets \Pcurr\ and \Pprev\ to the point named
+|!xxx| (|xxx| can be empty, so the point can be named |!|) and
+parsing the tree description which follows is initiated,
+terminating when a period is encountered. For example:
+
+\exh \tac|
+\jtree
+\! = <left>{A}!a ^<right>{B}.
+\!a = <left>{C}!b ^<right>{D}.
+\!b = <left>{E} ^<right>{F}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = <left>{A}!a ^<right>{B}.
+\!a = <left>{C}!b ^<right>{D}.
+\!b = <left>{E} ^<right>{F}.
+\endjtree
+\xe
+
+The following code produces identical results.
+
+\exh
+\tac|
+\jtree
+\! = <left>{A}!a ^<right>{B}.
+\!a = <left>{C}!a ^<right>{D}.
+\!a = <left>{E} ^<right>{F}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = <left>{A}!a ^<right>{B}.
+\!a = <left>{C}!a ^<right>{D}.
+\!a = <left>{E} ^<right>{F}.
+\endjtree
+\xe
+
+The name |!a| created in the main tree, is no longer needed (in
+this example) after the first subtree is initiated and can
+therefore be reassigned.  It is even possible to say:
+
+\exh
+\tac|
+\jtree
+\! = <left>{A}! ^<right>{B}.
+\! = <left>{C}! ^<right>{D}.
+\! = <left>{E} ^<right>{F}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = <left>{A}! ^<right>{B}.
+\! = <left>{C}! ^<right>{D}.
+\! = <left>{E} ^<right>{F}.
+\endjtree
+\xe
+
+There is nothing special about the name |!| that |\jtree|
+assigns other than it is assigned before tree  construction
+commences.
+
+
+\subsection The colon construction
+
+The combination\enspace |<left>|{\sl label\/}|^<right>| occurs
+frequently in the descriptions of binary trees. JTDL provides a
+shortcut for this.  |:|{\sl label\/} is interpreted as
+|<left>«label\/»^<right>|.  Using this:
+
+\exh \tac|
+\jtree
+\! = {a}
+   :{b} {c}
+   :{d} {e}
+   :{f} {g}
+   :{h} {i}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {a}
+   :{b} {c}
+   :{d} {e}
+   :{f} {g}
+   :{h} {i}.
+\endjtree
+\xe
+
+The formatting is for readability.  The following
+code produces the same tree:
+\medskip
+\quad |\jtree\! ={a}:{b}{c}:{d}{e}:{f}{g}:{h}{i}.\endjtree|
+\medskip
+One more example:
+
+\exh \tac|
+\jtree
+\! = :{a} :{b} :{c} :{d} {e}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{a} :{b} :{c} :{d} {e}.
+\endjtree
+\xe
+
+For expository reasons, the description above was oversimplified.
+Actually, |:«\sl label\/»| is shorthand for
+|<colonA>«label\/»^<colonB>|. \pstjtree\/ defines the
+branches |<colonA>| and |<left>| identically, and the branches
+|<colonB>| and |<right>| identically.  The user, however, is free
+to redefine any of these branches.  For example.
+
+
+\exh \tac|
+\jtree
+\defbranch<colonB>(1)(-.5)
+\! = {a}
+   :{b} {c}
+   :{d} {e}
+   :{f} {g}.
+\endjtree
+|endtac \quad \hfil
+\jtree
+\defbranch<colonB>(1)(-.5)
+\! = {a}
+   :{b} {c}
+   :{d} {e}
+   :{f} {g}.
+\endjtree
+\xe
+
+A later section will give the details of how branches are defined.
+Suffice it to say here that a branch is defined by giving its
+height and slope.  Labels are recognized by the \jTree\ parser
+as |{«stuff\/»}|, where the ``stuff'' is anything that can go
+in a Tex hbox.  We also defer to a later section automatic
+space that is inserted over and under labels and how this is
+specified and adjusted.
+
+\medskip
+The example below uses the colon shortcut
+extensively.\par\nobreak
+
+\ex
+\psset{xunit=2.2em,yunit=1em}
+\tac|
+\jtree
+\defbranch<Left>(2.3)(1)
+\! = <Left>!a ^<right> :{is} {rotten}.
+\!a = :{the} :{cheese} :{that}
+   <Left>!b ^<right> :{ate} {\it t}.
+\!b = :{the} :{rat} :{that}
+   <Left>!c ^<right> :{killed} {\it t}.
+\!c = :{the} :{cat} :{that} :{John} :{owned} {\it t}.
+\endjtree
+|endtac
+\bigskip
+\hfil\jtree
+\defbranch<Left>(2.3)(1)
+\! = <Left>!a ^<right> :{is} {rotten}.
+\!a = :{the} :{cheese} :{that}
+   <Left>!b ^<right> :{ate} {\it t}.
+\!b = :{the} :{rat} :{that}
+   <Left>!c ^<right> :{killed} {\it t}.
+\!c = :{the} :{cat} :{that} :{John} :{owned} {\it t}.
+\endjtree
+
+\xe
+\ftagex[cheese]\ftagpage[cheesepage]
+
+\subsection Inline adjunction
+
+In addition to the |:| operator, \jTree\ provides one other
+shortcut.  It provides an alternative to adjunction in the code
+below.
+
+\exh \tac|
+\jtree[xunit=2.8em,yunit=1em]
+\! = {S}
+   :{NP}!a {VP}
+   :{V}!b {NP}
+   <vert>{Tom}.
+\!a = <vert>{Mary}.
+\!b = <vert>{saw}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=2.8em,yunit=1em]
+\! = {S}
+   :{NP}!a {VP}
+   :{V}!b {NP}
+   <vert>{Tom}.
+\!a = <vert>{Mary}.
+\!b = <vert>{saw}.
+\endjtree
+\xe
+
+\goodbreak
+This can be written:
+\bigskip
+\qquad \tac|
+\jtree[xunit=2.8em,yunit=1em]
+\! = {S}
+   :{NP}(<vert>{Mary})  {VP}
+   :{V}(<vert>{saw})  {NP}<vert>{Tom}.
+\endjtree
+|endtac
+\bigskip
+Effectively, interpreting |(«$\,\ldots\,$»)| carries out {\it
+inline adjunction}, without the need to explicitly name the
+adjunction point.  In practice, description by inline adjunction
+should be avoided for all but very simple nonterminals (as in
+this example) since it can quickly lead to opaque code and the
+hornet's nest of parentheses that JTDL was designed to avoid.
+
+
+
+

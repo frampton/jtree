@@ -1,0 +1,76 @@
+
+\example \ftagEx[Merchant]
+
+The contrast illustrates the two main varieties of pointers that
+PSTricks makes available for relating nodes in a tree. My
+preference is (a), since it more clearly distinguishes the
+relation expressed by the pointer from tree relations. Tastes may
+vary.
+
+\bigskip
+\hfil a.\quad
+%
+\jtree[xunit=2.6em,yunit=1em]
+\def\\{[labelgapb=-1.2ex]}%
+\everymath={\rm}%
+\! = {CP}
+   :({XP}\\{$\scriptstyle [wh]$}@A1 ) {$C'$}
+   :({$C^0$}\\{$\scriptstyle [wh,Q]$}) {$\langle\, TP\,\rangle$}
+   <tri>{\dots\quad\rnode[b]{A2}{\it t}\quad\dots}.
+\nccurve[angleA=-150,angleB=-90,ncurv=1]{->}{A2}{A1}
+\endjtree
+%
+\hfil
+b.\quad
+\jtree[xunit=2.6em,yunit=1em]
+\def\\{[labelgapb=-1.2ex]}%
+\everymath={\rm}%
+\! = {CP}
+   :({XP}\\{$\scriptstyle [wh]$}@A1 )  {$C'$}
+   :({$C^0$}\\{$\scriptstyle [wh,Q]$}) {$\langle\, TP\,\rangle$}
+   <tri>{\dots\quad\rnode[b]{A2}{\it t}\quad \dots}.
+   \ncbar[angleA=-90,angleB=-90,armA=1em,
+   armB=1em,linearc=.6ex]{->}{A2}{A1}
+\endjtree
+
+\vskip3em
+(The version on the right is from a paper by Jason Merchant.)
+\medskip
+
+\goodbreak
+The code for (a) is:\par\nobreak
+
+\medskip
+\codelines
+|\jtree[xunit=2.6em,yunit=1em]
+\def\\{[labelgapb=-1.2ex]}%||1
+\everymath={\rm}%
+\! = {CP}
+   :({XP}\\{$\scriptstyle [wh]$}@A1 ) {$C'$}
+   :({$C^0$}\\{$\scriptstyle [wh,Q]$})
+      {$\langle\, TP\,\rangle$}
+   <tri>{\dots\quad\rnode[b]{A2}{\it t}\quad\dots}.||2
+\nccurve[angleA=-150,angleB=-90,ncurv=1]{->}{A2}{A1}
+\endjtree
+
+|endcodelines
+
+\medskip
+1.\ |\\| is used to close up the gap between category labels and
+features underneath them.
+
+\medskip
+2.\ The node |A2| is inserted via |\rnode| rather than
+by using |@A2| because it is not a pointer from the whole label,
+but from the trace inside the label.  |\rnode[b]| is used, which
+places the reference point at the bottom of the box that the
+trace is put in.  This works better visually, since it keeps the
+pointer from coming too close to the ellipsis.
+
+\bigskip
+For (b), substitute the following for the
+|\nccurve| pointer.
+\medskip
+|\ncbar[angleA=-90,angleB=-90,armA=1em,|\par
+|   armB=1em,linearc=.6ex]{->}{A2}{A1}|
+

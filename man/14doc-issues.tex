@@ -1,0 +1,78 @@
+
+\section Compatibility issues
+
+1.\enspace Earlier versions of \jTree\ had the syntax in (\nextx b), rather
+than the syntax (\nextx a) which has been explained and used in
+this documentation.
+
+\pex[interpartskip=!.5ex]
+\a \vtop{\hsize=4.4in  \leftskip=0pt
+|\jftree|\par
+{\sl preliminary definitions. parameter settings\/}\par
+|\! = |{\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\!a = |{\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\!b = |{\sl simple tree description}|.|\par
+{\sl dimensionless graphics}\par
+|\endjtree|\par}
+\a \vtop{\hsize=4.4in  \leftskip=0pt
+|\jftree|\par
+{\sl preliminary definitions. parameter settings\/}\par
+|\start |{\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\adjoin at !a |{\sl simple tree description}|.|\par
+{\sl definitions, parameter settings, dimensionless graphics}\par
+|\adjoin at !b |{\sl simple tree description}|.|\par
+{\sl dimensionless graphics}\par
+|\endjtree|\par}
+\xe
+
+{\it The old syntax can still be used, if desired.}  It is even
+possible to mix the old and new syntax.
+
+\medskip
+2.\enspace Tex uses the control sequence |\!| for negative
+spacing in math mode.  \jTree\ redefines |\!| inside |\jtree|
+\dots|\endjtree|. This redefinition can be suppressed, if
+desired, by redefining the token list |\jtEverytree|.  When
+|\jtree| is invoked, two token lists are expanded and evaluated.
+First, |\jtEverytree|\index*{+jtEverytree} and then
+|\jteverytree|\index*{+jteverytree}. The first is intended for
+setup use, to be rarely altered, and the second to be modified as
+needed in the course of using \jTree. |\jteverytree| can be
+modified by parameter setting.  The first cannot be, but can be
+redefined by editing \pstjtree\/ or by resetting it in a setup
+file that is loaded after {\sl pst-jtree\/} is loaded.  The
+default setting is:
+\medskip
+\hfil|\jtEverytree={\let\!\adjoinop}|
+\medskip
+The |\!| will be suppressed if this is changed to:
+\medskip
+\hfil|\jtEverytree={}|
+\medskip
+With the special use of |\!| suppressed,
+the syntax (\lastx b) must be used.\medskip
+In my personal file, I have:
+\medskip
+\hfil|\jtEverytree={\everymath={\rm}\let\!\adjoinop}|
+\medskip
+In typesetting linguistic trees, I more often prefer roman
+to math italic type in math mode.
+\medskip
+3.\enspace
+Earlier versions of \jTree\ were incompatible with certain
+packages which changed the character code of |"|, |<|, |>|, or
+|^|.  Starting with version 2.4 (dated 2007/04/15), \jTree\ no
+longer makes any assumptions about the character codes of these
+characters.  The tree description parser does assume that
+characters in the set $\{|.|,|:|,|(|,|)|,|@|,|!|\}$ are not
+active and have the same category code that they had when
+\pstjtree\/ was loaded.
+Users with unsolved compatibility problems are encouraged
+to report them to me at {\sl j.frampton@neu.edu\/}.
+
+
+
+

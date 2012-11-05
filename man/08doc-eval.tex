@@ -1,0 +1,120 @@
+
+\section Expansion and evaluation of control sequences in tree parsing
+
+
+\subsection The {\tt "} escape from tree parsing
+
+If the parser encounters |"|, it evaluates the next token or
+group and continues the parse.  Evaluation should contribute no
+material, since it is not parsed.  But evaluation can change
+parameter settings, which affects how the remaining material is
+typeset.  For example:
+
+\exh \tac|
+\jtree
+\! = {a} :{b}!! {c}
+   "{\psset{scaleby=.5 1}} :{f} {g}.
+\!! = :{d} {e}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {a} :{b}!! {c}
+   "{\psset{scaleby=.5 1}} :{f} {g}.
+\!! = :{d} {e}.
+\endjtree
+\xe
+
+|\!« \dots\ ».| does not establish an implicit group, so the
+change in scale persists to the subsequent subtree.
+
+\medskip
+The same effect can be achieved without using |"| if rescaling is
+done outside tree parsing.\par\nobreak
+
+\exh \tac|
+\jtree
+\! = {a} :{b}!a {c}!b .
+\psset{scaleby=.5 1}
+\!a = :{d} {e}.
+\!b = :{f} {g}.
+\endjtree
+|endtac \hfil
+\jtree
+\! = {a} :{b}!a {c}!b .
+\psset{scaleby=.5 1}
+\!a = :{d} {e}.
+\!b = :{f} {g}.
+\endjtree
+\xe
+
+\subsection Control sequence expansion
+
+If the parser encounters a control sequence or active character
+in a tree description, it is replaced by its expansion before the
+parse continues.  The expansion is parsed without further
+expansion of the initial token, which prevents an infinite loop
+if the expansion yields an unexpandable control sequence.
+
+\exh
+\tac|
+\jtree
+\def\Colon{:[scaleby=2.3]}%
+\! = \Colon !a :{c} :{d} {e}.
+\!a = :{a} {b}.
+\endjtree
+|endtac \hfil
+\jtree[treevshift=-1ex]
+\def\Colon{:[scaleby=2.2]}%
+\! = \Colon !a :{c} :{d} {e}.
+\!a = :{a} {b}.
+\endjtree
+\xe
+
+\pstjtree\/ contains the definition
+|\def\jtlong{[scaleby=2.3]}|, so we could also write:\par\nobreak
+
+\exh \tac|
+\jtree
+\! = :\jtlong !a :{c} :{d} {e}.
+\!a = :{a} {b}.
+\endjtree
+|endtac \hfil
+\jtree[treevshift=-1ex]
+\! = :\jtlong !a :{c} :{d} {e}.
+\!a = :{a} {b}.
+\endjtree
+\xe
+
+This technique makes some code much more transparent.
+(\gettag[cheese]) on page \gettag[cheesepage], for example,
+can be written:
+
+\bigskip
+\vtop{\leftskip=1.5em \mixedenv
+|\jtree[xunit=2.2em,yunit=1em]
+\! =  :\jtlong !a :{is} {rotten}.
+\!a = :{the} :{cheese} :{that} :\jtlong !b :{ate} {\it t}.
+\!b = :{the} :{rat} :{that} :\jtlong !c :{killed} {\it t}.
+\!c = :{the} :{cat} :{that} :{John} :{owned} {\it t}.
+\endjtree
+|\par}
+
+\bigskip
+The complete list of parameter changes that are encoded in
+macros in \pstjtree\/ is:\par\nobreak
+
+\cframe
+|\def\jtlong{[scaleby=2.3]}
+\def\jtshort{[scaleby=.5]}
+\def\jtwide{[scaleby=2 1]}
+\def\jtbig{[scaleby=2]}
+\def\jtjot{[scaleby=1.3]}
+|endcframe
+\index*{+jtlong}\index*{+jtwide}\index*{+jtbig}\index*{+jtjot}
+
+\vskip.7em
+Of course, users should define whatever similar macros are useful
+in their own work.
+
+
+

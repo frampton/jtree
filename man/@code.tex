@@ -1,0 +1,85 @@
+
+\lingmkletter @
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% various strategies for typesetting \tt material
+
+\chardef\other=12
+\def\allnormal{\catcode`\\=\other \catcode`\{=\other
+   \catcode`\}=\other \catcode`\$=\other  \catcode`\&=\other
+   \catcode`\#=\other  \catcode`\%=\other  \catcode`\~=\other
+   \catcode`\_=\other \catcode`\^=\other}
+\def\ttverbatim{\begingroup
+   \allnormal \obeyspaces\obeylines \tt}
+{\obeyspaces\gdef {\ }}
+
+\catcode`\|=\active    %|
+\catcode`\¦=\active
+\newskip\ttglue
+{\tt \global\ttglue=.5em}
+{\obeylines\gdef\begintt{\ttverbatim %
+   \let^^M=\ \let|=\endgroup}}  %|
+{\obeylines\gdef\beginTT{\ttverbatim %
+   \let^^M=\par \let|=\endgroup }}  %|
+\let|\begintt %|
+
+%\def\beginescape{\endgroup \kern1.2pt\bgroup\let¦=\endescape}
+%\def\endescape{\egroup\kern.4pt\begintt}
+
+\catcode`\»=\active
+\catcode`\«=\active
+\def«{\endgroup \kern1.2pt\bgroup\sl}
+\def»{\egroup\kern.4pt\begintt}
+
+\def\mixedenv{\let|\beginTT \obeylines}  %|% must be grouped
+
+\def\code{\linecount=1 \morecode}
+\def\morecode|{\smallskip  %|
+   \begingroup
+   \allnormal\obeyspaces\numberlines \tt}
+{\catcode`\^^M=\active
+   \gdef\numberlines{%
+      \catcode`\^^M=\active \let^^M=\specialpar %
+      \let|=\endcode}}%|
+\def\endcode{\endgroup \smallskip}
+\newcount\linecount
+\def\specialpar{\par\leavevmode
+   \llap{\hbox{\tenrm \hfil\the\linecount
+   \hskip2ex \global\advance\linecount by 1}}}
+
+\def\endtac{\egroup \endgroup\egroup}
+{\catcode`\^^M=\active
+\gdef\tac|%|
+   {\leavevmode\vtop \bgroup \begingroup \allnormal \tt
+   \catcode`^^M=\active \let^^M=\cr %
+   \catcode`\|=0 %|
+   \obeyspaces\halign\bgroup ##}}
+
+\def\endcodelines{\endgroup}
+{\catcode`\^^M=\active
+\gdef\codelines#1|{%|
+   \leavevmode \begingroup \allnormal \tt %
+   \catcode`^^M=\active \let^^M=\par %
+   \catcode`\|=0 \obeyspaces}} %|
+\def\|#1{$^{\>#1}$}  %|
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\cframe{%
+   \medskip
+   \line\bgroup
+      \vrule\hss
+         \vbox\bgroup\leftskip=1em
+            \hrule
+            \medskip
+            \codelines
+}
+\def\endcframe{%
+            \endcodelines
+            \medskip
+            \hrule
+         \egroup
+      \hss\vrule
+   \egroup
+   \medskip
+}
+\lingrestore @
+

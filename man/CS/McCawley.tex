@@ -1,0 +1,78 @@
+\parindent=2em
+
+\example
+
+\hrule
+\medskip
+\noindent This example, and the following four, illustrate some
+techniques for displaying multidominance structures.  I have
+argued that movement should be seen as creating multidominance
+trees with shared structure.  My suspicion is that the difficulty
+in portraying the resulting structures in a typeset diagram makes
+the idea less appealing than it might otherwise be.  It would be
+unfortunate for deficiencies in typesetting technology to have a
+significant influence in shaping theoretical work.  What made
+writing \pstjtree\/ worth the trouble was that I see it as a
+possible contribution to the development of theories of mental
+computation.
+
+The influence of typesetting technology on linguistic theory
+should not be underestimated.  The widespread inattention to
+autosegmental structure in phonology is at least partially
+a reflection of the state of typesetting technology.
+
+Since McCawley (1982) seems to be the first linguist to attempt
+to use multidominance to solve a complex syntax problem, we begin
+with one of his examples (right node raising).
+\medskip
+\hrule
+
+\bigskip
+\noindent\hfil
+\jtree[xunit=2.45em,yunit=1.4em,dirA=(1:-1),nodesep=0]
+\def\\{[labelgapb=-4pt]}%
+\def\V{$\rm \overline V$}%
+\! = {S}
+   <wideleft>{S}!a ^<vert>{and} ^<wideright>{S}
+   :({NP}<shortvert>{Fred}) {\V}
+   :({V}\\{knows}) {NP}
+   <tri>{a man} ^<right>
+   <right>[scaleby=3.5 1,branch=\blank]{NP}@A3 !b ^{S}
+   :({NP}<shortvert>{who}) {\V}@A2
+   <left>({V}\\{repairs}).
+\!a = :({NP}<shortvert>{John}) {\V}@A1
+   <left>{V}\\{sells}.
+\!b = <vartri>{washing machines}.
+\nccurve[angleB=150,ncurvB=1.4]{A2:b}{A3:t}
+\nccurve[angleB=135,ncurvA=.5,ncurvB=2.6]{A1:b}{A3:t}
+\endjtree
+
+\vfil\break
+
+\codelines|
+\jtree[xunit=2.45em,yunit=1.4em,dirA=(1:-1),nodesep=0]
+\def\\{[labelgapb=-4pt]}%
+\def\V{$\rm \overline V$}%
+\! = {S}
+   <wideleft>{S}!a ^<vert>{and} ^<wideright>{S}
+   :({NP}<shortvert>{Fred}) {\V}
+   :({V}\\{knows}) {NP}
+   <tri>{a man} ^<right>
+   <right>[scaleby=3.5 1,branch=\blank]{NP}@A3 !b ^{S}
+   :({NP}<shortvert>{who}) {\V}@A2
+   <left>({V}\\{repairs}).
+\!a = :({NP}<shortvert>{John}) {\V}@A1
+   <left>{V}\\{sells}.
+\!b = <vartri>{washing machines}.
+\nccurve[angleB=150,ncurvB=1.4]{A2:b}{A3:t}
+\nccurve[angleB=135,ncurvA=.5,ncurvB=2.6]{A1:b}{A3:t}
+\endjtree
+|endcodelines
+
+\medskip
+1. A blank branch is used to position the node which is shared
+between the two conjuncts.
+
+\smallskip
+2. Note the high value of |ncurvB| that is used to properly
+locate the curve.
