@@ -227,7 +227,10 @@
    \pst@dimd=\jt@scaleyby\pst@dimd
    \advance\@ypos by -\pst@dimd
    \advance\@xpos by \pst@dimc
-   \branch@type(\@xpos,\@ypos)(\@@xpos,\@@ypos)%
+% 11/7/2012
+% switched (\@xpos,\@ypos) and (\@@xpos,\@@ypos) so that the
+% starting point of the psline is at the higher node.
+   \branch@type(\@@xpos,\@@ypos)(\@xpos,\@ypos)%
    \jt@positionafter
    \ifdim\@xpos < \max@left \max@left=\@xpos \fi
    \ifdim\@xpos > \max@right \max@right=\@xpos \fi

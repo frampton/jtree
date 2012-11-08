@@ -1,0 +1,21 @@
+
+
+\input ../core/pst-jtree
+\input timesplain
+
+\def\psellipseN(#1,#2)#3#4{%
+   \psellipse(#1,#2)
+   \pnode(! #1 #3 cos mul #2 #3 sin mul){#4}
+}
+
+
+\jtree
+\! = :{A} :{B}@aa :{C}@bb {D}.
+\psLNode(aa)(bb){.5}{center}
+\rput{(1,-)}(center){\psellipseN(1.2,1.4){-40}{source}}
+\psdot(source)
+\endjtree
+
+\bye
+
+

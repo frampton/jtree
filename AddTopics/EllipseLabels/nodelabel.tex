@@ -1,0 +1,56 @@
+\input pstricks
+\input pst-node
+\input pst-xkey
+\input pst-jtree
+\input pstricks-add
+
+\noindent
+{\tt [Modelled on Chung, Ladusaw \& McCloskey 1995: 247, (16)]}\vskip20truept
+
+\jtree[xunit=4em,yunit=1em,elcxoffset=.7ex,elcyoffset=.7ex,
+   bbadjust=height 0.5em depth 2em left -1em]
+\defbranch<wideright>(1)(-2/3)
+\defbranch<shortright>(.8)(-1)
+\defbranch<steepright>(.7)(-3/2)
+\defbranch<steepleft>(.7)(3/2)
+%%%
+\! = {CP}
+<left>{\rnode{A}{PP$_i$}}!a
+   ^<wideright>{C$'$}
+<left>{C$^0$}!aa
+	^<wideright>{\elc{IP}}
+<left>{DP}!e
+   ^<shortright>{\elc{I$'$}}
+<left>{I$^0$}
+   ^<shortright>{\rnode{vp}{VP}}
+<left>[scaleby=1.3]{VP}!b
+   ^<right>{\omit}{\rnode{B}{PP$_i$}}.
+%%%
+\!aa = {[+Q]}[labelgapt=-2pt]<vert>{\kern5pt e$\fam0 ^x$}.
+\!a = <steepleft>{P}!c
+   ^<steepright>{DP} <vartri>{whom$\fam0 ^x$}.
+\!b = <steepleft>{DP}
+   ^<steepright>{\elc{V\'{}}}
+   <steepleft>{V$^0$}!d
+   ^<steepright>{DP}<vartri>{dinner}.
+\!c = <vert>{with}.
+\!d = <shortvert>{ate}.
+\!e = <vartri>{\rnode{joan}{Joan}}.
+\nccurve[angleA=237,angleB=-100,offsetA=0ex,offsetB=0ex,%
+	ncurvA=.6,ncurvB=1.2,nodesepB=1ex]{<-}{A}{B}
+%\ncput*[nrot=180,npos=.4]{\it merger}
+\ncput*[npos=.4]{\it merger}
+%
+\def\radiusa{9.5}%
+\def\pointa{\radiusa;30}
+\def\radiusb{3.5}%
+\def\pointb{\radiusb;40}%
+%
+\psLNode(B)(joan){.5}{centera}
+\rput(centera){\pscircle{\radiusa}\rput[l](\pointa){$\,\longleftarrow$ copying}}
+%
+\psLNode(vp)(B){.5}{centerb}
+\rput(centerb){\pscircle{\radiusb}\rput[l](\pointb){$\,\longleftarrow$ sprouting}}
+\endjtree
+
+\bye
