@@ -232,4 +232,127 @@ some special emphasis.\par\nobreak
 This construction is used several times in example \gettag[Chung2]
 in \exsec.
 
+\subsection Labeling connections between nodes
+
+PSTricks has 3 commands for labeling connections between nodes.
+|\ncput| puts the label directly on the connection, |\naput| puts
+it above the connection, and |\nbput| puts it below the
+connection.  There is a parameter |labelsep| which controls how
+far above or below the connection the label is put; a parameter
+|nrot| which can be used to rotate the label; and a parameter
+|npos| which determines where on the connection the label is put.
+from the starting label to the finishing label. See the PSTricks
+User's Guide for all the details.
+\medskip
+Here are some examples of the use of |\ncput|, the most useful of
+the connection labeling macros.
+
+\jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=<-,angleA=-90,angleB=-150}
+\nccurve{A1}{A2}
+\ncput*[npos=.65]{\tenpoint\it wh-movement}
+\nccurve{B1}{B2}
+\endjtree
+\bigskip
+
+\codelines
+|\jtree[xunit=3em,yunit=1em]
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=<-,angleA=-90,angleB=-150}
+\nccurve{A1}{A2}
+\ncput*[npos=.65]{\tenpoint\it wh-movement}
+\nccurve{B1}{B2}
+\endjtree
+|endcodelines
+
+\jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=<-,angleA=-90,angleB=-150}
+\nccurve{A1}{A2}
+\ncput*[nrot=:0,npos=.35]{\tenpoint\it wh-movement}
+\nccurve{B1}{B2}
+\endjtree
+\bigskip
+
+The code is the same as in the previous example except for the
+parameters of |\ncput|.  Here, they are |[nrot=:0,npos=.35]|.
+|npos|, which must be set to a number between 0 and 1,
+picks out a position along the connection; the default is .5.
+The parameter |nrot| gives the rotation of the label; the default
+is 0.  If the angle (measure in degrees) is preceeded by a colon,
+as in this example, the angle is measure with respect to the
+direction of the connection at the point at which the label is
+positioned.  The asterisk following |\ncput| annuls the
+transparency of the label.  It is surrounded by a framebox, which
+provides an extra whitespace around the label.  The size of the
+whitespace is controlled by the parameter |labelsep|.
+
+jTree constructs trees by using node connections.  Sometimes it
+is desirable to put a label on a tree branch.  This poses a
+problem, because the tree branch connections are generally drawn
+using |branch=\psline|, which not extablish nodes so that the
+PSTricks connection labeling mechanism does not apply.  But the
+branch parameter can be temporarily changed, if needed.  This is
+illustrated below.
+
+\exh
+\tac|
+\jtree[xunit=3em,yunit=3ex]
+\! = <left>{A}
+^<right>[branch=\pcline,nodesep=0]{B}
+"{\ncput[nrot=:0]{$\vert\vert$}}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=3em,yunit=3ex]
+\! = <left>{A}
+^<right>[branch=\pcline,nodesep=0]{B}
+"{\ncput[nrot=:0]{$\vert\vert$}}.
+\endjtree
+\xe
+|"| is an escape from parsing the tree description, so that
+|"{...}| simply executes the material inside the braces.
+
+\subsection Putting labels on circles and circling nodes in
+trees
+
+We approach this by explicating the code for the display below.
+\bigskip
+
+\jtree[xunit=3em,yunit=3ex,bbadjust=depth 6ex]
+\! = :{A} :{B}@C1 {C}@C2 .
+\psLNode(C1)(C2){.5}{center}
+\rput(center){%
+   \pscircle{1.3}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}
+}
+\endjtree
+\bigskip
+
+\CLnum
+\jtree[xunit=3em,yunit=3ex]
+\! = :{A} :{B}@C1 {C}@C2 .
+\psLNode(C1)(C2){.5}{center}
+\rput(center){%
+   \pscircle{1.3}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}
+}
+\endjtree|endCLnum%|
+\medskip
+Line 2 draws the tree and establishes ps nodes C1, and C2 (along
+with nodes C1:t, C1:b, C2:t, and C2:b).  Line 3 interpolates the
+a node labeled ``center'' between the nodes C1 and C2.  This will
+be the center of the circle which is drawn.  The circle is drawn
+by making a circle about the origin with radius 1.3 (line 5) and
+pasting this in at the node labeled ``center'' (line 4).  The
+label is attached to the circle before it is paster in at
+``center''.  The bottom left (|bl|) corner of the label is put at
+|(1.3;40)|, which PStricks recognizes as the point at
+distance 1.3 which makes an angle $\rm 40\,degrees$ with the
+positive horizontal direction.
+
+
 

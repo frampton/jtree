@@ -62,6 +62,43 @@
    \catcode`\|=0 \obeyspaces}} %|
 \def\|#1{$^{\>#1}$}  %|
 
+{\catcode`\^^M=\active
+\gdef\CL{%  (codelines)
+   \vskip\lingaboveexskip
+   \par \begingroup \parindent=0pt \leftskip=1em
+   \allnormal \tt %
+   \catcode`^^M=\active \let^^M=\par %
+   \catcode`\|=0 \obeyspaces \@gobble}%
+\gdef\CLboxed{%
+   \leavevmode\vtop \bgroup \begingroup \allnormal \tt
+   \catcode`^^M=\active \let^^M=\cr %
+   \catcode`\|=0 %
+   \obeyspaces\halign\bgroup ##}%
+\gdef\@CLnum{%
+   \parindent=0pt
+   \catcode`\^^M=\active \let^^M=\specialpar %
+   \catcode`\|=0 }%
+}
+\def\endCL{\endgroup \vskip\lingbelowexskip}%
+\def\endCLboxed{\egroup \endgroup\egroup}%
+\def\specialpar{%
+   \par
+   \@specialpar
+}
+\def\@specialpar{%
+   \leavevmode
+   \hbox to1.8em{\hbox to10pt{\hfil\tenrm \the\pexcnt}%
+      \hfil
+      \global\advance\pexcnt by 1}%
+}
+\def\CLnum{\smallskip\pexcnt=1 \morecode}
+\def\morecode{%
+   \smallskip \begingroup
+   \allnormal\obeyspaces\@CLnum\tt%
+}
+\def\endCLnum{\endgroup\medskip}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\cframe{%
    \medskip
