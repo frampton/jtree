@@ -542,18 +542,33 @@
       }%
    \aftergroup\jt@@afterpic
 }
+\define@boolkey[psset]{jtree}[jt@]{showbb}[true]{}
+\psset{showbb=false}
+
 \def\endjtree{%
    \advance\max@down by -\jt@bbdepthadjust
-   \jt@afterpic\jt@maxafter\egroup
+   \jt@afterpic\jt@maxafter
+   \ifjt@showbb
+   \global\let\@@showbb\jt@showbbtrue\else
+      \global\let\@@showbb\relax \fi
+%   \gdef\@@showbb{\jt@showbbtrue}\else \gdef\@@showbb{}\fi
+   \aftergroup\@@showbb
+   \egroup
    \advance\max@left by -\@extraleft
    \advance\max@right by \@extraright
    \dp\tree@box=-\max@down
-   \vbox{%
-   \kern\@extraht
-      \hbox{\kern-\max@left
-         \raise\@topadjust \box\tree@box
-         \kern\max@right}%
-   }%
+   \setbox\tree@box=\vbox{%
+      \kern\@extraht
+         \hbox{\kern-\max@left
+            \raise\@topadjust \box\tree@box
+            \kern\max@right}%
+      }%
+   \ifjt@showbb
+      \psframebox[framesep=0]{\box\tree@box}%
+   \else
+      \box\tree@box
+   \fi
+   \jt@showbbfalse
 }
 % alternates to \psline for drawing branches
 \let\branch@type=\psline
@@ -609,18 +624,27 @@
 \defin@inckeys{elcxoffset,elcyoffset}
 \define@key[psset]{jtree}{elcref}
    {\edef\jt@elcref{#1}}
-\psset{elcxoffset=.8ex,elcyoffset=0,elcref=bl}
+\psset{elcxoffset=.4em,elcyoffset=0,elcref=bl}
 \def\elc{\@getoptionalarg\@elc}
 \def\@elc#1{\psset@optionalarg
    \rput[\jt@elcref]%
       (\jt@elcxoffset,\jt@elcyoffset){#1}}
 %
-%%% added 11/09/2012
-\define@key[psset]{jtree}{branchlabel}%
-   {\let\branch@type@save=\branch@type
-   \def\branch@type(##1)(##2)%
-      {\branch@type@save(##1)(##2)%
-      \pcline[arrows=-,linestyle=none](##1)(##2)#1}}
+%%% added 11/12/2012
+\def\jtenode{\pst@ifstar\enode@i}
+\def\enode@i(#1,#2){\if@star\psellipse(#1,#2)\fi
+   \enode@ii(#1,#2)}
+\def\enode@ii(#1,#2)#3#4{%
+   \rput(! #3 cos #1 div dup mul #3 sin #2 div
+      dup mul add sqrt 1 exch div dup #3 cos mul exch #3 sin mul)%
+   {\pnode{#4}}\ignorespaces
+}
+%
+%\define@key[psset]{jtree}{branchlabel}%
+%   {\let\branch@type@save=\branch@type
+%   \def\branch@type(##1)(##2)%
+%      {\branch@type@save(##1)(##2)%
+%      \pcline[arrows=-,linestyle=none](##1)(##2)#1}}
 %%% end addition
 \unjtree@cats
 \jRestoreCat @

@@ -244,8 +244,8 @@ far above or below the connection the label is put; a parameter
 from the starting label to the finishing label. See the PSTricks
 User's Guide for all the details.
 \medskip
-Here are some examples of the use of |\ncput|, the most useful of
-the connection labeling macros.
+For linguists, |\ncput| is probably the most useful of the
+PSTricks connection labeling macros. Here is one example.
 
 \jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
 \! = :{who}@A1 :{did}@B1 :{Jack}
@@ -267,37 +267,23 @@ the connection labeling macros.
 \nccurve{B1}{B2}
 \endjtree
 |endcodelines
+\medskip
 
-\jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
-\! = :{who}@A1 :{did}@B1 :{Jack}
-   :{\sl t}@B2 :{see} {\sl t}@A2 .
-\psset{arrows=<-,angleA=-90,angleB=-150}
-\nccurve{A1}{A2}
-\ncput*[nrot=:0,npos=.35]{\tenpoint\it wh-movement}
-\nccurve{B1}{B2}
-\endjtree
-\bigskip
+The asterisk following |\ncput| annuls the transparency of the
+label.  It is surrounded by a framebox, which provides whitespace
+around the label.  The size of the whitespace is controlled by
+the parameter |framesep|.  The default value is used above.
+\medskip
 
-The code is the same as in the previous example except for the
-parameters of |\ncput|.  Here, they are |[nrot=:0,npos=.35]|.
-|npos|, which must be set to a number between 0 and 1,
-picks out a position along the connection; the default is .5.
-The parameter |nrot| gives the rotation of the label; the default
-is 0.  If the angle (measure in degrees) is preceeded by a colon,
-as in this example, the angle is measure with respect to the
-direction of the connection at the point at which the label is
-positioned.  The asterisk following |\ncput| annuls the
-transparency of the label.  It is surrounded by a framebox, which
-provides an extra whitespace around the label.  The size of the
-whitespace is controlled by the parameter |labelsep|.
-
-jTree constructs trees by using node connections.  Sometimes it
-is desirable to put a label on a tree branch.  This poses a
-problem, because the tree branch connections are generally drawn
-using |branch=\psline|, which not extablish nodes so that the
-PSTricks connection labeling mechanism does not apply.  But the
-branch parameter can be temporarily changed, if needed.  This is
-illustrated below.
+Labeling branches in jTree trees is not entirely straightforward
+because the branches (by default) are drawn using |\psline|,
+which does not establish PSTricks nodes at the ends of the
+branches.  Since there are no nodes, the labeling mechanism does
+not apply.  It is, however, possible to change the PSTricks macro
+that is used to draw branches by resetting |branch| to |\pcline|,
+which draws the branch exactly the same as |\psline| does but also
+establishes PSTricks nodes at the endpoints.  This is illustrated
+below.
 
 \exh
 \tac|
@@ -319,9 +305,11 @@ illustrated below.
 \subsection Putting labels on circles and circling nodes in
 trees
 
+\ftag{\the\secno.\the\subsecno}[CircleSec]
 We approach this by explicating the code for the display below.
 \bigskip
 
+\qquad
 \jtree[xunit=3em,yunit=3ex,bbadjust=depth 6ex]
 \! = :{A} :{B}@C1 {C}@C2 .
 \psLNode(C1)(C2){.5}{center}
@@ -342,17 +330,109 @@ We approach this by explicating the code for the display below.
 }
 \endjtree|endCLnum%|
 \medskip
-Line 2 draws the tree and establishes ps nodes C1, and C2 (along
-with nodes C1:t, C1:b, C2:t, and C2:b).  Line 3 interpolates the
-a node labeled ``center'' between the nodes C1 and C2.  This will
-be the center of the circle which is drawn.  The circle is drawn
-by making a circle about the origin with radius 1.3 (line 5) and
-pasting this in at the node labeled ``center'' (line 4).  The
-label is attached to the circle before it is paster in at
-``center''.  The bottom left (|bl|) corner of the label is put at
-|(1.3;40)|, which PStricks recognizes as the point at
-distance 1.3 which makes an angle $\rm 40\,degrees$ with the
+Line 2 draws the tree and establishes PSTricks nodes C1, and C2
+(along with nodes C1:t, C1:b, C2:t, and C2:b).  Line 3
+interpolates the a node labeled ``center'' between the nodes C1
+and C2.  This will be the center of the circle which is drawn.
+The circle is drawn by making a circle about the origin with
+radius 1.3 (line 5) and pasting this in at the node labeled
+``center'' (line 4).  The label is attached to the circle before
+it is pasted in at ``center''.  The bottom left (|bl|) corner of
+the label is put at |(1.3;40)|, which PStricks recognizes as the
+point at distance 1.3 from the origin so that the line from the
+origin to the point makes an angle $\rm 40^\circ$ with the
 positive horizontal direction.
+
+\subsubsection Ellipses
+
+\ftag{\the\secno.\the\subsecno.\the\subsubsecno}[EllipseSec]
+There are two challenges in typesetting the display below.  One
+is drawing and positioning the ellipse.  The other is positioning
+``split head'' and drawing the pointer which ends on the
+ellipse.
+
+\exdisplay \qquad
+\jtree[xunit=3em,yunit=2em]
+\! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
+\psLNode(A1)(B1){.5}{AB1}
+\rput{(1,-1)}(AB1){\jtenode*(.9,1){-40}{E1}}
+\rput(E1){\rput[l](1,-1){\rnode[l]{E2}{split head}}}
+\nccurve[angleA=-180,angleB=-60,nodesepB=0,arrows=->]
+   {E2}{E1}
+\endjtree
+\xe
+\bigskip
+\bigskip
+\CLnum
+\jtree[xunit=3em,yunit=2em]
+\! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
+\psLNode(A1)(B1){.5}{AB1}
+\rput{(1,-1)}(AB1){\jtenode*(.9,1){-40}{E1}}
+\rput(E1){\rput[l](1,-1){\rnode[l]{E2}{split head}}}
+\nccurve[angleA=-180,angleB=-60,nodesepB=0,arrows=->]
+   {E2}{E1}
+\endjtree|endCLnum %|
+
+|\rput(BC){\psellipse(.9,1)}| draws an ellipse centered at the
+node BC with $x$-radius .9 and $y$-radius 1 and its $x$-axis in
+line with the $x$-axis of the page.  This needs to be rotated
+about $30^\circ$ clockwise.  One could experiment and decide that
+$34^\circ$ is appropriate and use
+|\rput{34}(BC){\psellipse(.9,1)}| to draw the ellipse. In this
+example, you can let PSTricks figure the rotation out for you
+since the axis of the ellipse is aligned with right
+branches.  In contexts in which an angle is expected, PSTricks
+recognizes $(1,-1)$ as the angle between the $x$-axis (of the
+page) and the direction $(1,-1)$.  So
+|\rput{(1,-1)}(BC){\psellipse(.9,1)}| will draw the ellipse.
+The braces around
+\hbox{|(1,-1)|} are necessary so that |\rput| can recognize that
+an angle is expected.
+Putting the node
+named E1 on the ellipse is a challenge.  jTree provides the macro
+|\jtenode|\index*{+jtenode} to solve the problem.
+\medskip
+|\jtenode(«$x_1$»,«$y_1$»){«$\theta$»}{«name»}| puts a node with
+the given name at the point illustrated below.
+\medskip
+
+\qquad
+\pspicture(-2.1,-1.9)(2.1,1.7)
+\rput(0,0){%
+   \psset{nodesep=0}
+   \psellipse(2,1.4)%
+   \psline(0,-1.5)(0,1.5)%
+   \psline(-2.1,0)(2.1,0)%
+   \pcline[arrows=|*-|*](0,-1.7)(2,-1.7)%
+   \ncput*{$x_1$}
+   \pcline[arrows=|*-|*](2.3,0)(2.3,-1.7)%
+   \ncput*{$y_1$}
+   \jtenode(2,1.4){40}{EE}
+   \psdot(EE)
+   \psline(0,0)(2;{(EE)})
+   \psarc{->}{1}{0}{40}
+   \rput[l](1.1;15){$\theta$}
+}
+\endpspicture
+\medskip
+
+If |\jtenode| is followed directly by an asterisk, the ellipse is
+drawn, otherwise it is not.  This is used on line 6 above.
+\medskip
+
+Line 5 above is worth some attention because it illustrates the
+recursive application of |\rput|.  One of the things that makes
+PSTricks so useful is its ability to position objects relative to
+nodes that PSTricks has already positioned.
+|\rput(E1){\rput[l](1,-1){split head}}| puts ``split head'' in an
+hbox and positions its left edge $(1,-1)$ from the node E1. Line
+6 simply adds a node named E2 to the center of the left edge of
+the hbox containing ``split head''.  E2 is used to draw the
+pointer from ``split head'' to the ellipse.
+
+See Example \gettag[ExSprout] in Section{ExamplesSec} for a complex
+example using the ideas of this section.
+
 
 
 

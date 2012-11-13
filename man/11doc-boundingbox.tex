@@ -1,20 +1,22 @@
 
 \section The bounding box
 
+\ftag{\the\secno}[BBSec]
+
 PSTricks creates dimensionless graphics, but \jTree\ goes to a
 lot of trouble to figure out the sizes of the trees that it
 generates and to put them in appropriately sized boxes.  For
 example:
 
 \exh \tac|
-\psframebox[framesep=0]{\jtree
+\jtree
 \! = {X} :{a} :{a} :{a}
    {\multiline
       this and\cr
       that\endmultiline}.
-\endjtree}
+\endjtree
 |endtac \hfil
-\psframebox[framesep=0]{\jtree
+\psframebox[framesep=0,linestyle=dashed]{\jtree
 \! = {X} :{a} :{a} :{a}
    {\multiline
       this and\cr
@@ -27,39 +29,10 @@ recognize the white space due to |labelgapt|, |labelgapb|,
 |labelstrutt|, and |labelstrutb|.  But it is not bad.
 
 \medskip
-If PSTricks is used to draw arrows, they often extend outside the
+If PSTricks is used to draw node connections, they often extend outside the
 \jTree\ bounding box.
 
 \exh \tac|
-\psframebox[framesep=0]{\jtree
-\! = {X}@A1
-   <right>
-   :{a}
-   :{a}
-      {\multiline
-         this and\cr
-         that\endmultiline}@A2 .
-\nccurve[angleA=210,angleB=200,
-   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
-\endjtree}
-|endtac \hfil
-\psframebox[framesep=0]{\jtree
-\! = {X}@A1
-   <right>
-   :{a}
-   :{a}
-      {\multiline
-         this and\cr
-         that\endmultiline}@A2 .
-\nccurve[angleA=210,angleB=200,
-   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
-\endjtree}
-\xe
-
-This has to be fixed by hand by inserting appropriate kerning.
-
-\exh \tac|
-\psframebox[framesep=0]{\kern2.4em
 \jtree
 \! = {X}@A1
    <right>
@@ -70,9 +43,9 @@ This has to be fixed by hand by inserting appropriate kerning.
          that\endmultiline}@A2 .
 \nccurve[angleA=210,angleB=200,
    ncurv=2,nodesepA=0]{->}{A1:b}{A2}
-\endjtree}
+\endjtree
 |endtac \hfil
-\psframebox[framesep=0]{\kern2.4em\jtree
+\psframebox[framesep=0,linestyle=dashed]{\jtree
 \! = {X}@A1
    <right>
    :{a}
@@ -85,7 +58,81 @@ This has to be fixed by hand by inserting appropriate kerning.
 \endjtree}
 \xe
 
+There are two ways to fix this.  The first is elementary, simply
+inserting kerning as appropriate.
 
+\exh \tac|
+\hbox{\kern2.4em\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+|endtac \hfil
+\psframebox[framesep=0,linestyle=dashed]{\kern2.4em\jtree
+\! = {X}@A1
+   <right>
+   :{a}
+   :{a}
+      {\multiline
+         this and\cr
+         that\endmultiline}@A2 .
+\nccurve[angleA=210,angleB=200,
+   ncurv=2,nodesepA=0]{->}{A1:b}{A2}
+\endjtree}
+\xe
 
+jTree also provides the two parameters which can be used to
+fine-tune the extent of the bounding box, if such adjustment is
+needed in some application.  First, the boolean parameter
+|showbb|\index*{showbb} can be set to |true| to show the bounding
+box. It has the XKV default value |true|, so |\psset{showbb}|
+with no value is sufficient to set it to |true|.  It is always
+set to |false| when |\endjtree| is executed, so the scope of a
+|true| setting does not extend past the first |\endjtree|
+encountered. The parameter |bbadjust|\index*{bbadjust} can be
+used to modify the size of the bounding box from the size which
+|\jtree| naturally computes.  Setting |bbadjust=height 1ex depth
+2ex left 1em right .5em|, for example, alters the size of the box
+as expected.  The specifications of the height, depth, left
+(side), right (side) adjustments are optional, provided that
+there is at least one specified.  |showbb| and |bbajust| are
+illustrated below.
 
+\exh
+\tac|
+\jtree[showbb]
+\! = :{A}@A1 ({[Q]}[labelgap=-.5ex])
+   :{B} {C}@C1 .
+\nccurve[angleA=200,angleB=-140,
+   ncurv=1.4,arrows=->]{A1}{C1}
+\endjtree
+|endtac \hfil
+\jtree[showbb]
+\! = :{A}@A1 ({[Q]}[labelgap=-.5ex]) :{B} {C}@C1 .
+\nccurve[angleA=200,angleB=-140,ncurv=1.4]{->}{A1}{C1}
+\endjtree
+\bigskip
+\tac|
+\jtree[showbb,
+   bbadjust=left 1.2em depth 2.3ex]
+\! = :{A}@A1 ({[Q]}[labelgap=-.5ex])
+   :{B} {C}@C1 .
+\nccurve[angleA=200,angleB=-140,
+   ncurv=1.4,arrows=->]{A1}{C1}
+\endjtree
+|endtac \hfil
+\jtree[showbb,
+   bbadjust=left 1.2em depth 2.3ex]
+\! = :{A}@A1 ({[Q]}[labelgap=-.5ex])
+   :{B} {C}@C1 .
+\nccurve[angleA=200,angleB=-140,
+   ncurv=1.4,arrows=->]{A1}{C1}
+\endjtree
+\xe
 

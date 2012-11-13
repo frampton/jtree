@@ -200,7 +200,7 @@ uses a negative label gap.\par
 \kern3em
 \xe
 
-See examples \gettag[Andrews] and \gettag[Merchant] in \exsec\
+See examples \gettag[ExAndrews] and \gettag[ExMerchant] in \exsec\
 for applications of this trick, which often eliminates the need
 for complex multiline labels.
 
@@ -280,5 +280,74 @@ label box.  |labeloffset| still operates. Contrast the following:
    :{a} {a}.
 \endjtree
 \xe
+
+\subsection 0-dimensional labels
+
+Consider the trees below.
+
+\exdisplay \labels
+\tl\quad \jtree \! = {CP} :{Spec} :{C} {TP}.\endjtree
+\hfil
+\tl\quad\jtree \! = {CP} :{Spec} {C$'$} :{C} {TP}.\endjtree
+\hfil
+\tl\quad \jtree \! = {CP} :{Spec} {\elc{C$'$}} :{C} {TP}.\endjtree
+\xe
+
+The various codings are:
+
+\exdisplay \labels
+\tl\quad |\jtree \! = {CP} :{Spec} :{C} {TP}.\endjtree|
+\medskip
+\tl\quad |\jtree \! = {CP} :{Spec} {C$'$} :{C} {TP}.\endjtree|
+\medskip
+\tl\quad |\jtree \! = {CP} :{Spec} {\elc{C$'$}} :{C} {TP}.\endjtree|
+\xe
+
+The first has no label over the $\fam0 {C,TP}$ subtree.  (b), of
+course does.  The last has a label, but it is 0-dimensional.
+The label itself occupies no space, but |\elc{C$'$}|\index*{+elc} uses PSTricks to
+typset C$'$ a specified displacement from the 0-dimensional
+label.  There are a few commands (|\elc|, |\pnode|, and |\omit|)
+that cause jTree to make a 0-dimensional label, with no gaps, provided they
+appear first in the label.
+\medskip
+
+Note the following.
+
+\exh
+\tac|
+\jtree
+\! = {CP} :{Spec} {} :{C} {TP}.
+\endjtree
+|endtac \hfil
+\jtree \! = {CP} :{Spec} {} :{C} {TP}.\endjtree
+\bigskip
+\tac|
+\jtree
+\! = {CP} :{Spec} {\omit} :{C} {TP}.
+\endjtree
+|endtac \hfil
+\jtree \! = {CP} :{Spec} {\omit} :{C} {TP}.\endjtree
+\xe
+An empty node, |{}|, is not interpreted as 0-dimensional since a
+strut is automatically inserted.
+\medskip
+
+The jTree macro |\elc| (empty label comment) positions the
+comment (it is not the label) according to the setting of the
+parameters |elcxoffset|\index*{elcxoffset},
+|elcyoffset|\index*{elcyoffset}, and |elcref|\index*{elcref}.  The latter
+parameter determines the reference point in the label which is
+placed at the designated position.  The default setting of
+|elcref| is |bl| (bottom left).  The possible settings of
+|elcref| are the same as the possible reference points for the
+PSTricks macro |\rput|, which is used to implement |\elc|.  Note,
+by the way, that since |\rput| is used, the comment positioned by
+|\elc| does not contribute to the bounding box of the tree which
+is constructed. See Section \gettag[BBSec] for discussion of the
+bounding box. The default settings of the positioning dimensions
+are |elcxoffset=.4em| and |elcyoffset=0|.
+
+
 
 

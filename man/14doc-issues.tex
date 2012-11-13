@@ -62,16 +62,17 @@ In typesetting linguistic trees, I more often prefer roman
 to math italic type in math mode.
 \medskip
 3.\enspace
-Earlier versions of \jTree\ were incompatible with certain
-packages which changed the character code of |"|, |<|, |>|, or
-|^|.  Starting with version 2.4 (dated 2007/04/15), \jTree\ no
-longer makes any assumptions about the character codes of these
-characters.  The tree description parser does assume that
-characters in the set $\{|.|,|:|,|(|,|)|,|@|,|!|\}$ are not
-active and have the same category code that they had when
-\pstjtree\/ was loaded.
-Users with unsolved compatibility problems are encouraged
-to report them to me at {\sl j.frampton@neu.edu\/}.
+Early versions of jTree assumed that the characters |^|, |>|,
+|<|, and |"|, which all have special meaning to the jTree parser,
+had their normal category codes when the macro |\jtree| was
+invoked.  This made jTree incompatible with Babel, gb4e, and any
+other macro packages which alter the category code of these
+characters.  This incompatibility has now been removed.  Invoking
+|\jtree| changes the category codes of these characters to the
+normal values.  The change does not apply within labels, so the
+Babel shortcuts can be used in labels. Users with unsolved
+compatibility problems are encouraged to report them to me at
+{\sl j.frampton@neu.edu\/}.
 
 
 
