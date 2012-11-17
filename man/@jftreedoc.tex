@@ -63,9 +63,11 @@
 
 \newcount\Exno
 
-\outer\def\appendix#1\par{\vskip0pt plus.4\vsize\penalty-20
+\outer\def\appendix#1#2 \par{%
+   \vskip0pt plus.4\vsize\penalty-20
    \vskip0pt plus-.4\vsize\bigskip\vskip\parskip
-   {\noindent \titlefont{sec} Appendix #1\par}\nobreak
+   {\noindent \titlefont{sec} Appendix #1: #2\par}\nobreak
+   \ifcontents \expandafter\writecontents#1{#2}\sec\fi \nobreak
    \medskip\nobreak\noindent}
 
 

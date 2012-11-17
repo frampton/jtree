@@ -1,18 +1,16 @@
 \vfil\break
 
-\example\hfil
+\example
 
-\vskip-1em
+% these are not scoped because they are used again later
+\def\scaleA{[scaleby=1.6 1]}%
+\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
+\def\mkovalnode{\rput(-1ex,-.8)
+   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
+
+\exdisplay~
 \hfil
-\def\scaleA{[scaleby=1.6 1]}%
-\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
-\def\mkovalnode{\rput(-1ex,-.8)
-   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
-\jtree[xunit=3em,yunit=1.5em]
-\def\scaleA{[scaleby=1.6 1]}%
-\def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
-\def\mkovalnode{\rput(-1ex,-.8)
-   {\ovalnode[framesep=\psxunit]{K}{\hskip2em}}}%
+\jtree[xunit=3em,yunit=3.5ex,bbadjust=left 1em depth 7ex]
 \! = {$\rm Agr'$}
    :\scaleA{Agr}!a \scaleA{\bf VP}
    <vert>[linestyle=dashed,linewidth=1pt]{\bf V}
@@ -25,15 +23,14 @@
 \nccurve[nodesepB=0]{A1}{K}
 \nccurve[ncurv=1.3]{A2}{A3}
 \endjtree
-
-\vskip5em
+\xe
 
 (Koopman, Hilda. 1995.  On Verbs That Fail to Undergo V-Second,
 {\sl Linguistic Inquiry\/} 26.1:150.)
 
 \medskip
 \codelines
-|\jtree[xunit=3em,yunit=1.5em]
+|\jtree[xunit=3em,yunit=3.5ex]
 \def\scaleA{[scaleby=1.6 1]}%
 \def\scaleB{[scaleby=.6 1,doubleline=true,doublesep=.1ex]}%
 \def\mkovalnode{\rput(-1ex,-.8)
@@ -72,11 +69,13 @@ draft paper to a book manuscript, or to move the tree from the
 text to a footnote with a smaller font.
 
 \smallskip
-|\twelvepoint\jtree[xunit=4.8em,yunit=2em]|, without altering any
-other code, produces\medskip
+|\twelvepoint\jtree[xunit=4.8em,yunit=4.5ex]|, without altering any
+other code, produces:
+
+\exdisplay
 \hfill
 \twelvepoint
-\jtree[xunit=4.8em,yunit=2em]
+\jtree[xunit=4.8em,yunit=4.5ex,bbadjust= depth 11ex left 1.8em]
 \def\mkovalnode{\rput(-1ex,-.8){\ovalnode[framesep=\psxunit]{K}
    {\hskip2em}}}%
 \! = {$\rm Agr'$}
@@ -91,13 +90,15 @@ other code, produces\medskip
 \nccurve[nodesepB=0]{A1}{K}
 \nccurve[ncurv=1.3]{A2}{A3}
 \endjtree
+\xe
 
-\vskip6em
-|\tenpoint\jtree[xunit=2.6em,yunit=1em]|, again
-without altering any other code, produces:\bigskip
+|\tenpoint\jtree[xunit=2.5em,yunit=2.5ex]|, again
+without altering any other code, produces:
 
-\hfil \begingroup\tenpoint
-\jtree[xunit=2.6em,yunit=1em]
+\exdisplay
+\tenpoint
+\hfil
+\jtree[xunit=2.5em,yunit=2.5ex,bbadjust=depth 5ex left 1em]
 \def\mkovalnode{\rput(-1ex,-.8){\ovalnode[framesep=\psxunit]{K}
    {\hskip2em}}}%
 \! = {$\rm Agr'$}
@@ -112,8 +113,7 @@ without altering any other code, produces:\bigskip
 \nccurve[nodesepB=0]{A1}{K}
 \nccurve[ncurv=1.3]{A2}{A3}
 \endjtree
-\vskip4em
-\endgroup
+\xe
 
 The oval is somewhat too small, but that is easily fixed by
 increasing |framesep|.

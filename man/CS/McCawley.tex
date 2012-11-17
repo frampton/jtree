@@ -1,10 +1,8 @@
-\parindent=2em
 
-\example
-
+\vfil\break
+\begingroup \parskip=1ex
 \hrule
-\medskip
-\noindent This example, and the following four, illustrate some
+\noindent The next sequence of examples illustrates some
 techniques for displaying multidominance structures.  I have
 argued that movement should be seen as creating multidominance
 trees with shared structure.  My suspicion is that the difficulty
@@ -21,15 +19,20 @@ should not be underestimated.  The widespread inattention to
 autosegmental structure in phonology is at least partially
 a reflection of the state of typesetting technology.
 
-Since McCawley (1982) seems to be the first linguist to attempt
-to use multidominance to solve a complex syntax problem, we begin
-with one of his examples (right node raising).
-\medskip
+McCawley (1982) seems to be the first linguist to attempt
+to use multidominance to explain a complex syntactical
+phenomenon, so we begin with one of his examples (right node
+raising). \endgroup
+\smallskip
 \hrule
 
 \bigskip
-\noindent\hfil
-\jtree[xunit=2.45em,yunit=1.4em,dirA=(1:-1),nodesep=0]
+\global\advance\Exno by 1
+\noindent  {\titlefont{sub}Example \the\Exno}
+
+\exdisplay
+\hfil
+\jtree[xunit=2.45em,yunit=3ex,angleA={(1,-1)},nodesep=0]
 \def\\{[labelgapb=-4pt]}%
 \def\V{$\rm \overline V$}%
 \! = {S}
@@ -46,11 +49,12 @@ with one of his examples (right node raising).
 \nccurve[angleB=150,ncurvB=1.4]{A2:b}{A3:t}
 \nccurve[angleB=135,ncurvA=.5,ncurvB=2.6]{A1:b}{A3:t}
 \endjtree
+ \xe
 
 \vfil\break
 
 \codelines|
-\jtree[xunit=2.45em,yunit=1.4em,dirA=(1:-1),nodesep=0]
+\jtree[xunit=2.45em,yunit=3ex,angleA={(1,-1)},nodesep=0]
 \def\\{[labelgapb=-4pt]}%
 \def\V{$\rm \overline V$}%
 \! = {S}

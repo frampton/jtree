@@ -15,126 +15,245 @@ specified.  The most useful curve drawing command for annotating
 tree structures is |\nccurve|.  The main point of this section is
 to explain how |\nccurve| works.
 
-\medskip
-Suppose there is a box node and a point node as shown below.  The
-dots are the reference points.
-\bigskip
+\subsection \sl nccurve
 
-\def\templabel{\rput(0,1){\rput(0,2ex){A}}}
-\def\goop{\psframebox[boxsep=false,framesep=0,linecolor=gray]
+Every PSTricks node has a shape and a reference point.Suppose
+there is a box node named A1 and a point node named A2 as shown
+below. The dots are the reference points and the border of the
+box node is indicated by a dashed line.
+
+\newpsstyle{how}{angleA=50,angleB=110,unit=2cm,ncurv=.67,offset=0,nodesep=0}
+\def\goop{\rnode[lB]{A1}{\psframebox[boxsep=false,framesep=0,
+   linecolor=black,linestyle=dashed,linewidth=.4pt]
    {\vrule width0pt height1\psunit depth.5\psunit
-      \hskip\psunit \pnode{QQ}\templabel\hskip\psunit}}
+      \hskip2\psunit}}}
 
-\psset{unit=1.2cm}
-\hfil \pspicture(0,0)(9,2.8)%\psgrid
-\pnode(8,0){B}
-\pnode(8,0){Q}
-\rput(8,0){\rput(0,02ex){B}}
-\rput[B](1,1){\rnode[B]{A}{\goop}}
-\SpecialCoor
-\qdisk(Q){2pt}
-\qdisk(QQ){2pt}
+\exdisplay[style=how]
+\qquad
+\pspicture(0,-0)(4.6,1.5)%\psgrid
+\rput[bl](0,0){\goop}
+\pnode(4,0){A2}
+\psdot(A1)
+\rput[bl](A1){\kern.5em $\fam0 \scriptstyle A1$}
+\psdot(A2)
+\rput[bl](A2){\kern.5em $\fam0 \scriptstyle A2$}
 \endpspicture
+\xe
 
-\bigskip
-The diagram below illustrates how
+PSTricks has a range of macros which can be used to draw
+connections between nodes.  |nccurve| is the most important.  Its
+use is illustrated below.
+
 \medskip
-\hfil|\nccurve[angleA=50,angleB=110]{A}{B}|
-\medskip
-is drawn.
-\bigskip
+|\nccurve[angleA=50,angleB=110]{A1}{A2}|
 
-\let\templabel=\relax
-
-\hfil \pspicture(-.4,0)(8,3)%\psgrid
-\pnode(8,0){B}
-\pnode(8,0){Q}
-\rput[B](1,1){\rnode[B]{A}{\goop}}
-\SpecialCoor
-\qdisk(Q){2pt}
-\qdisk(QQ){2pt}
-\psset{nodesep=0}
-\nccurve[angleA=50,angleB=110]{A}{B}
-\psline[style=dotted](Q)([angle=110,nodesep=2.8]Q)
-\psline[style=dotted](QQ)([angle=50,nodesep=2.8]QQ)
-\psline[style=dotted](QQ)([angle=0,nodesep=.6]QQ)
-\psline[style=dotted](Q)([angle=0,nodesep=.6]Q)
-\psarc{->}(Q){.5}{0}{110}
-\psarc{->}(QQ){.5}{0}{50}
-\rput[bl]([angle=25,nodesep=.6]QQ){\tenpoint$50^\circ$}
-\rput[bl]([angle=55,nodesep=.6]Q){\tenpoint$110^\circ$}
+\exdisplay[style=how]
+\qquad
+\pspicture(0,-0)(4.6,2.4)%\psgrid
+\rput[bl](0,0){\goop}
+\pnode(4,0){A2}
+\rput(A1){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.4;50)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{50}
+   \rput(.7;25){$\scriptstyle 50^\circ$}}
+\rput(A2){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.5;110)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{110}
+   \rput(.7;45){$\scriptstyle 110^\circ$}}
+\psdot(A1)
+\psdot(A2)
+\nccurve[nodesep=0,angleA=50,angleB=110]{A1}{A2}
 \endpspicture
-\bigskip
+\xe
 
-
-
-
-This simple picture can be modified by a number of parameters. In
-addition to the usual parameters like |linewidth|, |linestyle|
-and |arrows| which determine how a geometrical curve is rendered,
-there are six parameters which modify the geometry of the curve
-itself: |ncurvA|, |ncurvB|, |nodesepA|, |nodesepB|, |offsetA|,
-and |offsetB|.  The parameters can be set individually or in
-pairs.  |\psset{nodesep=«x\/»}| induces
+This relatively simple picture can be modified by a number of
+parameters. In addition to the usual parameters like |linewidth|,
+|linestyle| and |arrows| which determine how a geometrical curve
+is rendered, there are six parameters which modify the geometry
+of the curve itself: |ncurvA|, |ncurvB|, |nodesepA|, |nodesepB|,
+|offsetA|, and |offsetB|.  The parameters can be set individually
+or in pairs.  |\psset{nodesep=«x\/»}| induces
 |\psset{nodesepA=«x\/»,nodesepB=«x\/»}|.  |ncurv| and |offset|
-work the same way. We will examine the parameters in turn.
+work the same way. For the display above, the settings are what
+is produced by |\psset{ncurv=.67,offset=0,nodesep=0}|.  The
+displays which follow in the next three sections which show how
+the display above is modified by changing one or the other of
+these parameters.
+\medskip
 
-\medskip |\psset{nodesepA=«x\/»}|
-causes the dimensions of the node box to be adjusted by {\sl
-x\/} before the curve is determined.
+\subsubsection \sl nodesep
 
-\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,linecolor=gray]
-      {\goop}}
-%\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,style=dotted]
-%      {\goop}}
-%\dimpuba=.5\psunit
-\dimpubb=.2\psunit
+|\psset{nodesepA=«x\/»}| causes the dimensions of the node shape
+at the starting node of the connection to be to be adjusted by
+{\sl x\/} before the curve is determined.  |nodesepB| affects the
+finishing point.  Point nodes are adjusted to be disks.
+
 \bigskip
-\hfil \pspicture(-.2,0)(8,3)%\psgrid
-\pnode(8,0){B}
-\pnode(8,0){Q}
-\rput[B](1,1){\rnode[B]{A}{\Goop}}
-\nccurve[angleA=50,angleB=110,%nodesepB=\dimpuba,
-   nodesepA=\dimpubb,nodesepB=0]{A}{B}
-\SpecialCoor
-\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
-\psline[style=dotted](QQ)([angle=50,nodesep=2.6]QQ)
-\qdisk(Q){2pt}
-\qdisk(QQ){2pt}
+|\nccurve[angleA=50,angleB=110,nodesepA=«$x$»]{A1}{A2}|
+\par\nobreak\smallskip
+for $x=0$ and $x=.3\,$.\par\nobreak
+
+\exdisplay[style=how]
+\qquad\pspicture(0,-.5)(4.6,2.4)%\psgrid
+\rput[bl](0,0){\goop}
+\pnode(4,0){A2}
+\rput(A1){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.4;50)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{50}
+   \rput(.7;25){$\scriptstyle 50^\circ$}}
+\rput(A2){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.5;110)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{110}
+   \rput(.7;45){$\scriptstyle 110^\circ$}}
+\psdot(A1)
+\psdot(A2)
+\rput(A1){\psframe[boxsep=false,framesep=0,
+   linecolor=black,linestyle=dotted,linewidth=.8pt](-.3,-.8)(2.3,1.3)}
+\nccurve[nodesepA=0]{A1}{A2}
+\naput[npos=.02,labelsep=1pt]{$\scriptstyle 0$}
+\nccurve[nodesepA=.3]{A1}{A2}
+\naput[npos=.02,labelsep=1pt]{$\scriptstyle .3$}
 \endpspicture
-\bigskip
+\xe
 
-The effect of |ncurv| is the most subtle.  One can imagine that
-the curve is ``pulled'' in the directions of the arrows below.
-You can think of |ncurv| as setting the strength of the pulls.
-The default is $.67$.  The picture below shows the curves that
-are drawn with various settings of |ncurv|.
+The first display below uses the default {\sl nodesep\/}
+parameters. The second shows the effects of different settings.
+Modification of the {\sl nodesep\/} parameters is very useful in
+various contexts.
 
-\bigskip
-\hfil \pspicture(-.2,0)(8,4.1)%\psgrid
-\pnode(8,0){B}
-\pnode(8,0){Q}
-\rput[B](1,1){\rnode[B]{A}{\Goop}}
-\psset{angleA=50,angleB=110,nodesepA=\dimpubb,
-   nodesepB=0,labelsep=3pt}
-\nccurve[ncurv=.4]{A}{B}
-\bput(.35){\tenrm .4}
-\nccurve[ncurv=.67]{A}{B}
-\bput(.35){\tenrm .67}
-\nccurve[ncurv=1]{A}{B}
-\bput(.35){\tenrm 1}
-\nccurve[ncurv=1.4]{A}{B}
-\bput(.4){\tenrm 1.4}
-\SpecialCoor
-\psline[style=dotted]{->}(Q)([angle=110,nodesep=4]Q)
-\psline[style=dotted]{->}(QQ)([angle=50,nodesep=4]QQ)
-\qdisk(Q){2pt}
-\qdisk(QQ){2pt}
+\exh[xunit=2em,yunit=2ex]
+\psset{xunit=2em,yunit=2ex}
+\tac|
+\jtree \! = :{A}@A1 :{B} :{C}@A2 {D}.
+\nccurve[angleA=-180,angleB=-90]
+   {A2}{A1}\endjtree
+|endtac \hfil
+\jtree \! = :{A}@A1 :{B} :{C}@A2 {D}.
+\nccurve[angleA=-180,angleB=-90]{A2}{A1}\endjtree
+
+\tac|
+\jtree[nodesepA=1.5ex,nodesepB=.2ex]
+\! = :{A}@A1 :{B} :{C}@A2 {D}.
+\nccurve[angleA=-180,angleB=-90]
+   {A2}{A1}\endjtree
+|endtac \hfil
+\jtree[nodesepA=1.5ex,nodesepB=.2ex]
+\! = :{A}@A1 :{B} :{C}@A2 {D}.
+\nccurve[angleA=-180,angleB=-90]{A2}{A1}\endjtree
+\xe
+
+
+\subsection \sl offset
+
+|\psset{offsetA=«$x$»}| shifts the starting point of the
+connection perpindicular to the curve a distance $x$.
+If $x>0$, the shift is to the left looking in the direction of
+the curve away from the starting point.  |offsetB| has the
+corresponding effect with respect to the finishing point.
+
+\medskip
+|\nccurve[angleA=50,angleB=110,offsetA=«$x$»]{A1}{A2}|
+\smallskip
+for $x=0$, $x=-.3$, and $x=+.3\,$.
+
+\exdisplay[style=how]
+\qquad\pspicture(0,-.4)(4.6,2.4)%\psgrid
+\rput[bl](0,0){\goop}
+\pnode(4,0){A2}
+\rput(A1){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.4;50)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{50}
+   \rput(.7;25){$\scriptstyle 50^\circ$}}
+\rput(A2){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.5;110)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{110}
+   \rput(.7;45){$\scriptstyle 110^\circ$}}
+\psdot(A1)
+\psdot(A2)
+\rput(.839,1.5){\psline[linewidth=.4pt,linecolor=gray](.5;-40)(.5;140)}
+\nccurve[nodesep=0,angleA=50,angleB=110]{A1}{A2}
+\nbput[npos=.06,labelsep=0]{$\scriptstyle 0$}
+\nccurve[nodesep=0,angleA=50,angleB=110,offsetA=.3]{A1}{A2}
+\nbput[npos=.06,labelsep=0]{$\scriptstyle +.3$}
+\nccurve[nodesep=0,angleA=50,angleB=110,offsetA=-.3]{A1}{A2}
+\nbput[npos=.06,labelsep=0]{$\scriptstyle -.3$}
 \endpspicture
-\bigskip
+\xe
 
-Here is a simple illustration of the use of |ncurv|. There is a
-typesetting problem with the pointer below which must be fixed.\par\nobreak
+Here is a simple application of using the offset parameters that
+might be appropriate for some special emphasis.\par\nobreak
+
+\exh
+\tac|
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+|endtac \hfil
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+\xe
+
+This construction is used in example \gettag[Chung2]
+in \exsec.  Example \gettag[ExBilink] in \exsec\ also uses the
+offset parameters.
+
+
+\subsection \sl ncurv
+
+\medskip
+|ncurv| affects the ``stiffness'' of the curve.
+
+\medskip
+|\nccurve[angleA=50,angleB=110,ncurv=«$x$»]{A1}{A2}|
+\smallskip
+for $x=.4$, $x=.67$, $x=1$, and $x=1.4\,$.
+
+\exdisplay[style=how]
+\qquad\pspicture(0,-.4)(4.6,2.8)%\psgrid
+\rput[bl](0,0){\goop}
+\pnode(4,0){A2}
+\rput(A1){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.4;50)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{50}
+   \rput(.7;25){$\scriptstyle 50^\circ$}}
+\rput(A2){\psline[linewidth=.4pt,linecolor=gray](0,0)(2.5;110)
+   \psline[linewidth=.4pt,linecolor=gray](0,0)(.6,0)
+   \psarc[linewidth=.4pt,arrowsize=3pt]{->}(0,0){.4}{0}{110}
+   \rput(.7;45){$\scriptstyle 110^\circ$}}
+\psdot(A1)
+\psdot(A2)
+%\rput(.839,1.5){\psline[linewidth=.4pt,linecolor=gray](.5;-40)(.5;140)}
+\nccurve[nodesep=0,angleA=50,angleB=110,ncurv=.4]{A1}{A2}
+\psset{labelsep=1pt}
+\nbput{$\scriptstyle .4$}
+\nccurve[nodesep=0,angleA=50,angleB=110,ncurv=.67]{A1}{A2}
+\nbput{$\scriptstyle .67$}
+\nccurve[nodesep=0,angleA=50,angleB=110,ncurv=1]{A1}{A2}
+\nbput{$\scriptstyle 1$}
+\nccurve[nodesep=0,angleA=50,angleB=110,ncurv=1.4]{A1}{A2}
+\nbput{$\scriptstyle 1.4$}
+%\nccurve[nodesep=0,angleA=50,angleB=110,offsetA=.3]{A1}{A2}
+%\nccurve[nodesep=0,angleA=50,angleB=110,offsetA=-.3]{A1}{A2}
+%\rput(.838,1.5){\rput(.3;-40)
+%   {\rput[tr](0,-.5ex){$\scriptstyle
+%-.3$}}}
+%\rput(.838,1.5){\rput(-.3;-40)
+%   {\rput[tr](0,-.5ex){$\scriptstyle
+%+.3$}}}
+%\psdot(.838,1.5)
+\endpspicture
+\xe
+
+Here is a simple illustration of the use of |ncurv|. The
+pointer below comes too close to ``B''.  Some adjustment is
+needed.
 
 \exh
 \tac|
@@ -168,69 +287,48 @@ One way to fix the problem is to increase the value of the
 \bigskip
 \xe
 
-|\psset{ncurv=«x\/»}| has the effect
-|\psset{ncurvA=«x\/»,ncurvB=«x\/»}|.
-Sometimes it is advantageous to set the parameters to different
-values.  Experimentation will quickly give you a feel for how
-this works.
+\medskip
+\subsection Specifying angles
+
+Previous versions of jTree discussed parameters |dirA| and |dirB|
+which could be used to set |angleA| and |angleB| indirectly, so
+that they could be easily aligned with branches.  These
+parameters should now be considered obsolete (although they will
+still work as before).\footnote{$^1$}{The more robust handling of
+``special coordinates'' in recent versions of PSTricks makes the
+the {\sl dir\/} parameters unnecessary.}
+
 
 \medskip
-Finally, we come to the two |offset| parameters.
-|\psset{offsetA=«x\/»}| causes the starting point to be offset a
-distance {\sl x\/} perpindicular to the starting direction. The
-direction is to the left (looking in the starting direction) if
-{\sl x\/} is positive.
-
-%\dimpuba=.5\psunit
-%\dimpubb=.2\psunit
-\bigskip
-\hfil \pspicture(-.2,0)(8,3.4)%\psgrid
-\pnode(8,0){B}
-\pnode(8,0){Q}
-\rput[B](1,1){\rnode[B]{A}{\Goop}}
-\SpecialCoor
-\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
-\pnode([angle=50,nodesep=3]QQ){L1}
-\psline[style=dotted](QQ)(L1)
-\qdisk(Q){2pt}
-\qdisk(QQ){2pt}
-\pnode(2.007,2.2){Z}
-\rput([angle=140,nodesep=.3]Z){\pnode{Z2}}
-\nccurve[angleA=50,angleB=110,nodesep=0]{Z2}{B}
-\psline[style=dotted](Z)([angle=140,nodesep=1]Z)
-\psline[style=dotted]([angle=140,nodesep=.3]L1)%
-   ([angle=140,nodesep=.3]QQ)
-\endpspicture
-\bigskip
-
-|\psset{offsetB=«x\/»}| causes the finishing point to be
-displaced a distance {\sl x\/} perpindicular to the finishing
-direction, to the left.  Remember that the finishing direction
-points toward the node, not back along the curve.
-
-\medskip
-Here is a simple application that might be appropriate for
-some special emphasis.\par\nobreak
+The challenge in the example below is to set |angleA| so that the
+ncurve joins smoothly with the (short) left branch. One could
+convert $\fam0 2\,em$ and $\fam0 3\,ex$ to the same units
+(points, for example), and then use trigonometry to determine the
+|angleA| setting.  This is at best tedious. Fortunately, in
+contexts in which PSTricks expects an angle, it interprets
+$(x,y)$ as the angle corresponding to the direction $(x,y)$.
+$(-1,-1)$ is the direction of left branches in this example. Note
+that in setting |angleA| in this way, braces are needed around
+the direction so that the parameter parsing algorithm does not
+get confused by the comma in the direction.
+|\psset{angleA=(-1,-1)}| would try (unsuccessfully) to set
+|angleA| to |(-1| and to find a parameter |-1)|.
 
 \exh
+\jtree[xunit=2em,yunit=3ex,bbadjust=left 1em]
+\! = {A} <left>[scaleby=.4]@A1 ^<right> :{B} :{C}@A2 \etc.
+\nccurve[angleA={(-1,-1)},angleB=190,nodesepA=0,
+   ncurvA=1,ncurvB=1.2,arrows=->]{A1}{A2}
+\endjtree
+\hfill
 \tac|
-\jtree[xunit=3em,yunit=2em]
-\! = :{A}@A {B} <vert>{C}@C .
-\psset{angleA=-90,angleB=180}
-\nccurve[offsetA=.5ex]{->}{A}{C}
-\nccurve[offsetA=-.5ex]{A}{C}
+\jtree[xunit=2em,yunit=3ex,bbadjust=left 1em]
+\! = {A} :[scaleby=.4]@A1 :{B} :{C}@A2 \etc.
+\nccurve[arrows=->,angleA={(-1,-1)},angleB=190,
+   nodesepA=0,ncurvA=1,ncurvB=1.2]{A1}{A2}
 \endjtree
 |endtac \hfil
-\jtree[xunit=3em,yunit=2em]
-\! = :{A}@A {B} <vert>{C}@C .
-\psset{angleA=-90,angleB=180}
-\nccurve[offsetA=.5ex]{->}{A}{C}
-\nccurve[offsetA=-.5ex]{A}{C}
-\endjtree
 \xe
-
-This construction is used several times in example \gettag[Chung2]
-in \exsec.
 
 \subsection Labeling connections between nodes
 
@@ -247,6 +345,7 @@ User's Guide for all the details.
 For linguists, |\ncput| is probably the most useful of the
 PSTricks connection labeling macros. Here is one example.
 
+\exdisplay
 \jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
 \! = :{who}@A1 :{did}@B1 :{Jack}
    :{\sl t}@B2 :{see} {\sl t}@A2 .
@@ -255,7 +354,7 @@ PSTricks connection labeling macros. Here is one example.
 \ncput*[npos=.65]{\tenpoint\it wh-movement}
 \nccurve{B1}{B2}
 \endjtree
-\bigskip
+\xe
 
 \codelines
 |\jtree[xunit=3em,yunit=1em]
@@ -275,15 +374,18 @@ around the label.  The size of the whitespace is controlled by
 the parameter |framesep|.  The default value is used above.
 \medskip
 
+\subsection Labeling tree branches
+
 Labeling branches in jTree trees is not entirely straightforward
 because the branches (by default) are drawn using |\psline|,
 which does not establish PSTricks nodes at the ends of the
 branches.  Since there are no nodes, the labeling mechanism does
 not apply.  It is, however, possible to change the PSTricks macro
 that is used to draw branches by resetting |branch| to |\pcline|,
-which draws the branch exactly the same as |\psline| does but also
-establishes PSTricks nodes at the endpoints.  This is illustrated
-below.
+which draws the branch exactly as |\psline| does but also
+establishes PSTricks nodes at the endpoints. (The parameter
+|branch| is discussed in Section \gettag[CustomSec].) This is
+illustrated below.
 
 \exh
 \tac|
@@ -300,7 +402,8 @@ below.
 \endjtree
 \xe
 |"| is an escape from parsing the tree description, so that
-|"{...}| simply executes the material inside the braces.
+|"{...}| simply executes the material inside the braces.  The |"|
+escape is discussed in Section \gettag[EscapeSec].
 
 \subsection Putting labels on circles and circling nodes in
 trees
@@ -310,38 +413,51 @@ We approach this by explicating the code for the display below.
 \bigskip
 
 \qquad
-\jtree[xunit=3em,yunit=3ex,bbadjust=depth 6ex]
+\jtree[unit=3em,yunit=3ex,bbadjust=depth 6ex]
 \! = :{A} :{B}@C1 {C}@C2 .
 \psLNode(C1)(C2){.5}{center}
 \rput(center){%
    \pscircle{1.3}
-   \rput[bl](1.3;40){$\leftarrow$ fronted}
-}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}}
 \endjtree
 \bigskip
 
 \CLnum
-\jtree[xunit=3em,yunit=3ex]
+\jtree[unit=3em,yunit=3ex]
 \! = :{A} :{B}@C1 {C}@C2 .
 \psLNode(C1)(C2){.5}{center}
 \rput(center){%
    \pscircle{1.3}
-   \rput[bl](1.3;40){$\leftarrow$ fronted}
-}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}}
 \endjtree|endCLnum%|
 \medskip
 Line 2 draws the tree and establishes PSTricks nodes C1, and C2
 (along with nodes C1:t, C1:b, C2:t, and C2:b).  Line 3
-interpolates the a node labeled ``center'' between the nodes C1
+uses the PSTricks macro |\psLNode| to
+interpolate a node labeled ``center'' between the nodes C1
 and C2.  This will be the center of the circle which is drawn.
 The circle is drawn by making a circle about the origin with
 radius 1.3 (line 5) and pasting this in at the node labeled
 ``center'' (line 4).  The label is attached to the circle before
 it is pasted in at ``center''.  The bottom left (|bl|) corner of
-the label is put at |(1.3;40)|, which PStricks recognizes as the
-point at distance 1.3 from the origin so that the line from the
-origin to the point makes an angle $\rm 40^\circ$ with the
-positive horizontal direction.
+the label is put at |(1.3;40)|, which PStricks interprets as the
+point at on the circle at angle $\rm 40^\circ$.
+
+\medskip
+Note that on line 1, the |unit| parameter (not the |xunit|
+parameter) is set to $\fam0 3\,em$.  The reason is this.
+|\pscircle{«$x$»}|, if $x$ is a number, draws a circle of radius
+$x$ psunits. PSTricks keeps track of 3 units of measurement:
+psxunits, psyunits, and psunits. {\it They can all be different.}
+If the unit parameter is not set on line 1, the psunits are
+simply inherited from the environment.  It is set first, because
+setting the psunits to a value has the side effect of setting the
+psxunits and psyunits to the same value.  Setting the psxunits or
+psyunits leaves the psunits unchanged.  Finally, note that it is
+relatively easy to estimate the radius of the circle in terms of
+the horizontal dimension of the branches; about 1.2 or 1.3 times
+as long.  That horizontal dimension is exactly 1 psunit.  It can
+be fine-tuned by visual inspection.
 
 \subsubsection Ellipses
 
@@ -352,7 +468,7 @@ is drawing and positioning the ellipse.  The other is positioning
 ellipse.
 
 \exdisplay \qquad
-\jtree[xunit=3em,yunit=2em]
+\jtree[xunit=3em,yunit=2em,bbadjust=depth 6ex]
 \! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
 \psLNode(A1)(B1){.5}{AB1}
 \rput{(1,-1)}(AB1){\jtenode*(.9,1){-40}{E1}}
@@ -361,8 +477,7 @@ ellipse.
    {E2}{E1}
 \endjtree
 \xe
-\bigskip
-\bigskip
+
 \CLnum
 \jtree[xunit=3em,yunit=2em]
 \! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
@@ -374,28 +489,18 @@ ellipse.
 \endjtree|endCLnum %|
 
 |\rput(BC){\psellipse(.9,1)}| draws an ellipse centered at the
-node BC with $x$-radius .9 and $y$-radius 1 and its $x$-axis in
-line with the $x$-axis of the page.  This needs to be rotated
-about $30^\circ$ clockwise.  One could experiment and decide that
-$34^\circ$ is appropriate and use
-|\rput{34}(BC){\psellipse(.9,1)}| to draw the ellipse. In this
-example, you can let PSTricks figure the rotation out for you
-since the axis of the ellipse is aligned with right
-branches.  In contexts in which an angle is expected, PSTricks
-recognizes $(1,-1)$ as the angle between the $x$-axis (of the
-page) and the direction $(1,-1)$.  So
-|\rput{(1,-1)}(BC){\psellipse(.9,1)}| will draw the ellipse.
-The braces around
-\hbox{|(1,-1)|} are necessary so that |\rput| can recognize that
-an angle is expected.
-Putting the node
-named E1 on the ellipse is a challenge.  jTree provides the macro
-|\jtenode|\index*{+jtenode} to solve the problem.
+node AB1 with $x$-radius .9 psxunits and $y$-radius 1 psyunit and
+its $x$-axis in line with the $x$-axis of the page.  This needs
+to be rotated clockwise to align with the right branches.
+Putting the node named E1 on the ellipse is a challenge.  jTree
+provides the macro |\jtenode|\index*{+jtenode} to solve the
+problem.
+
 \medskip
 |\jtenode(«$x_1$»,«$y_1$»){«$\theta$»}{«name»}| puts a node with
 the given name at the point illustrated below.
-\medskip
 
+\exdisplay[unit=.5in]
 \qquad
 \pspicture(-2.1,-1.9)(2.1,1.7)
 \rput(0,0){%
@@ -414,7 +519,7 @@ the given name at the point illustrated below.
    \rput[l](1.1;15){$\theta$}
 }
 \endpspicture
-\medskip
+\xe
 
 If |\jtenode| is followed directly by an asterisk, the ellipse is
 drawn, otherwise it is not.  This is used on line 6 above.
@@ -430,7 +535,8 @@ hbox and positions its left edge $(1,-1)$ from the node E1. Line
 the hbox containing ``split head''.  E2 is used to draw the
 pointer from ``split head'' to the ellipse.
 
-See Example \gettag[ExSprout] in Section{ExamplesSec} for a complex
+\medskip
+See Example \gettag[ExSprout] in Section \gettag[ExamplesSec] for a complex
 example using the ideas of this section.
 
 

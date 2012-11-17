@@ -3,8 +3,8 @@
 
 \ftagEx[ExAndrews]
 
-\hfil
-\jtree[xunit=2.2em,yunit=.7em]
+\exdisplay
+\jtree[xunit=2.2em,yunit=1.5ex,bbadjust=depth 2ex]
 \def\\{[labelgapb=-.5ex]}%
 \! = {S}
    :({NP}\\{that book}@A1 ) \jtwide{S/NP}
@@ -18,18 +18,37 @@
    :({V}\\{read}) {NP/NP}\\{e}@A2 .
 \nccurve[angleA=210,angleB=-90]{->}{A2}{A1}
 \endjtree
+\xe
+
+\codelines
+|\jtree[xunit=2.2em,yunit=1.5ex]
+\def\\{[labelgapb=-.5ex]}%
+\! = {S}
+   :({NP}\\{that book}@A1 ) \jtwide{S/NP}
+   :({NP}\\{I}) {VP/NP}
+   :({V}\\{want}) {VP/NP}
+   :{\it to} {VP/NP}
+   <left>({V}\\{ask}) ^<vert>({NP}\\{Mary}) ^<wideright>{VP/NP}
+   :{\it to} {VP/NP}
+   <left>({V}\\{tell}) ^<vert>({NP}\\{Tom}) ^<wideright>{VP/NP}
+   :{\it to} {VP/NP}
+   :({V}\\{read}) {NP/NP}\\{e}@A2 .
+\nccurve[angleA=210,angleB=-90]{->}{A2}{A1}
+\endjtree|endcodelines
+
 
 \vskip3em
 (This is an adaptation of an example in the documentation to
 Avery Andrew's tree formatting preprocessor.)
 
+\medskip
 Some may prefer the following formatting style.  The code is
 almost identical to the code for the style above.  |\\| has a
 different definition and |<vartri>| is used instead of |\\|
 in one place.\bigskip
 
-\hfil
-\jtree[xunit=2.2em,yunit=.7em]
+\exdisplay
+\jtree[xunit=2.2em,yunit=1.5ex,bbadjust=depth 2ex]
 \def\\{<shortvert>}%
 \! = {S}
    :({NP}<vartri>{that book}@A1 ) \jtwide{S/NP}
@@ -43,5 +62,24 @@ in one place.\bigskip
    :({V}\\{read}) {NP/NP}\\{e}@A2 .
 \nccurve[angleA=210,angleB=-90]{->}{A2}{A1}
 \endjtree
+\xe
+
+
+\codelines
+|\jtree[xunit=2.2em,yunit=1.5ex]
+\def\\{<shortvert>}%
+\! = {S}
+   :({NP}<vartri>{that book}@A1 ) \jtwide{S/NP}
+   :({NP}\\{I}) {VP/NP}
+   :({V}\\{want}) {VP/NP}
+   :{\it to} {VP/NP}
+   <left>({V}\\{ask}) ^<vert>({NP}\\{Mary}) ^<wideright>{VP/NP}
+   :{\it to} {VP/NP}
+   <left>({V}\\{tell}) ^<vert>({NP}\\{Tom}) ^<wideright>{VP/NP}
+   :{\it to} {VP/NP}
+   :({V}\\{read}) {NP/NP}\\{e}@A2 .
+\nccurve[angleA=210,angleB=-90]{->}{A2}{A1}
+\endjtree|endcodelines
+
 
 

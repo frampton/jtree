@@ -134,7 +134,7 @@ trees. The entire inventory of predefined branches is:\medskip
 |medskip
 \defbranch<colonA>(1)(1)
 \defbranch<colonB>(1)(-1)
-|endcframe
+|endcframe %|
 
 Of course, users can define whatever branches they find need for.
 |<colonA>| and |<colonB>| are the branches used by the colon
@@ -181,6 +181,94 @@ macro.  They are defined to be the same as |<left>| and
       ^<right>{c} ^<wideright>{d}.
 \endjtree
 \dc
+
+\subsection Custom branches
+
+\ftag{\the\secno.\the\subsecno}[CustomSec]
+
+\jTree\ ordinarily draws branches using the PSTricks macro
+|\psline|, but it does this in an indirect way.  It actually
+calls the macro |\branch@type| to do the drawing; and \jTree\
+contains the line |\let\branch@type=\psline|.  If the user says
+|\psset{branch=\customline}|, then |\branch@type| is made
+|\customline| instead of |\psline| with the usual locality. If
+|\customline| is suitably defined then it will be used to draw
+branches.  A few alternative macros for drawing branches are
+included in \jTree.  The enterprising user might want to define
+appropriate zigzag or coil macros, following the PSTricks model.
+\jTree\ provides |\blank| (see example \gettag[Zubi] in \exsec\
+for an illustration of its use), |\brokenbranch| (see example
+\gettag[Frampton2] in \exsec), and |\etcbranch| (see example
+\gettag[Frampton1] in \exsec).%
+\index*{branch}\index*{+blank}\index*{+brokenbranch}%,
+\index*{+etcbranch}
+
+\medskip
+Here is an example which uses various custom branches.  It is
+tempting to comment on the syntax which might prompt a display like
+this.  But, as we linguists say, I will leave that for future
+work.
+
+\exdisplay
+\jtree[xunit=2em,yunit=4ex,etcratio=.5]
+\! = <right>[scaleby= 6 0,branch=\blank]!a
+^{CP$_1$}
+<left>[branch=\etcbranch]
+^<right>[branch=\brokenbranch,scaleby=4.5]{VP}
+<left>[branch=\etcbranch] ^<right>{DP}@A1 <tri>{\omit}.
+\!a = {CP$_2$}
+<left>[branch=\etcbranch]
+^<right>[branch=\brokenbranch,scaleby=2]{VP}
+<left>[branch=\etcbranch] ^<right>[scaleby=.3]@A2 .
+\nccurve[angleA={(1,1)},angleB={(1,-1)},nodesep=0]{A1:t}{A2}
+\endjtree
+\xe
+
+\codelines
+|\jtree[xunit=2em,yunit=4ex,etcratio=.5]
+\! = <right>[scaleby= 6 0,branch=\blank]!a
+^{CP$_1$}
+<left>[branch=\etcbranch]
+^<right>[branch=\brokenbranch,scaleby=4.5]{VP}
+<left>[branch=\etcbranch] ^<right>{DP}@A1 <tri>.
+\!a = {CP$_2$}
+<left>[branch=\etcbranch]
+^<right>[branch=\brokenbranch,scaleby=2]{VP}
+<left>[branch=\etcbranch] ^<right>[scaleby=.3]@A2 .
+\nccurve[angleA={(1,1)},angleB={(1,-1)},nodesep=0]{A1:t}{A2}
+\endjtree|endcodelines
+\medskip
+Shortly, we will see how to use `tags' like A1 and A2; and the
+how to use |\nccurve| to connect tagged positions. The proportion
+of the ``etc branch'' that is dotted is controlled by a parameter
+\index*{etcratio}|etcratio| with default value .75. The style for
+the dotted portion is defined by:
+
+\cframe
+|\newpsstyle{etc}{nodesepB=0,nodesepA=1pt,linestyle=dotted,
+   linewidth=1.2pt,dotsep=2pt}
+|endcframe
+
+The user can overwrite the specification of this style
+with a new specification, if desired.
+
+\medskip
+\pstjtree\/ contains the macro definition:
+
+\cframe|\def\etc{[branch=\etcbranch,scaleby=.7]}|endcframe
+\index*{+etc}\ftagpage[etcpage]
+
+So you can write:
+
+\exh \tac|
+\jtree
+\! = :{A} :{B} :{C}() \etc.
+\endjtree
+|endtac \hfil
+\jtree
+\! = :{A} :{B} :{C}() \etc.
+\endjtree
+\xe
 
 
 

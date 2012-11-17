@@ -2,11 +2,12 @@
 \vfil\break
 
 \example
-
 \ftag{\the\Exno}[Zubi]
+
+\exdisplay~
 \hfil
-%% ACTIVE CODE
-\jtree[xunit=2.5em,yunit=2em]
+\jtree[xunit=2.5em,yunit=4.5ex,bbadjust=depth 2ex
+   left 1em right 1.5em]
 \def\ovalstuff{\vtop{\hbox{arg$^3$}%
    \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
 \! = {V}@B1
@@ -18,17 +19,15 @@
 \nccurve[angleA=150,angleB=180,ncurv=1.2]{B2}{B1}
 \nccurve[angleA=90,angleB=0,ncurv=.8]{K}{B1}
 \endjtree
-%% END ACTIVE CODE
-\kern6em
+\xe
 
-\vskip2.5em
 (Zubizaretta, Maria Luisa. 1985.
 Morphology and Morphosyntax: Romance Causatives,
 {\sl Linguistic Inquiry\/} 16.2, p.~276.)
 
 \medskip
 \codelines
-|\jtree[xunit=2.5em,yunit=2em]
+|\jtree[xunit=2.5em,yunit=4.5ex]
 \def\ovalstuff{\vtop{\hbox{arg$^3$}%
    \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
 \! = {V}@B1
@@ -41,19 +40,22 @@ Morphology and Morphosyntax: Romance Causatives,
 \nccurve[angleA=90,angleB=0,ncurv=.8]{K}{B1}
 \endjtree
 |endcodelines
+
 \medskip
 In order to see how this tree is put together, consider first:
-\medskip
-\hfil\jtree[xunit=2.5em,yunit=2em]
+
+\exdisplay
+\hfil\jtree[xunit=2.5em,yunit=4.5ex]
 \! = {V}
    <left>{face}({arg$^1$})
    ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
    ^<right>[scaleby=3 1]
       {X}{arg$^3$}.
 \endjtree
-\bigskip
+\xe
+
 \codelines
-|\jtree[xunit=2.5em,yunit=2em]
+|\jtree[xunit=2.5em,yunit=4.5ex]
 \! = {V}
    <left>{face}({arg$^1$})
    ^<right>{$\rm [_V\,$leggere]}({arg$^2$})
@@ -61,11 +63,13 @@ In order to see how this tree is put together, consider first:
    {arg$^3$}.
 \endjtree
 |endcodelines
+
 \medskip
 Then:
 \medskip
-\hfil
-\jtree[xunit=2.5em,yunit=2em]
+
+\exdisplay
+\jtree[xunit=2.5em,yunit=4.5ex]
 \def\ovalstuff{\vtop{\hbox{arg$^3$}%
    \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
 \! = {V}
@@ -74,10 +78,11 @@ Then:
    ^<right>[scaleby=3 1,branch=\blank]{}
       {\ovalstuff}.
 \endjtree
+\xe
 
 \medskip
 \codelines
-|\jtree[xunit=2.5em,yunit=2em]
+|\jtree[xunit=2.5em,yunit=4.5ex]
 \def\ovalstuff{\vtop{\hbox{arg$^3$}%
    \hbox to 4em{(\thinspace \leaders\hrule\hfil\ NP)}}}%
 \! = {V}

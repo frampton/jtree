@@ -7,9 +7,9 @@ The following display is from Christos Vlachos, modeled on Chung,
 Ladusaw \& McCloskey 1995: 247, (16).  (His code was slightly
 modified in order to illustrate a few points of general
 interest.)  It uses ideas from Section \gettag[CircleSec].
-\bigskip
 
-\quad \jtree[xunit=3.5em,yunit=1em,elcxoffset=.7ex,
+\exdisplay
+\quad \jtree[unit=3.5em,yunit=1em,elcxoffset=.7ex,
    elcyoffset=.7ex,bbadjust=height 1ex depth 4ex]
 \defbranch<wideright>(1)(-2/3)
 \defbranch<shortright>(.5)(-2/3)
@@ -35,18 +35,16 @@ interest.)  It uses ideas from Section \gettag[CircleSec].
 \ncput*[npos=.4]{\it merger}
 \psLNode(joan)(PPbot){.5}{center1}
 \psLNode(vp)(PPbot){.5}{center2}
-\rput(center1){\pscircle{8.8}
-   \rput[l](8.8;30){$\,\longleftarrow$ copying}}
-\rput(center2){\pscircle{3.5}
-   \rput[l](3.5;40){$\,\longleftarrow$ sprouting}}
+\rput(center1){\pscircle{2.5}
+   \rput[l](2.5;30){$\,\longleftarrow$ copying}}
+\rput(center2){\pscircle{1}
+   \rput[l](1;40){$\,\longleftarrow$ sprouting}}
 \endjtree
-
-
-\bigskip
+\xe
 
 \CLnum
-\jtree[xunit=3.5em,yunit=1em,elcxoffset=.7ex,
-   elcyoffset=.7ex,bbadjust=height 1ex depth 4ex]
+\jtree[unit=3.5em,yunit=1em,elcxoffset=.7ex,
+   elcyoffset=.7ex]
 \defbranch<wideright>(1)(-2/3)
 \defbranch<shortright>(.5)(-2/3)
 \defbranch<steepright>(.7)(-3/2)
@@ -71,10 +69,10 @@ interest.)  It uses ideas from Section \gettag[CircleSec].
 \ncput*[npos=.4]{\it merger}
 \psLNode(joan)(PPbot){.5}{center1}
 \psLNode(vp)(PPbot){.5}{center2}
-\rput(center1){\pscircle{8.8}
-   \rput[l](8.8;30){$\,\longleftarrow$ copying}}
-\rput(center2){\pscircle{3.5}
-   \rput[l](3.5;40){$\,\longleftarrow$ sprouting}}
+\rput(center1){\pscircle{2.5}
+   \rput[l](2.5;30){$\,\longleftarrow$ copying}}
+\rput(center2){\pscircle{1}
+   \rput[l](1;40){$\,\longleftarrow$ sprouting}}
 \endjtree|endCLnum  %|
 \medskip
 
@@ -84,40 +82,6 @@ italic font set.
 \medskip
 
 Another version of Vlachos' display is given below.
-
-%\jtree[xunit=3.5em,yunit=1em,elcxoffset=.5ex,
-%   elcyoffset=.5ex,bbadjust=height .5ex depth 5.5ex]
-%\defbranch<wideright>(1)(-2/3)
-%\defbranch<shortright>(.5)(-2/3)
-%\defbranch<steepright>(.7)(-3/2)
-%\defbranch<steepleft>(.7)(3/2)
-%\! = {CP}
-%<left>{PP$_i$}@PPtop !a ^<wideright>{C$'$}
-%<left>{C$^0$}!b ^<wideright>{\elc{IP}}
-%<left>{DP}(<vartri>{\rnode{joan}{Joan}})
-%   ^<shortright>{\elc{I$'$}}
-%<left>{I$^0$} ^<shortright>{VP}@vp
-%<left>[scaleby=1.3]{VP}!c
-%   ^<wideright>[scaleby=.7]{PP$_i$}@PPbot .
-%\!a = <steepleft>{P}(<vert>{with})
-%   ^<steepright>{DP} <vartri>{whom$\fam0 ^x$}.
-%\!b = {[+Q]}[labelgapt=-.6ex]<vert>{e\rlap{$\fam0 ^x$}}.
-%\!c = <steepleft>{DP}
-%   ^<steepright>{\elc{V$'$}}
-%   <steepleft>{V$^0$}(<shortvert>{ate})
-%   ^<steepright>{DP}<vartri>{dinner}.
-%\nccurve[angleA=-120,angleB=-95,ncurvA=.7,ncurvB=1.2,
-%   nodesepA=0,nodesepB=.5ex,arrows=<->]{PPtop}{PPbot}
-%\ncput*[npos=.4]{\it merger}
-%\psLNode(joan)(PPbot){.5}{center1}
-%\psLNode(vp)(PPbot){.5}{center2}
-%\rput(center1){\pscircle{8.8}
-%   \rput[l](8.8;30){$\,\longleftarrow$ copying}}
-%\rput(center2){\pscircle{3.5}
-%   \rput[l](3.5;40){$\,\longleftarrow$ sprouting}}
-%\endjtree
-
-
 
 \exdisplay
 \ \jtree[xunit=3.5em,yunit=1em,elcxoffset=.7ex,
@@ -186,7 +150,7 @@ Another version of Vlachos' display is given below.
 
 1. Rather than defining new branches |<steepleft>| and
 |<steepright>|, the branches used to construct the |\!a|, |\!b|,
-and |\!c| subtrees are preceeded by a change of scale executed by
+and |\!c| subtrees are preceded by a change of scale executed by
 |\psset{scaleby=.5 .7}|.
 \medskip
 2. The merger connection is made using |\ncangles| rather than

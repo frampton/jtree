@@ -4,6 +4,7 @@
 
 \subsection The {\tt "} escape from tree parsing
 
+\ftag{\the\secno.\the\subsecno}[EscapeSec]
 If the parser encounters |"|, it evaluates the next token or
 group and continues the parse.  Evaluation should contribute no
 material, since it is not parsed.  But evaluation can change
@@ -110,7 +111,8 @@ macros in \pstjtree\/ is:\par\nobreak
 \def\jtbig{[scaleby=2]}
 \def\jtjot{[scaleby=1.3]}
 |endcframe
-\index*{+jtlong}\index*{+jtwide}\index*{+jtbig}\index*{+jtjot}
+\index*{+jtlong}\index*{+jtwide}\index*{+jtbig}\index*{+jtjot}%
+\index*{+jtshort}
 
 \vskip.7em
 Of course, users should define whatever similar macros are useful

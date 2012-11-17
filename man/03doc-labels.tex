@@ -204,7 +204,8 @@ See examples \gettag[ExAndrews] and \gettag[ExMerchant] in \exsec\
 for applications of this trick, which often eliminates the need
 for complex multiline labels.
 
-\medskip
+\subsection \sl labeloffset
+
 The label box can be positioned horizontally using |labeloffset|.
 
 \exh
@@ -226,11 +227,11 @@ See example \gettag[Dowty] in \exsec\ for an illustration of how
 changing |labeloffset| can solve certain spacing problems between
 labels.
 
-\medskip
-There is one other parameter that is relevant to labels. The
-material specified by |everylabel|\index*{everylabel} is put into
-a token list and the token list is inserted at the beginning of
-every label.
+\subsection \sl everylabel
+
+The material specified by |everylabel|\index*{everylabel} is put
+into a token list and the token list is inserted at the beginning
+of every label.
 
 \exh \tac|
 \jtree[everylabel=\sl]
@@ -246,107 +247,91 @@ every label.
 \endjtree
 \xe
 
-\medskip
-If a label is |{\omit|\dots|}|\index*{+omit} or
-|{\pnode|\dots|}|, then the vertical positioning algorithm
+\subsection Suppressing the effect of {\sl labelstrut\/} and {\sl
+labelgap}
+
+If the first token of the label is |\omit|\index*{+omit},
+|\pnode|, or |\elc|, then the vertical positioning algorithm
 discussed above is bypassed and the label is positioned with its
-top edge at the level of $\cal P$ and $\cal P'$ is positioned
-directly under $\cal P$ at the level of the bottom edge of the
-label box.  |labeloffset| still operates. Contrast the following:
-
-\exh \tac|
-\jtree[everylabel=\strut,labelgap=3pt]
-\! = :{a} {\omit\psframebox{dog\strut}}
-   :{a} {\pnode{A1}}
-   :{a} {a}.
-\endjtree
-|endtac \hfil
-\jtree[everylabel=\strut,labelgap=3pt]
-\! = :{a} {\omit\psframebox{dog\strut}}
-   :{a} {\pnode{A1}}
-   :{a} {a}.
-\endjtree
-\bigskip
-\tac|
-\jtree[everylabel=\strut,labelgap=3pt]
-\! = :{a} {\psframebox{dog\strut}}
-   :{a} {}
-   :{a} {a}.
-\endjtree
-|endtac \hfil
-\jtree[everylabel=\strut,labelgap=3pt]
-\! = :{a} {\psframebox{dog\strut}}
-   :{a} {}
-   :{a} {a}.
-\endjtree
-\xe
-
-\subsection 0-dimensional labels
-
-Consider the trees below.
-
-\exdisplay \labels
-\tl\quad \jtree \! = {CP} :{Spec} :{C} {TP}.\endjtree
-\hfil
-\tl\quad\jtree \! = {CP} :{Spec} {C$'$} :{C} {TP}.\endjtree
-\hfil
-\tl\quad \jtree \! = {CP} :{Spec} {\elc{C$'$}} :{C} {TP}.\endjtree
-\xe
-
-The various codings are:
-
-\exdisplay \labels
-\tl\quad |\jtree \! = {CP} :{Spec} :{C} {TP}.\endjtree|
+top edge at the level of $\cal P$ and the new current point $\cal
+P'$ is positioned directly under $\cal P$ at the level of the
+bottom edge of the label box.  |labeloffset| still operates.
 \medskip
-\tl\quad |\jtree \! = {CP} :{Spec} {C$'$} :{C} {TP}.\endjtree|
-\medskip
-\tl\quad |\jtree \! = {CP} :{Spec} {\elc{C$'$}} :{C} {TP}.\endjtree|
-\xe
-
-The first has no label over the $\fam0 {C,TP}$ subtree.  (b), of
-course does.  The last has a label, but it is 0-dimensional.
-The label itself occupies no space, but |\elc{C$'$}|\index*{+elc} uses PSTricks to
-typset C$'$ a specified displacement from the 0-dimensional
-label.  There are a few commands (|\elc|, |\pnode|, and |\omit|)
-that cause jTree to make a 0-dimensional label, with no gaps, provided they
-appear first in the label.
-\medskip
-
-Note the following.
+Contrast the following:
 
 \exh
+\advance\rightskip by 5em
+|\def\dog{\\psframebox{dog\strut}}|
+\def\dog{\psframebox{dog\strut}}
+\medskip
 \tac|
 \jtree
-\! = {CP} :{Spec} {} :{C} {TP}.
+\! = :{A} {\dog}
+   :{B} {}
+   :{C} {D}.
 \endjtree
-|endtac \hfil
-\jtree \! = {CP} :{Spec} {} :{C} {TP}.\endjtree
+|endtac \hfill
+\jtree
+\! = :{A} {\dog}
+   :{B} {}
+   :{C} {D}.
+\endjtree
 \bigskip
 \tac|
 \jtree
-\! = {CP} :{Spec} {\omit} :{C} {TP}.
+\! = :{A} {\omit\dog}
+   :{B} {\omit}
+   :{C} {D}.
 \endjtree
-|endtac \hfil
-\jtree \! = {CP} :{Spec} {\omit} :{C} {TP}.\endjtree
+|endtac \hfill
+\jtree
+\! = :{A} {\omit\dog}
+   :{B} {\omit}
+   :{C} {D}.
+\endjtree
+\bigskip
+\tac|
+\jtree
+\! = :{A} {\omit\dog}
+   :{B} :{C} {D}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{A} {\omit\dog}
+   :{B} :{C} {D}.
+\endjtree
+\bigskip
+\tac|
+\jtree
+\! = :{A} {\omit\dog}
+   :{B} {\elc{C$'$}}
+   :{C} {D}.
+\endjtree
+|endtac \hfill
+\jtree
+\! = :{A} {\omit\dog}
+   :{B} {\elc{C$'$}}
+   :{C} {D}.
+\endjtree
 \xe
-An empty node, |{}|, is not interpreted as 0-dimensional since a
-strut is automatically inserted.
-\medskip
 
-The jTree macro |\elc| (empty label comment) positions the
-comment (it is not the label) according to the setting of the
-parameters |elcxoffset|\index*{elcxoffset},
-|elcyoffset|\index*{elcyoffset}, and |elcref|\index*{elcref}.  The latter
-parameter determines the reference point in the label which is
-placed at the designated position.  The default setting of
-|elcref| is |bl| (bottom left).  The possible settings of
-|elcref| are the same as the possible reference points for the
-PSTricks macro |\rput|, which is used to implement |\elc|.  Note,
-by the way, that since |\rput| is used, the comment positioned by
-|\elc| does not contribute to the bounding box of the tree which
-is constructed. See Section \gettag[BBSec] for discussion of the
-bounding box. The default settings of the positioning dimensions
-are |elcxoffset=.4em| and |elcyoffset=0|.
+From Tex's point of view, |\elc{C$'$}|\index*{+elc} is
+dimensionless, but it uses PSTricks to typset C$'$ a specified
+displacement from the dimensionless label. The label vertical
+positioning mechanism is suppressed, so that it appears as if
+there is no label, just the comment C$'$.  The comment is
+positioned according to 3 parameters;
+|elcxoffset|\index*{elcxoffset} (default $\fam0 .4\,em$),
+|elcyoffset|\index*{elcyoffset} (default $\fam0 0\,pt$), and
+|elcref|\index*{elcref}.  The latter parameter determines the
+reference point in the label which is placed at the designated
+position.  The default setting of |elcref| is |bl| (bottom left).
+The possible settings of |elcref| are the same as the possible
+reference points for the PSTricks macro |\rput|, which is used to
+implement |\elc|.  Note, by the way, that since |\rput| is used,
+the comment positioned by |\elc| does not contribute to the
+bounding box of the tree which is constructed. See Section
+\gettag[BBSec] for discussion of the bounding box.
 
 
 

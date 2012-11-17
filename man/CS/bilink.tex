@@ -1,50 +1,63 @@
 
 \example
+\ftag{\the\Exno}[ExBilink]
 
-\def\bilink(#1,#2)(#3,#4){%
-   \pcarc(#1,#2)(#3,#4)%
-   \pcarc[linestyle=dashed](#3,#4)(#1,#2)%
-}
+\def\bilink(#1,#2)(#3,#4){{%
+   \psset{offset=.1ex,arcangle=6,arrows=->,nodesep=.8ex}
+   \pcarc(#1,#2)(#3,#4)
+   \pcarc[linestyle=dashed](#3,#4)(#1,#2)
+}}
+\newpsstyle{arrowsA}{arrowsize=.7ex,arrowlength=1.8,arrowinset=.35}
 
-\hfil\kern3em\jtree[xunit=3em,yunit=1.8em,style=arrows2,
-   dirA=(-1:-1),branch=\bilink,nodesep=3pt,
-   arcangle=10,offset=1pt,labelgapt=!3pt]
-\def\@{\pscircle(0,0){3pt}}%
-\! =
-   {\pnode{A1}\@}
-   <right>{\omit\@\pnode(.8,-.8){A3}}
-   :({\omit\@}{C}) [scaleby=1.6,arcangle=7]{\omit\@}
-   :({\omit\@}{see})
-      ({\omit\@\pnode{A2}}{who}[labeloffset=.8em]).
-\nccurve[angleB=225,ncurvA=1.95,ncurvB=1,offset=1.6pt]{A1}{A2}
-\nccurve[angleB=227,ncurvA=2,ncurvB=1.02,offset=-1.6pt,
-   linestyle=dashed,arrows=<-]{A1}{A2}
-\rput(1.8,-1.8){\pscircle*[linecolor=white]{1em}}%
-\rput(1.8,-1.8){\dots}
+\exdisplay
+\def\O{\pscircle{.8ex}}%
+\hfil
+\jtree[xunit=4em,yunit=4ex,branch=\bilink,
+   style=arrowsA,labelgapt=1ex,bbadjust=left 3em depth 5ex]
+\! = {\omit\O}@A1 <right>{\omit\O}@B1
+   :{\omit\O}({C}) [scaleby=1.4]{\omit\O}@B2
+   :{\omit\O}({see}) {\omit\O}@A2 {who}[labeloffset=.8em].
+\psset{offset=.2ex,nodesep=.6ex,arrows=->}
+\nccurve[angleA={(-1,-1)},angleB=-135,ncurvA=1.5,ncurvB=1.1]
+   {A1}{A2}
+\nccurve[angleA=-130,angleB={(-1,-.9)},ncurvA=1.2,ncurvB=1.55,
+   linestyle=dashed]{A2}{A1}
+\pcline[linestyle=none,offset=0]{-}(B1)(B2)
+\ncput*[framesep=1.5ex]{\dots}
 \endjtree
-\vskip1.5em
+\xe
 
-\codelines|
-\def\bilink(#1,#2)(#3,#4){%
-   \pcarc(#1,#2)(#3,#4)%
-   \pcarc[linestyle=dashed](#3,#4)(#1,#2)%
-}
+\codelines
+|\def\bilink(#1,#2)(#3,#4){{%
+   \psset{offset=.1ex,arcangle=6,arrows=->,nodesep=.8ex}
+   \pcarc(#1,#2)(#3,#4)
+   \pcarc[linestyle=dashed](#3,#4)(#1,#2)
+}}
+\def\O{\pscircle{.8ex}}%
+\newpsstyle{arrowsA}{arrowsize=.7ex,arrowlength=1.8,
+   arrowinset=.35}
 
-\jtree[xunit=3em,yunit=1.8em,style=arrows2,
-   dirA=(-1:-1),branch=\bilink,nodesep=3pt,
-   arcangle=10,offset=1pt,labelgapt=!3pt]
-\def\@{\pscircle(0,0){3pt}}%
-\! =
-   {\pnode{A1}\@}
-   <right>{\omit\@\pnode(.8,-.8){A3}}
-   :({\omit\@}{C}) [scaleby=1.6,arcangle=7]{\omit\@}
-   :({\omit\@}{see})
-      ({\omit\@\pnode{A2}}{who}[labeloffset=.8em]).
-\nccurve[angleB=225,ncurvA=1.95,ncurvB=1,offset=1.6pt]{A1}{A2}
-\nccurve[angleB=227,ncurvA=2,ncurvB=1.02,offset=-1.6pt,
-   linestyle=dashed,arrows=<-]{A1}{A2}
-\rput(1.8,-1.8){\pscircle*[linecolor=white]{1em}}%
-\rput(1.8,-1.8){\dots}
+|bigskip|relax
+\jtree[xunit=4em,yunit=4ex,branch=\bilink,
+   style=arrowsA,labelgapt=1ex]
+\! = {\omit\O}@A1 <right>{\omit\O}@B1
+   :{\omit\O}({C}) [scaleby=1.4]{\omit\O}@B2
+   :{\omit\O}({see}) {\omit\O}@A2 {who}[labeloffset=.8em].
+\psset{offset=.2ex,nodesep=.6ex,arrows=->}
+\nccurve[angleA={(-1,-1)},angleB=-135,ncurvA=1.5,ncurvB=1.1]
+   {A1}{A2}
+\nccurve[angleA=-130,angleB={(-1,-.9)},ncurvA=1.2,ncurvB=1.55,
+   linestyle=dashed]{A2}{A1}
+\pcline[linestyle=none,offset=0,arrows=-](B1)(B2)
+\ncput*[framesep=1.5ex]{\dots}
 \endjtree
+
 |endcodelines
+
+\bigskip
+Needless to say, a display likes this takes quite a bit of tuning
+of the various parameters to get good result.
+
+
+
 

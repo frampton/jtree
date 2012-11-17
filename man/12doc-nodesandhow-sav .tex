@@ -1,0 +1,472 @@
+
+\section Nodes and connections between them
+
+\ftag{\the\secno}[nodesandhow]%
+Nodes have a shape, a reference point, and a name. \pstnode\
+allows the user to define box, elliptical, circular, and point
+nodes.  In addition to a shape, nodes have a reference point.  It
+is at the center of an elliptical, circular, or point node.  It
+can be at the center of a box node, but there are other options
+for box nodes: the ends and centers of the edges and the
+baseline.  \pstnode\ has a number of commands for drawing curves
+of various kinds between nodes.  Various features of how these
+curves are rendered (linewidth, linestyle, arrows, etc.) can be
+specified.  The most useful curve drawing command for annotating
+tree structures is |\nccurve|.  The main point of this section is
+to explain how |\nccurve| works.
+
+\medskip
+Suppose there is a box node and a point node as shown below.  The
+dots are the reference points.
+\bigskip
+
+\def\templabel{\rput(0,1){\rput(0,2ex){A}}}
+\def\goop{\psframebox[boxsep=false,framesep=0,linecolor=gray]
+   {\vrule width0pt height1\psunit depth.5\psunit
+      \hskip\psunit \pnode{QQ}\templabel\hskip\psunit}}
+
+\psset{unit=1.2cm}
+\hfil \pspicture(0,0)(9,2.8)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput(8,0){\rput(0,02ex){B}}
+\rput[B](1,1){\rnode[B]{A}{\goop}}
+\SpecialCoor
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+
+\bigskip
+The diagram below illustrates how
+\medskip
+\hfil|\nccurve[angleA=50,angleB=110]{A}{B}|
+\medskip
+is drawn.
+\bigskip
+
+\let\templabel=\relax
+
+\hfil \pspicture(-.4,0)(8,3)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\goop}}
+\SpecialCoor
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\psset{nodesep=0}
+\nccurve[angleA=50,angleB=110]{A}{B}
+\psline[style=dotted](Q)([angle=110,nodesep=2.8]Q)
+\psline[style=dotted](QQ)([angle=50,nodesep=2.8]QQ)
+\psline[style=dotted](QQ)([angle=0,nodesep=.6]QQ)
+\psline[style=dotted](Q)([angle=0,nodesep=.6]Q)
+\psarc{->}(Q){.5}{0}{110}
+\psarc{->}(QQ){.5}{0}{50}
+\rput[bl]([angle=25,nodesep=.6]QQ){\tenpoint$50^\circ$}
+\rput[bl]([angle=55,nodesep=.6]Q){\tenpoint$110^\circ$}
+\endpspicture
+\bigskip
+
+
+
+
+This simple picture can be modified by a number of parameters. In
+addition to the usual parameters like |linewidth|, |linestyle|
+and |arrows| which determine how a geometrical curve is rendered,
+there are six parameters which modify the geometry of the curve
+itself: |ncurvA|, |ncurvB|, |nodesepA|, |nodesepB|, |offsetA|,
+and |offsetB|.  The parameters can be set individually or in
+pairs.  |\psset{nodesep=«x\/»}| induces
+|\psset{nodesepA=«x\/»,nodesepB=«x\/»}|.  |ncurv| and |offset|
+work the same way. We will examine the parameters in turn.
+
+\medskip |\psset{nodesepA=«x\/»}|
+causes the dimensions of the node box to be adjusted by {\sl
+x\/} before the curve is determined.
+
+\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,linecolor=gray]
+      {\goop}}
+%\def\Goop{\psframebox[boxsep=false,framesep=\dimpubb,style=dotted]
+%      {\goop}}
+%\dimpuba=.5\psunit
+\dimpubb=.2\psunit
+\bigskip
+\hfil \pspicture(-.2,0)(8,3)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\nccurve[angleA=50,angleB=110,%nodesepB=\dimpuba,
+   nodesepA=\dimpubb,nodesepB=0]{A}{B}
+\SpecialCoor
+\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
+\psline[style=dotted](QQ)([angle=50,nodesep=2.6]QQ)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+\bigskip
+
+The effect of |ncurv| is the most subtle.  One can imagine that
+the curve is ``pulled'' in the directions of the arrows below.
+You can think of |ncurv| as setting the strength of the pulls.
+The default is $.67$.  The picture below shows the curves that
+are drawn with various settings of |ncurv|.
+
+\bigskip
+\hfil \pspicture(-.2,0)(8,4.1)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\psset{angleA=50,angleB=110,nodesepA=\dimpubb,
+   nodesepB=0,labelsep=3pt}
+\nccurve[ncurv=.4]{A}{B}
+\bput(.35){\tenrm .4}
+\nccurve[ncurv=.67]{A}{B}
+\bput(.35){\tenrm .67}
+\nccurve[ncurv=1]{A}{B}
+\bput(.35){\tenrm 1}
+\nccurve[ncurv=1.4]{A}{B}
+\bput(.4){\tenrm 1.4}
+\SpecialCoor
+\psline[style=dotted]{->}(Q)([angle=110,nodesep=4]Q)
+\psline[style=dotted]{->}(QQ)([angle=50,nodesep=4]QQ)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\endpspicture
+\bigskip
+
+Here is a simple illustration of the use of |ncurv|. There is a
+typesetting problem with the pointer below which must be fixed.\par\nobreak
+
+\exh
+\tac|
+\jtree[unit=2em]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80]{->}{C}{A}
+\endjtree
+|endtac \hfil
+\jtree[unit=2em]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80]{->}{C}{A}
+\endjtree
+\xe
+
+One way to fix the problem is to increase the value of the
+|ncurv| parameter.
+
+\exh
+\tac|
+\jtree[unit=2em,nodesep=.6ex]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80,
+   ncurv=1.1]{->}{C}{A}
+\endjtree
+|endtac \hfil
+\jtree[unit=2em,nodesep=.6ex]
+\! = :{A}@A :{B} {C}@C .
+\nccurve[angleA=210,angleB=-80,
+   ncurv=1.1]{->}{C}{A}
+\endjtree
+\bigskip
+\xe
+
+|\psset{ncurv=«x\/»}| has the effect
+|\psset{ncurvA=«x\/»,ncurvB=«x\/»}|.
+Sometimes it is advantageous to set the parameters to different
+values.  Experimentation will quickly give you a feel for how
+this works.
+
+\medskip
+Finally, we come to the two |offset| parameters.
+|\psset{offsetA=«x\/»}| causes the starting point to be offset a
+distance {\sl x\/} perpindicular to the starting direction. The
+direction is to the left (looking in the starting direction) if
+{\sl x\/} is positive.
+
+%\dimpuba=.5\psunit
+%\dimpubb=.2\psunit
+\bigskip
+\hfil \pspicture(-.2,0)(8,3.4)%\psgrid
+\pnode(8,0){B}
+\pnode(8,0){Q}
+\rput[B](1,1){\rnode[B]{A}{\Goop}}
+\SpecialCoor
+\psline[style=dotted](Q)([angle=110,nodesep=3]Q)
+\pnode([angle=50,nodesep=3]QQ){L1}
+\psline[style=dotted](QQ)(L1)
+\qdisk(Q){2pt}
+\qdisk(QQ){2pt}
+\pnode(2.007,2.2){Z}
+\rput([angle=140,nodesep=.3]Z){\pnode{Z2}}
+\nccurve[angleA=50,angleB=110,nodesep=0]{Z2}{B}
+\psline[style=dotted](Z)([angle=140,nodesep=1]Z)
+\psline[style=dotted]([angle=140,nodesep=.3]L1)%
+   ([angle=140,nodesep=.3]QQ)
+\endpspicture
+\bigskip
+
+|\psset{offsetB=«x\/»}| causes the finishing point to be
+displaced a distance {\sl x\/} perpindicular to the finishing
+direction, to the left.  Remember that the finishing direction
+points toward the node, not back along the curve.
+
+\medskip
+Here is a simple application that might be appropriate for
+some special emphasis.\par\nobreak
+
+\exh
+\tac|
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+|endtac \hfil
+\jtree[xunit=3em,yunit=2em]
+\! = :{A}@A {B} <vert>{C}@C .
+\psset{angleA=-90,angleB=180}
+\nccurve[offsetA=.5ex]{->}{A}{C}
+\nccurve[offsetA=-.5ex]{A}{C}
+\endjtree
+\xe
+
+This construction is used several times in example \gettag[Chung2]
+in \exsec.
+
+\subsection Specifying angles
+
+Previous versions of jTree discussed parmeters |dirA| and |dirB|
+which could be used to set |angleA| and |angleB| indirectly, so
+that they could be easily aligned with branches.  These
+parameters should now be considered obsolete (although they will
+still work as before).
+
+\medskip
+The challenge in the example below is to set |angleA| so that the
+ncurve to joins smoothly with the left branch. One could,
+depending on the font in effect, convert $\fam0 2\,em$ and $\fam0
+3\,ex$, and then use trigonometry to determine the |angleA|
+setting.  This is at best tedious. Fortunately, in contexts in
+which PSTricks expects an angle, it recognizes $(x,y)$ as the
+angle corresponding to the direction $(x,y)$.  $(-1,-1)$ is the
+direction of left branches in this example.  Note that in setting
+|angleA| in this way, braces are needed around the direction
+so that the parameter parsing algorithm does not get confused by
+the comma in the direction.  |\psset{angleA=(-1,-1)}| would try
+(unsuccessfully) to set |angleA| to |(-1| and to find a parameter
+|-1)|.
+
+\exh
+\jtree[xunit=2em,yunit=3ex,bbadjust=left 1em]
+\! = {A} <left>[scaleby=.4]@A1 ^<right> :{B} :{C}@A2 \etc.
+\nccurve[angleA={(-1,-1)},angleB=190,nodesepA=0,
+   ncurvA=1,ncurvB=1.2,arrows=->]{A1}{A2}
+\endjtree
+\hfill
+\tac|
+\jtree[xunit=2em,yunit=3ex,bbadjust=left 1em]
+\! = {A} :[scaleby=.4]@A1 :{B} :{C}@A2 \etc.
+\nccurve[arrows=->,angleA={(-1,-1)},angleB=190,
+   nodesepA=0,ncurvA=1,ncurvB=1.2]{A1}{A2}
+\endjtree
+|endtac \hfil
+\xe
+
+\subsection Labeling connections between nodes
+
+PSTricks has 3 commands for labeling connections between nodes.
+|\ncput| puts the label directly on the connection, |\naput| puts
+it above the connection, and |\nbput| puts it below the
+connection.  There is a parameter |labelsep| which controls how
+far above or below the connection the label is put; a parameter
+|nrot| which can be used to rotate the label; and a parameter
+|npos| which determines where on the connection the label is put.
+from the starting label to the finishing label. See the PSTricks
+User's Guide for all the details.
+\medskip
+For linguists, |\ncput| is probably the most useful of the
+PSTricks connection labeling macros. Here is one example.
+
+\jtree[xunit=3em,yunit=1em,bbadjust=depth 4ex]
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=<-,angleA=-90,angleB=-150}
+\nccurve{A1}{A2}
+\ncput*[npos=.65]{\tenpoint\it wh-movement}
+\nccurve{B1}{B2}
+\endjtree
+\bigskip
+
+\codelines
+|\jtree[xunit=3em,yunit=1em]
+\! = :{who}@A1 :{did}@B1 :{Jack}
+   :{\sl t}@B2 :{see} {\sl t}@A2 .
+\psset{arrows=<-,angleA=-90,angleB=-150}
+\nccurve{A1}{A2}
+\ncput*[npos=.65]{\tenpoint\it wh-movement}
+\nccurve{B1}{B2}
+\endjtree
+|endcodelines
+\medskip
+
+The asterisk following |\ncput| annuls the transparency of the
+label.  It is surrounded by a framebox, which provides whitespace
+around the label.  The size of the whitespace is controlled by
+the parameter |framesep|.  The default value is used above.
+\medskip
+
+\subsection Labeling tree branches
+
+Labeling branches in jTree trees is not entirely straightforward
+because the branches (by default) are drawn using |\psline|,
+which does not establish PSTricks nodes at the ends of the
+branches.  Since there are no nodes, the labeling mechanism does
+not apply.  It is, however, possible to change the PSTricks macro
+that is used to draw branches by resetting |branch| to |\pcline|,
+which draws the branch exactly the same as |\psline| does but also
+establishes PSTricks nodes at the endpoints. (The parameter
+|branch| is discussed in Section \gettag[CustomSec].) This is illustrated
+below.
+
+\exh
+\tac|
+\jtree[xunit=3em,yunit=3ex]
+\! = <left>{A}
+^<right>[branch=\pcline,nodesep=0]{B}
+"{\ncput[nrot=:0]{$\vert\vert$}}.
+\endjtree
+|endtac \hfil
+\jtree[xunit=3em,yunit=3ex]
+\! = <left>{A}
+^<right>[branch=\pcline,nodesep=0]{B}
+"{\ncput[nrot=:0]{$\vert\vert$}}.
+\endjtree
+\xe
+|"| is an escape from parsing the tree description, so that
+|"{...}| simply executes the material inside the braces.  The |"|
+escape is discussed in Section \gettag[EscapeSec].
+
+\subsection Putting labels on circles and circling nodes in
+trees
+
+\ftag{\the\secno.\the\subsecno}[CircleSec]
+We approach this by explicating the code for the display below.
+\bigskip
+
+\qquad
+\jtree[xunit=3em,yunit=3ex,bbadjust=depth 6ex]
+\! = :{A} :{B}@C1 {C}@C2 .
+\psLNode(C1)(C2){.5}{center}
+\rput(center){%
+   \pscircle{1.3}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}
+}
+\endjtree
+\bigskip
+
+\CLnum
+\jtree[xunit=3em,yunit=3ex]
+\! = :{A} :{B}@C1 {C}@C2 .
+\psLNode(C1)(C2){.5}{center}
+\rput(center){%
+   \pscircle{1.3}
+   \rput[bl](1.3;40){$\leftarrow$ fronted}
+}
+\endjtree|endCLnum%|
+\medskip
+Line 2 draws the tree and establishes PSTricks nodes C1, and C2
+(along with nodes C1:t, C1:b, C2:t, and C2:b).  Line 3
+interpolates the a node labeled ``center'' between the nodes C1
+and C2.  This will be the center of the circle which is drawn.
+The circle is drawn by making a circle about the origin with
+radius 1.3 (line 5) and pasting this in at the node labeled
+``center'' (line 4).  The label is attached to the circle before
+it is pasted in at ``center''.  The bottom left (|bl|) corner of
+the label is put at |(1.3;40)|, which PStricks recognizes as the
+point at distance 1.3 from the origin so that the line from the
+origin to the point makes an angle $\rm 40^\circ$ with the
+positive horizontal direction.
+
+\subsubsection Ellipses
+
+\ftag{\the\secno.\the\subsecno.\the\subsubsecno}[EllipseSec]
+There are two challenges in typesetting the display below.  One
+is drawing and positioning the ellipse.  The other is positioning
+``split head'' and drawing the pointer which ends on the
+ellipse.
+
+\exdisplay \qquad
+\jtree[xunit=3em,yunit=2em]
+\! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
+\psLNode(A1)(B1){.5}{AB1}
+\rput{(1,-1)}(AB1){\jtenode*(.9,1){-40}{E1}}
+\rput(E1){\rput[l](1,-1){\rnode[l]{E2}{split head}}}
+\nccurve[angleA=-180,angleB=-60,nodesepB=0,arrows=->]
+   {E2}{E1}
+\endjtree
+\xe
+\bigskip
+\bigskip
+\CLnum
+\jtree[xunit=3em,yunit=2em]
+\! = :{Spec} :{A}@A1 :{B}@B1 {Comp}.
+\psLNode(A1)(B1){.5}{AB1}
+\rput{(1,-1)}(AB1){\jtenode*(.9,1){-40}{E1}}
+\rput(E1){\rput[l](1,-1){\rnode[l]{E2}{split head}}}
+\nccurve[angleA=-180,angleB=-60,nodesepB=0,arrows=->]
+   {E2}{E1}
+\endjtree|endCLnum %|
+
+|\rput(BC){\psellipse(.9,1)}| draws an ellipse centered at the
+node BC with $x$-radius .9 and $y$-radius 1 and its $x$-axis in
+line with the $x$-axis of the page.  This needs to be rotated
+about clockwise to align with the right branches.
+Putting the node named E1 on the ellipse is a challenge.  jTree
+provides the macro |\jtenode|\index*{+jtenode} to solve the
+problem.
+
+\medskip
+|\jtenode(«$x_1$»,«$y_1$»){«$\theta$»}{«name»}| puts a node with
+the given name at the point illustrated below.
+\medskip
+
+\qquad
+\pspicture(-2.1,-1.9)(2.1,1.7)
+\rput(0,0){%
+   \psset{nodesep=0}
+   \psellipse(2,1.4)%
+   \psline(0,-1.5)(0,1.5)%
+   \psline(-2.1,0)(2.1,0)%
+   \pcline[arrows=|*-|*](0,-1.7)(2,-1.7)%
+   \ncput*{$x_1$}
+   \pcline[arrows=|*-|*](2.3,0)(2.3,-1.7)%
+   \ncput*{$y_1$}
+   \jtenode(2,1.4){40}{EE}
+   \psdot(EE)
+   \psline(0,0)(2;{(EE)})
+   \psarc{->}{1}{0}{40}
+   \rput[l](1.1;15){$\theta$}
+}
+\endpspicture
+\medskip
+
+If |\jtenode| is followed directly by an asterisk, the ellipse is
+drawn, otherwise it is not.  This is used on line 6 above.
+\medskip
+
+Line 5 above is worth some attention because it illustrates the
+recursive application of |\rput|.  One of the things that makes
+PSTricks so useful is its ability to position objects relative to
+nodes that PSTricks has already positioned.
+|\rput(E1){\rput[l](1,-1){split head}}| puts ``split head'' in an
+hbox and positions its left edge $(1,-1)$ from the node E1. Line
+6 simply adds a node named E2 to the center of the left edge of
+the hbox containing ``split head''.  E2 is used to draw the
+pointer from ``split head'' to the ellipse.
+
+\medskip
+See Example \gettag[ExSprout] in Section \gettag[ExamplesSec] for a complex
+example using the ideas of this section.
+
+
+
+

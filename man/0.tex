@@ -1,7 +1,6 @@
 
 \input @localsettings                % local
 \input pstricks
-%\input temp  \bye
 \input pst-node
 \input pst-xkey
 \input @lingbasics
@@ -26,9 +25,12 @@
 \catcode`@=12
 
 %\input temp \bye
+%\input 12doc-temp  \bye
+%\input ./CS/Frampton2  \bye
+%\input ../userexamples/multiroot  \bye
 
-%\get 000doc-cover
-%\get contents
+\get 000doc-cover
+\get contents
 \get 00doc-intro
 \get 01doc-TDL
 \get 02doc-parameters
@@ -38,28 +40,28 @@
 \get 06doc-nodes
 \get 07doc-colon
 \get 08doc-eval
-\get 09doc-bells
 \get 10doc-incremental
 \get 11doc-boundingbox
 \get 12doc-nodesandhow
 \get 13doc-examples
 \get 14doc-issues
 %
-%\get appendix-env
-%\input ./index/doindex  \bye
+\get appendix-env
+\input ./Index/doindex  \bye
 %
+
 %\get 14doc-appendix2
 %\get 14doc-appendix
 %\get index
 %\closeout\indexfile
 
-%\input pst-jtree-doc-add
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TESTING
 %\get ./CS/Zubizaretta
 %\get 90Sprouting
 
 \bye
+%\get 09doc-bells
 
 %\get ./CS/cheese
 %\get ./CS/Ndayiragije

@@ -1,0 +1,397 @@
+
+\def\fileversion{03.4}
+\def\filedate{2004/06/26}
+\message{ v\fileversion, \filedate}
+
+\lingmkletter @
+
+%%%%%%%%%
+%% \ex, \pex
+%%%%%%%%%
+\newcount\exno \exno=0
+\def\smallpenaltypar{\endgraf
+   \vskip \ling@exsplitvfil
+   \expandafter\penalty\ling@exgoodparpenalty
+   \vskip-\ling@exsplitvfil}
+\def\beginex{\par\penalty50 \prevdepth30pt
+   \vskip\ling@beforeexskip
+   \vskip\ling@exsplitvfil
+      \expandafter\penalty\ling@exbeginsplitpenalty
+      \vskip-\ling@exsplitvfil
+   \global\advance\exno by 1
+   \hsize=\ling@exhsize
+   \examplebaselines
+   \let\goodpar=\smallpenaltypar
+   \interlinepenalty=\ling@exparpenalty
+   \parindent=0pt}
+
+\edef\ling@letterwd{.8em}
+
+\newtoks\everyex \everyex={}
+\newcount\pexpartcount
+\newif\ifling@textadjust
+\newif\ifling@firstpart
+
+\def\ex{\ling@getpars\ex@A}
+\def\ex@A{\bgroup
+   \expandafter\Lingsetkeys\expandafter{\pst@pars}
+   \beginex
+   \the\everyex
+   \setbox0=\hbox{\hskip\ling@numoffset
+      (\rm\the\exno)\hskip\ling@exoffset}%
+   \leftskip=\wd0
+   \leavevmode\llap{\unhbox0}\ignorespaces}
+\def\pex{\@ifnextchar*\pex@a\pex@b}
+\def\pex@a#1{\ling@textadjusttrue\pex@c}
+\def\pex@b{\ling@textadjustfalse\pex@c}
+\def\pex@c{\ling@getpars\pex@d}
+\def\pex@d{\bgroup
+   \expandafter\Lingsetkeys\expandafter{\pst@pars}%
+   \beginex
+   \ifling@pexnumbers \pexpartcount=0 \let\a=\ling@pexnumber
+      \else \pexpartcount=96 \let\a=\ling@pexchar \fi
+   \ling@firstparttrue
+   \the\everyex
+   \setbox0=\hbox{\hskip\ling@numoffset
+      (\rm\the\exno)\hskip\ling@letteroffset\hskip\ling@letterwd
+         \hskip\ling@exoffset}%
+   \leftskip=\wd0
+   \leavevmode\llap{\unhbox0}%
+   \ifling@textadjust\hskip-\ling@pextextadjust\fi \ignorespaces}
+\def\xe{\vskip\ling@afterexskip
+   \nointerlineskip\allowbreak \egroup }
+\def\ling@pexchar{\advance\pexpartcount by 1
+   \ifling@firstpart\ling@firstpartfalse\else
+      \par\vskip\ling@interpartskip
+      \fi
+   \leavevmode
+   \llap{\char\the\pexpartcount.\hskip\ling@exoffset}}
+\def\ling@pexnumber{\advance\pexpartcount by 1
+   \ifling@firstpart\ling@firstpartfalse\else
+      \par\vskip\ling@interpartskip
+      \fi
+   \leavevmode
+   \llap{\the\pexpartcount.\hskip\ling@exoffset}}
+% -- glosses -----------
+\newskip\glossspaceskip  \glossspaceskip=1.5ex
+\newtoks\everyentry
+\def\glossit{\noalign{\global\everyentry={\it}}}
+\def\gloss{\vtop\bgroup \everyentry={}%
+   \halign\bgroup \the\everyentry ##\hfil &&
+      \the\everyentry\kern\glossspaceskip ##\hfil\cr}
+\def\endgloss{\strut\crcr\egroup\egroup\par\prevdepth=.5ex}
+\catcode`|=\active %confine|
+\def\glossstrut{\vrule height1.9ex depth.7ex width0pt}
+\def\@glossline@AA{\ling@getpars\@glossline@BB}
+\def\@glossline@BB{%
+   \ifx\pst@pars\@empty
+      \global\everyentry={}%
+   \else
+      \expandafter\global\expandafter
+         \everyentry\expandafter{\pst@pars}%
+   \fi
+   \@glossline@a
+}
+\def\@glossline@a#1 {\the\everyentry #1\@glossline@b}
+\def\@glossline@b{%
+   \@ifnextchar| %confine|
+      {\glossstrut\gloss@gobble}%
+      {\@glossline@c}%
+}
+\def\@glossline@c#1 {& \the\everyentry #1\@glossline@b}
+\def\gloss@gobble#1#2{%
+   \ifx#2^%
+      \def\next{\cr\egroup\egroup\ignorespaces}%
+   \else
+      \def\next{\cr#2}%
+   \fi
+   \next
+}
+\def\igloss@a{%
+   \let|=\@glossline@AA %confine|
+   \halign\bgroup ##\hfil && \kern\glossspaceskip ##\hfil\cr
+}
+\gdef\igloss{%
+   \leavevmode
+   \vtop\bgroup
+      \everyentry={}%
+      \offinterlineskip
+      \catcode`\|=\active % confine|
+      \igloss@a
+}
+\def\|{\igloss \@glossline@AA} %confine|
+\catcode`|=12  %confine|
+%%%%%%%%
+%% headline
+%%%%%%%%
+%%%%
+\newbox\HLbox
+% headlines
+\def\mkheadline{\vtop to 0pt{\vss
+   \hbox to\hsize{\spaceskip=0pt \tenrm \ling@headline\hfil}%
+   \vskip\ling@headlinelevel}}
+%   \hbox to\hsize{\ling@headline}\vskip\ling@headlinelevel}}
+
+\def\mkheadline{\rput[Bl](0,\ling@headlinelevel)%
+   {\hbox to \ling@normalhsize{\spaceskip=0pt \ling@headline}}}
+%% redefine \plainoutput to include PSTricks commands and
+%%   marginal notes
+\newtoks\psteverypage   % pst commands only
+\def\jfoutput{\shipout\vbox{%
+   \hbox to0pt{\the\psteverypage\hss}\pagebody}
+   \advancepageno
+   \ifnum\outputpenalty>-20000 \else\dosupereject\fi}
+\let\plainoutput=\jfoutput
+\psteverypage={\mkheadline}
+
+\def\dump{\ifling@printnotes \dumpnotes \fi
+   \ifling@printrefs \dumprefs \fi}
+
+%%%%%%%%%%%
+%% sections
+%%%%%%%%%%%
+
+\newcount\secno            \secno=0
+\newcount\subsecno
+\newcount\subsubsecno
+\newcount\subsubsubsecno
+
+\outer\def\section #1\par{%
+   \global\advance\secno by 1  \global\subsecno=0
+      \global\subsubsecno=0
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{sec}
+       \the\secno.\enskip #1\par}\nobreak
+   \medskip\nobreak\noindent}
+
+\outer\def\subsection #1 \par{%
+   \global\advance \subsecno by 1 \global\subsubsecno=0
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{sub}
+      \the\secno .\the\subsecno. \enskip #1}\par\nobreak
+   \medskip\nobreak\noindent}
+
+\outer\def\subsubsection #1 \par{%
+   \global\advance \subsubsecno by 1 \global\subsubsubsecno=0
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\bigskip\vskip\parskip
+   {\noindent \titlefont{subsub}
+      \the\secno .\the\subsecno.\the\subsubsecno \enskip #1}\par\nobreak
+   \medskip\nobreak\noindent}
+
+\def\subsubsubsection #1 \par{\advance\subsubsubsecno by 1
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\medskip
+   \noindent {\it \the\secno.\the\subsecno.\the\subsubsecno
+      .\the\subsubsubsecno\enspace #1}:\hskip.5em}
+
+\def\bulletsection #1\par{%
+   \vskip0pt plus.1\vsize\penalty0
+   \vskip0pt plus-.1\vsize\medskip
+   \noindent $\bullet$\enspace
+      {\it #1}\par\nobreak\medskip\nobreak\noindent}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ----- disclaimer, title, name ------
+
+\def\title{%
+   \bgroup
+   \leftskip=0pt plus 1fil \rightskip=0pt plus 1fil
+   \parindent=0pt \parfillskip=0pt
+   \baselineskip=\ifling@doublespace 22\else 13\fi pt
+   \titlefont{main}}
+\def\author{\vskip.7em
+   \baselineskip=\ifling@doublespace 14\else 13\fi pt
+   \titlefont{subsub}}
+\def\endtitle{\vskip1.6em \egroup}
+\def\disclaimer{\leavevmode
+   \bgroup \parindent=0pt
+   \baselineskip=13pt
+   \vskip-.8truein
+   \hrule
+   \medskip}
+\def\enddisclaimer{\medskip\egroup
+   \hrule
+   \vskip2.5em plus 2em minus .2em}
+
+% ------  footnotes ------
+
+\newcount\fnno
+\fnno=0
+
+\def\raisedasterisk{\raise3pt\rlap{\twelverm *}}
+\def\ackmark{$\,{}^1$ \global\fnno=1}
+\def\putfnno{\hbox{\global\advance\fnno by 1 $^{\the\fnno}$}}
+
+\long\def\acknowledgement#1{\global\advance\fnno by 1
+  {\edef\next{\immediate\write\notesfile{\noexpand\note\the\fnno}}\next}%
+  \immediate\write\notesfile{#1}%
+  \immediate\write\notesfile{}}
+
+%\gdef\endfn{"endfootnote}
+%\gdef\putfnno{\global\advance\fnno by 1
+%   ${}^{\the\fnno}$}
+%\gdef\footsetup{\edef\fntempsf{\the\spacefactor}\putfnno
+%   \spacefactor=\fntempsf{} }
+%\gdef\footbody{\ifling@gathernotes\immediate\write\notesfile{}\fi%
+%   \edef\n@xt{\noexpand\noexpand\noexpand \note\the\fnno}%
+%   \ifling@gathernotes\immediate\write\notesfile{\n@xt}\fi\fnverbatim}
+%\gdef\footnote{\footsetup \footbody}       %"endfootnote
+%\gdef\fnverbatim{\begingroup\setupcopyfn\copyfnfirst}
+%\gdef\setupcopyfn{\def\do##1{\catcode`##1=12 }\dospecials
+%   \obeylines}
+%{\obeylines
+%\gdef\copyfn#1
+%   {\def\n@xt{#1}%
+%    \ifx\n@xt\endfn%
+%         \ifling@gathernotes\immediate\write\notesfile{}\fi%
+%         \let\n@xt=\endgroup%
+%      \else%
+%         \ifling@gathernotes\immediate\write\notesfile{\n@xt}\fi%
+%         \let\n@xt=\copyfn \fi%
+%         \n@xt}
+%\gdef\copyfnfirst#1
+%   {\def\n@xt{#1}%
+%   \ifx\n@xt\empty%
+%   \else\ifling@gathernotes\immediate\write\notesfile{\n@xt}\fi%
+%   \fi \copyfn}}
+
+%% printing notes and references
+\def\dumpnotes{\immediate\closeout\notesfile
+   \dumpnotesinit
+   \def\note ##1 {%
+      \smallskip\penalty10\noindent ##1.\quad}%
+   \smalltext
+   \input !notes.tex}
+\def\dumpnotesinit{\vskip30pt
+   \vskip.3\vsize\penalty-30\vskip-.3\vsize
+   \centerline{Notes}
+   \medskip}
+\def\dumprefs{\vskip30pt
+   \vskip.3\vsize\penalty-30\vskip-.3\vsize
+   \smalltext
+   \parindent=0pt
+   \parskip=0pt plus 1pt
+   \rightskip=0pt
+   \tolerance=350 \interlinepenalty=400
+   \centerline{\normaltext References}
+   \bigskip
+   \input @@refs.tex }
+
+
+% -- numbering and reference to numbers
+
+\newcount\exno \exno=0
+\newcount\tracinglabels \tracinglabels=0
+
+\def\nextx{{\advance\exno by 1 \number\exno}}
+\def\anextx{{\advance\exno by 2 \number\exno}}
+\def\lastx{\number\exno}
+\def\blastx{{\advance\exno by -1 \number\exno}}
+\def\bblastx{{\advance\exno by -2 \number\exno}}
+
+%% TAGS
+\newread\ftagsin
+\newwrite\ftagsout
+%  input !ftags.tex, first testing to see that it exists
+\def\fdef#1 #2 {\expandafter\xdef\csname TAG#1\endcsname{#2}}
+\immediate\openin\ftagsin=!ftags.tex
+\ifeof\ftagsin \else \closein\ftagsin \input !ftags \fi
+\ifling@gatherftags \immediate\openout\ftagsout=!ftags.tex \fi
+%  local tags for example numbers
+\def\tagex[#1]{%
+   \expandafter\xdef\csname TAG#1\endcsname{\the\exno}\ignorespaces}
+% f(ar)tags
+\def\ftagpage[#1]{\ifling@gatherftags
+   \write\ftagsout{\noexpand\fdef #1 {\the\pageno}}\fi \ignorespaces}
+\def\ftag#1[#2]{\ifling@gatherftags
+   \immediate\write\ftagsout{\noexpand\fdef #2 {#1}}\fi\ignorespaces}
+\def\currsec{\ifnum\chapno>0 \the\chapno
+   \ifnum\secno>0 .\the\secno
+   \ifnum\subsecno>0 .\the\subsecno
+   \ifnum\subsubsecno>0 .\the\subsubsecno \fi\fi\fi\fi}
+\def\currex{\the\exno}
+\def\ftagex[#1]{\ftag\the\exno[#1]}
+\def\ftagsec[#1]{\ftag\currsec[#1]}
+%  retrieving tags
+\def\gettag[#1]{\expandafter\ifx\csname TAG#1\endcsname\relax
+   \ifling@gatherftags \else \write16{****TAG NOT DEFINED**** [#1]}\fi
+    $\bullet${\tt #1}\else
+    \ifnum\tracinglabels=1
+       {\tt !#1}\else \csname TAG#1\endcsname\fi\fi}
+%  Use: \gettagrel[Malay:-2]  the Malay number minus 2
+%  Caution: the tag retrieved must be numeric
+\def\gettagrel[#1:#2]{{\expandafter\ifx\csname TAG#1\endcsname\relax
+   \tracinglabels=2 $\bullet$\fi
+   \ifnum\tracinglabels=0 \count0=\csname TAG#1\endcsname
+      \advance\count0 by #2 \the\count0
+   \else \tt {\ifnum\tracinglabels=1 !\fi}#1:#2\fi}}
+
+% -- right arrows ---------------------
+
+\newskip\beforetoskip
+\newskip\aftertoskip
+\newskip\normaltoskipamount
+\normaltoskipamount=1em minus .5em
+\def\normaltoskips{\beforetoskip=\normaltoskipamount
+   \aftertoskip=\normaltoskipamount}
+\normaltoskips
+\newdimen\torise
+\torise=1ex
+\def\to{\ifmmode \rightarrow \else
+   \hskip\beforetoskip$\rightarrow$\hskip\aftertoskip \fi}
+\def\tooby #1 {\hskip\beforetoskip\hbox{$\buildrel {\rm #1}
+   \vrule width0pt depth\torise height0pt
+   \over\longrightarrow$}\hskip\aftertoskip}
+
+% -- alignment ---------------
+
+\newskip\Tskip \Tskip=2.4em
+\def\Tspace{\hskip\Tskip}
+\def\hwit#1{\hidewidth \it #1\hidewidth}
+
+% numbering and lettering in \halign
+\let\numbers=\letters
+\newcount\lettercharno \lettercharno=1
+\newdimen\letterswd \letterswd=2em
+\def\omitletter{\omit\hskip\letterswd}
+\def\iniletters{\global\lettercharno=96 }
+\def\ininumbers{\lettercharno=48}
+\newtoks\everyletter \everyletter={}
+\def\letters{\global\advance\lettercharno by 1
+   \hbox to\letterswd{\rm \the\everyletter\char\the\lettercharno.\hfil}}
+\let\numbers=\letters
+\def\lettering{\iniletters
+   \def\\{\global\advance\lettercharno by 1 \char\the\lettercharno}}
+%% the following should be placed on the line before the
+%% line in which the letter is set
+\def\tagletterA{\xdef\letterA{\char\the\lettercharno}}
+\def\tagletterB{\xdef\letterB{\char\the\lettercharno}}
+\def\tagletterC{\xdef\letterC{\char\the\lettercharno}}
+\def\tagletterD{\xdef\letterD{\char\the\lettercharno}}
+\def\tagletterE{\xdef\letterE{\char\the\lettercharno}}
+%%%%% \crskip matters
+\def\crs{\cr\noalign{\vskip\crskip}}
+\newskip\crskip
+\newskip\normalcrskipamount  \normalcrskipamount=.6em
+\def\normalcrskip{\crskip=\normalcrskipamount}
+\normalcrskip
+%%%%% utilities
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+
+\def\ling@doublespacestyle{%
+   exhsize=6truein,
+   beforeexskip=1.4em plus.1em,
+   afterexskip=1.4em plus.1em,
+   interpartskip=0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lingrestore @
+
+\everymath={\rm}
+
+
+

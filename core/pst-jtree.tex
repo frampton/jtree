@@ -118,21 +118,22 @@
    \pst@dimc=\@denom pt \pst@dimd=#1pt  \pst@dimd=-\pst@dimd
    \pst@divide\pst@dimc\pst@dimd#4}
 %%%
-\def\expandaftertwice{\expandafter\expandafter\expandafter}
+\def\jt@expandaftertwice{\expandafter\expandafter\expandafter}
 \def\@empty{}
 \def\@nullbox{\omit}
-\def\psinterpolate(#1)(#2)#3#4{{\SpecialCoor
-   \pst@getcoor{#1}\pst@tempa%
-   \pst@getcoor{#2}\pst@tempb%
-   \pnode(!%
-     \pst@tempa /YA exch \pst@number\psyunit div def
-     /XA exch \pst@number\psxunit div def
-     \pst@tempb /YB exch \pst@number\psyunit div def
-     /XB exch \pst@number\psxunit div def
-     /dx XB XA sub def
-     /dy YB YA sub def
-     dx #3\space mul XA add dy #3\space mul YA add){#4}
-   }\ignorespaces}
+% 11/13/2012 henceforth obsolete, superceded by \psLNode
+%\def\psinterpolate(#1)(#2)#3#4{{\SpecialCoor
+%   \pst@getcoor{#1}\pst@tempa%
+%   \pst@getcoor{#2}\pst@tempb%
+%   \pnode(!%
+%     \pst@tempa /YA exch \pst@number\psyunit div def
+%     /XA exch \pst@number\psxunit div def
+%     \pst@tempb /YB exch \pst@number\psyunit div def
+%     /XB exch \pst@number\psxunit div def
+%     /dx XB XA sub def
+%     /dy YB YA sub def
+%     dx #3\space mul XA add dy #3\space mul YA add){#4}
+%   }\ignorespaces}
 %% PSTricks parameters
 %%
 % labelgap,labelgapt,labelgapb,everytree,everylabel,branch,triratio
@@ -169,8 +170,8 @@
    \psset{labelstrutb=#2}}
 \define@key[psset]{jtree}{labelstrut}{\@@strut #1 \@nil}
 \define@boolkey[psset]{jtree}[jt@]{normallabelstrut}[true]%
-   {\ifjt@normallabelstrut \NormalLabelStrut \fi}
-\def\NormalLabelStrut{%
+   {\ifjt@normallabelstrut \@jtnormlabstrut \fi}
+\def\@jtnormlabstrut{%
    \psset{labelstrut={\the\ht\strutbox} {\the\dp\strutbox}}}
 \def\@@scale #1 #2 #3\@nil{\ifx#2\@nil \edef\@yscale{#1}%
    \else \edef\@yscale{#2}\fi \edef\@xscale{#1}}
@@ -211,7 +212,7 @@
 \def\defbranch{\defenter\defbranch@a}
 \def\defbranch@a<#1>#2(#3)#4(#5){%
    \jt@xovery{#5}\temp
-   \expandaftertwice\edef\@nameuse{leaf@#1}%
+   \jt@expandaftertwice\edef\@nameuse{leaf@#1}%
       {\noexpand\def\noexpand\@leaf{%
          \noexpand\@@branch{\@optionalarg}{#3}{\temp}}}%
    \defreturn
@@ -241,7 +242,7 @@
 \def\deftriangle@a#1<#2>#3(#4)#5(#6)#7(#8){%
    \jt@xovery{#6}\tempA
    \jt@xovery{#8}\tempB
-   \expandaftertwice\edef\@nameuse{leaf@#2}%
+   \jt@expandaftertwice\edef\@nameuse{leaf@#2}%
       {\noexpand\def\noexpand\@leaf{%
          \noexpand\@@triangle{\@optionalarg}{#4}{\tempA}{\tempB}}}%
    \defreturn
@@ -276,7 +277,7 @@
 }
 \def\defvartriangle{\defenter\defvartriangle@a}
 \def\defvartriangle@a#1<#2>#3(#4){%
-   \expandaftertwice\edef\@nameuse{leaf@#2}%
+   \jt@expandaftertwice\edef\@nameuse{leaf@#2}%
       {\noexpand\@CurrState=\State@vartri
       \noexpand\def\noexpand\@leaf{%
           \noexpand\@@vartriangle{\@optionalarg}{#4}}}%
@@ -400,7 +401,7 @@
    \@ifnextchar !\jtp@labelF\jtp@labelG}
 \def\jtp@labelF #1 {%
    \testlabel#1.\@nil
-   \expandaftertwice\xdef\@nameuse{coords@#1}{%
+   \jt@expandaftertwice\xdef\@nameuse{coords@#1}{%
       \noexpand\@xpos=\the\@xpos\noexpand\@ypos=\the\@ypos}%
    \jtp@labelH
 }
@@ -428,7 +429,7 @@
                \fi
          \fi
    \fi
-   \expandaftertwice\ifx\@nameuse{leaf@#1}\relax
+   \jt@expandaftertwice\ifx\@nameuse{leaf@#1}\relax
       \jtp@err{unknown branch, <#1>}%
       \fi
    \@nameuse{leaf@#1}%
@@ -491,7 +492,7 @@
 %%% end of parser
 %
 \def\adjoin at #1 {%
-   \expandaftertwice\ifx\@nameuse{coords@#1}\relax
+   \jt@expandaftertwice\ifx\@nameuse{coords@#1}\relax
          \writeln{* * coords@#1 unknown * *}%
          \let\next\more@gobble
       \else
@@ -510,8 +511,8 @@
 \def\jtree@a{\leavevmode
    \setbox\tree@box\hbox\bgroup
    \tempjtree@cats
-   \expandaftertwice\def\@nameuse{coords@!}{\@xpos=0pt \@ypos=0pt}%
-   \ifjt@normallabelstrut  \NormalLabelStrut \fi
+   \jt@expandaftertwice\def\@nameuse{coords@!}{\@xpos=0pt \@ypos=0pt}%
+   \ifjt@normallabelstrut  \@jtnormlabstrut \fi
    \the\jtEverytree
    \the\jteverytree
    \psset@optionalarg
@@ -544,6 +545,7 @@
 }
 \define@boolkey[psset]{jtree}[jt@]{showbb}[true]{}
 \psset{showbb=false}
+\def\showbb{\psset{showbb=true}}
 
 \def\endjtree{%
    \advance\max@down by -\jt@bbdepthadjust
@@ -606,12 +608,12 @@
 % Incremental tree building
 \def\stuff{\@getoptionalarg\stuff@A}
 \def\stuff@A{\ifx\@optionalarg\@empty no def\else
-   \expandaftertwice\ifx\@nameuse{stuff@@\@optionalarg}\relax
+   \jt@expandaftertwice\ifx\@nameuse{stuff@@\@optionalarg}\relax
       {\tt [}\expandafter\tt\@optionalarg]\else
    \@nameuse{stuff@@\@optionalarg}\fi\fi
 }
 \def\defstuff[#1]#2{%
-   \expandaftertwice\def\@nameuse{stuff@@#1}{#2}\ignorespaces}
+   \jt@expandaftertwice\def\@nameuse{stuff@@#1}{#2}\ignorespaces}
 % support for multiline labels
 \def\multiline{\setbox0=\hbox{\strut}\vrule height\ht0 width0pt
    \xdef\@temp@{\the\dp0}%

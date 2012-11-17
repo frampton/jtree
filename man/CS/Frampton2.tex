@@ -1,79 +1,121 @@
 
 \example
-
 \ftag{\the\Exno}[Frampton2]
-\bigskip
-\hfil
-\jtree[xunit=2.4em,yunit=1.2em,style=arrows2,nodesep=0]
-\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
-\def\stub{<right>[scaleby=.5,arrows=-]}%
-\def\\#1{\rput[bl](.6ex,.4ex){\it #1}}%
-\! = {\omit\\a}@A1
-   \stub @K1  ^<right>{\omit\\b}
-   :{C$_2$}()  \broken @A2
-   \stub @K2  ^<right>@A3
-   \stub @K3  ^<right>
-   :{C$_1$}()  \broken
-   :{ubil}  {\omit\\c}@A4
-   :{kolko}  {\omit\\d}
-   :{studenti}  {\omit\\e}@A5
-   :{ot} :{koi} {strani}.
-\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}
-\nccurve{K1}{A5}
-\nccurve{-}{K2}{A5}
-\nccurve{K3}{A4}
-\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}
-\nccurve{A1}{K1}
-\nccurve{A2}{K2}
-\nccurve{A3}{K3}
-\endjtree
 
-\vskip1.5em
-\codelines
-|\jtree[xunit=2.4em,yunit=1.2em,arrows=->,nodesep=0]
-\def\broken{[branch=\brokenbranch,scaleby=1.6]}%||1
-\def\stub{<right>[scaleby=.5,arrows=-]}%||2
-\def\\#1{\rput[bl](.6ex,.4ex){\it #1}}%||3
-\! = {\omit\\a}@A1
-   \stub @K1  ^<right>{\omit\\b}
+\exdisplay
+\hfil
+\jtree[xunit=2.4em,yunit=3ex,style=arrows2,nodesep=0]
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
+\! = {\elc{\it a}}@A1
+   <right>{\elc{\it b}}@A1a
    :{C$_2$}()  \broken @A2
-   \stub @K2  ^<right>@A3
-   \stub @K3  ^<right>
+   <right>@A3
+   <right>@A3a
    :{C$_1$}()  \broken
-   :{ubil}  {\omit\\c}@A4
-   :{kolko}  {\omit\\d}
-   :{studenti}  {\omit\\e}@A5
+   :{ubil}  {\elc{\it c}}@A4
+   :{kolko}  {\elc{\it d}}
+   :{studenti}  {\elc{\it e}}@A5
    :{ot} :{koi} {strani}.
-\psset{dirA=(1:1),angleB=90,ncurvA=.6,ncurvB=1}||4
+\psLNode(A1)(A1a){.5}{K1}
+\psLNode(A2)(A3){.5}{K2}
+\psLNode(A3)(A3a){.5}{K3}
+\psset{angleA={(1,1)},angleB=90,ncurvA=.6,ncurvB=1}
 \nccurve{K1}{A5}
-\nccurve{-}{K2}{A5}
+\nccurve[arrows=-]{K2}{A5}
 \nccurve{K3}{A4}
-\psset{dirA=(-1:-1),dirB=(-1:-1),ncurv=4,arrows=-}||5
+\psset{angleA={(-1,-1)},angleB={(-1,-1)},ncurv=4,arrows=-}
 \nccurve{A1}{K1}
 \nccurve{A2}{K2}
 \nccurve{A3}{K3}
 \endjtree
-|endcodelines
+\xe
+
+Before we tackle the display above, consider the simpler one
+below.
+
+\exh \tac|
+\jtree[xunit=3em,yunit=3ex,nodesep=0]
+\! = @Q1 <right>@Q2
+   <left>{A} ^<right>@Q3
+   <left>{B} ^<right>{C}.
+\psLNode(Q1)(Q2){.5}{Q12}
+\nccurve[angleA={(-1,-1)},
+   angleB={(-1,-1)},ncurv=3]{Q1}{Q12}
+\nccurve[angleA={(1,1)},angleB=90,
+   ncurv=1]{Q12}{Q3}
+\endjtree
+|endtac \hfil
+\qquad\jtree[xunit=3em,yunit=3ex,nodesep=0]
+\! = @Q1 <right>@Q2
+   <left>{A} ^<right>@Q3
+   <left>{B} ^<right>{C}.
+\psLNode(Q1)(Q2){.5}{Q12}
+\nccurve[angleA={(-1,-1)},
+   angleB={(-1,-1)},ncurv=3]{Q1}{Q12}
+\nccurve[angleA={(1,1)},angleB=90,
+   ncurv=1]{Q12}{Q3}
+\endjtree
+\xe
+
+The curve is drawn in two segments which join at the midpoint of
+the highest right branch.  That point is found by |\psLNode|,
+which interpolates a point between the two ends of that branch.
+The angle at which the first segment leaves its starting point is the same
+as the angle at which left branches leave their parent nodes, hence
+|angleA={(-1,-1)}|.  The angle at which the first segment leaves
+the finish point of the segment is the same.  (One might expect
+that |angleB| would be the negative of |angleA|, but that is not
+the PSTricks convention.  |angleA| and |angleB| are independent
+of the direction that the segment is drawn in.) |ncurv| is set to a large value in
+order to get the first segment to bow out sufficiently.  The fact
+that |angleA| for the second segment is the opposite of |angleB|
+for the first curve means that the two segments join smoothly.
+By ``opposite'' I mean that the two angles differ by $180^\circ$.
 
 \medskip
-1.\ See Section~\gettag[customsec] for information about the
+We are now ready for the code for the complex display.
+
+\exdisplay
+\codelines
+|\jtree[xunit=2.4em,yunit=3ex,style=arrows2,nodesep=0]
+\def\broken{[branch=\brokenbranch,scaleby=1.6]}%
+\! = {\elc{\it a}}@A1
+   <right>{\elc{\it b}}@A1a
+   :{C$_2$}()  \broken @A2
+   <right>@A3
+   <right>@A3a
+   :{C$_1$}()  \broken
+   :{ubil}  {\elc{\it c}}@A4
+   :{kolko}  {\elc{\it d}}
+   :{studenti}  {\elc{\it e}}@A5
+   :{ot} :{koi} {strani}.
+\psLNode(A1)(A1a){.5}{K1}
+\psLNode(A2)(A3){.5}{K2}
+\psLNode(A3)(A3a){.5}{K3}
+\psset{angleA={(1,1)},angleB=90,ncurvA=.6,ncurvB=1}
+\nccurve{K1}{A5}
+\nccurve[arrows=-]{K2}{A5}
+\nccurve{K3}{A4}
+\psset{angleA={(-1,-1)},angleB={(-1,-1)},ncurv=4,arrows=-}
+\nccurve{A1}{K1}
+\nccurve{A2}{K2}
+\nccurve{A3}{K3}
+\endjtree|endcodelines
+\xe
+
+\medskip
+1. See Section~\gettag[CustomSec] for discussion of the
 |branch| parameter.
 
 \smallskip
-2.\ |\stub| is used to position nodes halfway down certain right
-branches to facilitate drawing the complex (2~segment) pointers.
+2. The empty adjunction |()| is used so that |\broken| is not
+parsed as parameters for the preceeding label.
 
-\smallskip
-3.\ |\\| is used to position the tags {\sl a, b, c,} \dots
+\endinput
 
-\smallskip
-4.\ |dirA| is used in order to ensure that the complex pointers
-are parallel to left branches at the point that they cross the
-right branches.
 
-\smallskip
-5.\ A very high value of |ncurv| is used in order to get the loop
-to bow out sufficiently.
+
+
 \bigskip
 An alternate to using |\stub| to position the crossing points is
 |\psinterpolate|.

@@ -1,7 +1,7 @@
 
 \example
 
-In order to show that right node raising does not in general
+In order to show that right node raising does not always
 apply to constituents, Chris Wilder gave the example (from
 German):
 
@@ -13,10 +13,12 @@ Er hat einen Mann, der drei, und sie hat eine Frau,
 In my own work on right node raising, I have had occasion to
 typeset the following.  It may provide some useful things for
 \jTree\ users, so it is included here.
-\bigskip
 
+\exdisplay
+\newpsstyle{arrowsA}{arrowsize=.7ex,arrowlength=1.8,arrowinset=.35}
 \hfil
-\jtree[dirA=(1:-1),nodesepA=0,nodesepB=.8ex,style=arrows2]
+\jtree[dirA=(1:-1),nodesepA=0,nodesepB=.8ex,
+   arrows=->,style=arrowsA,bbadjust=right 4em]
 \! = :!a {\rnode{K1}{knew}}.
 \!a = :!b {\rnode{O1}{owned}}.
 \!b = :!c {\rnode{C1}{cats}}.
@@ -45,11 +47,15 @@ typeset the following.  It may provide some useful things for
 \nccurve[angleB=-90,ncurvA=1.4]{K3}{K1}
 \nccurve[angleB=-90,ncurvA=1.4]{C3}{C1}
 \nccurve[angleB=-10,ncurvB=1.8,ncurvA=1.6]{C2}{C1}
-\endjtree\kern6em
+\endjtree
+\xe
 
-\codelines|
-\jtree[dirA=(1:-1),nodesepA=0,nodesepB=.8ex,arrows=->,
-   arrowlength=3.6,arrowsize=2pt,arrowinset=.4]
+\codelines
+|\newpsstyle{arrowsA}{arrowsize=.7ex,
+   arrowlength=1.8,arrowinset=.35}
+|bigskip|relax
+\jtree[dirA=(1:-1),nodesepA=0,nodesepB=.8ex,
+   arrows=->,style=arrowsA,bbadjust=right 4em]
 \! = :!a {\rnode{K1}{knew}}.
 \!a = :!b {\rnode{O1}{owned}}.
 \!b = :!c {\rnode{C1}{cats}}.
@@ -65,7 +71,7 @@ typeset the following.  It may provide some useful things for
    :{a woman}[labeloffset=-1ex]
    :{who}() @O2
    <left>@C2
-   <left>{four}.
+   <left>{four}.|goodbreak|relax
 \!f =
    :{a man}
    :{who}() @O3
@@ -78,5 +84,6 @@ typeset the following.  It may provide some useful things for
 \nccurve[angleB=-90,ncurvA=1.4]{K3}{K1}
 \nccurve[angleB=-90,ncurvA=1.4]{C3}{C1}
 \nccurve[angleB=-10,ncurvB=1.8,ncurvA=1.6]{C2}{C1}
-\endjtree\kern6em
-|endcodelines
+\endjtree|endcodelines
+
+

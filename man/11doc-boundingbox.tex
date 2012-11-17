@@ -3,10 +3,57 @@
 
 \ftag{\the\secno}[BBSec]
 
+|\jtree«\thinspace\dots»\endjtree| yields an hbox.  It has
+dimensions and a baseline.  There are jTree parameters which can be
+used to make adjustments to the dimensions and baseline if
+needed.
+
+\subsection {\sl baretopadjust}
+
+The baseline of the box created by |\jtree...\endjtree| is
+normally the baseline of the root label.  If, however, the root
+label is empty, that puts the baseline too low, at least for my
+taste.  Contrast the trees below:
+\bigskip
+\qquad a.\quad
+\jtree \! = {A} :{B} {C}.\endjtree
+\hfil b.\quad
+\jtree[baretopadjust=0] \! = :{B} {C}.\endjtree
+\bigskip
+\jTree\  takes corrective action by raising the tree diagram if
+the root label is empty by the amount specified by the parameter
+\index*{baretopadjust}|baretopadjust|.  The default setting is
+$\fam0 1.4\,ex$.  With the default
+setting:
+\bigskip
+\qquad a.\quad
+\jtree \! = {A} :{B} {C}.\endjtree
+\hfil b.\quad \jtree[baretopadjust=1.4ex] \! = :{B} {C}.\endjtree
+
+\subsection {\sl treevshift}
+
+\jTree\ also provides the parameter
+\index*{treevshift}|treevshift|, which is set to 0 by default. It
+is independent of |baretopadjust| and can be used to move the
+tree diagram up and down, if desired.
+
+\exh \leavevmode\raise1.2em\hbox{\tac|
+$\to$\qquad
+\jtree[treevshift=1.2em]
+\! = {A} :{B} {C}.
+\endjtree
+|endtac}\hfil
+$\to$\qquad
+\jtree[treevshift=1.2em]
+\! = {A} :{B} {C}.\endjtree
+\xe
+
+\subsection {\sl bbadjust\/} and {\sl bbshow}
+
 PSTricks creates dimensionless graphics, but \jTree\ goes to a
 lot of trouble to figure out the sizes of the trees that it
 generates and to put them in appropriately sized boxes.  For
-example:
+example (with the box dimensions indicated by the dashed box):
 
 \exh \tac|
 \jtree
@@ -135,4 +182,26 @@ illustrated below.
    ncurv=1.4,arrows=->]{A1}{C1}
 \endjtree
 \xe
+
+In addition to the boolean parameter {\sl showbb}, there is a
+command macro |\showbb|\index*{+showbb} which turns on display of
+the bounding box.  The macro is more convenient than the
+parameter in testing and adjustment because it is more easily
+commented out.
+
+
+\subsection {\sl everytree}
+
+Suppose you would like to see the outlines of all the bounding
+boxes of your jTree trees in some document. You could go to to
+each one and set the |showbb| parameter, but that would be
+tedious.  jTree provides a parameter which solves the problem.
+\index*{everytree}If |\psset{everytree=\showbb}| is executed,
+then all bounding boxes in the scope of the setting will be
+outlined. |\psset{everytree=«x\/»}| puts {\sl x\/} into a token
+list (|\jteverytree|) whose tokens are inserted at the beginning
+of every |\jtree«\thinspace\dots»\endjtree| construction. It is
+inserted before the local |\jtree| parameter settings take
+effect, so that it will be overridden by local parameter
+settings.
 

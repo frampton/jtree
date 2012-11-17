@@ -1,0 +1,134 @@
+%%%%%%%%%%% fonts
+% rm
+\font\twelverm=t1xr at 12pt
+\font\tenrm=t1xr at 10pt
+\font\eightrm=t1xr at 8pt
+\font\sevenrm=t1xr at 7pt
+% mit
+\font\twelvei=txmi at 12pt
+\font\teni=txmi at 10pt
+\font\eighti=txmi at 8pt
+\font\seveni=txmi at 7pt
+% symbol
+\font\twelvesy=txsy at 12pt
+\font\tensy=txsy at 10pt
+\font\eightsy=txsy at 8pt
+\font\sevensy=txsy at 7pt
+% extended symbol
+\font\twelveex=txex at 12pt
+\font\tenex=txex at 10pt
+\font\eightex=txex at 8pt
+\font\sevenex=txex at 7pt
+% sl
+\font\twelvesl=t1xsl at 12pt
+\font\tensl=t1xsl at 10pt
+\font\eightsl=t1xsl at 8pt
+\font\sevensl=t1xsl at 7pt
+% bf
+\font\twelvebf=t1xb at 12pt
+\font\tenbf=t1xb at 10pt
+\font\eightbf=t1xb at 8pt
+\font\sevenbf=t1xb at 7pt
+% tt
+\font\twelvett=txtt at 12pt
+\font\tentt=txtt at 10pt
+% it
+\font\twelveit=t1xi at 12pt
+\font\tenit=t1xi at 10pt
+\font\eightit=t1xi at 8pt
+\font\sevenit=t1xi at 7pt
+
+\def\twelvepoint{%
+\textfont0=\twelverm \scriptfont0=\eightrm
+\textfont1=\twelvei	 \scriptfont1=\eighti
+\textfont2=\twelvesy \scriptfont2=\eightsy
+\textfont3=\twelveex \scriptfont3=\eightex
+\textfont\slfam=\twelvesl	  \scriptfont\slfam=\eightsl
+\textfont\bffam=\twelvebf	  \scriptfont\bffam=\eightbf
+\textfont\ttfam=\twelvett
+\textfont\itfam=\twelveit	  \scriptfont\itfam=\eightit
+\def\rmr{\fam0          \twelverm   }%
+\def\rms{\fam\slfam     \twelvesl   }%
+\def\rmb{\fam\bffam     \twelvebf   }%
+\def\rm{\rmr \let\sl\rms \let\bf\rmb }
+\def\tt{\fam\ttfam     \twelvett   }%
+\def\it{\fam\itfam     \twelveit   }%
+\normalbaselineskip=14pt
+\bigskipamount=12pt plus4pt  minus4pt
+\setbox\strutbox=\hbox{\vrule height10pt depth4pt width0pt}%
+\def\sc{\tenrm}%
+\normalbaselines
+\rm}
+
+\def\tenpoint{%
+\textfont0=\tenrm \scriptfont0=\sevenrm
+\textfont1=\teni	 \scriptfont1=\seveni
+\textfont2=\tensy \scriptfont2=\sevensy
+\textfont3=\tenex \scriptfont3=\sevenex
+\textfont\slfam=\tensl	  \scriptfont\slfam=\sevensl
+\textfont\bffam=\tenbf	  \scriptfont\bffam=\sevenbf
+\textfont\ttfam=\tentt
+\textfont\itfam=\tenit	  \scriptfont\itfam=\sevenit
+\def\rm{\fam0          \tenrm   }%
+\def\tt{\fam\ttfam     \tentt   }%
+\def\it{\fam\itfam     \tenit   }%
+\def\sl{\fam\slfam     \tensl   }%
+\def\bf{\fam\bffam     \tenbf   }%
+\normalbaselineskip=12pt
+\bigskipamount=10pt plus3pt minus3pt
+\setbox\strutbox=\hbox{\vrule height8.5pt depth3.7pt width0pt}%
+\let\sc=\eightrm
+\normalbaselines
+\rm
+}
+
+\catcode`@=11
+\gdef\twelvebig#1{{\hbox{$\left#1\vbox to 9.5pt{}\right.\n@space$}}}
+\gdef\tenbig#1{{\hbox{$\left#1\vbox to 8pt{}\right.\n@space$}}}
+\catcode`@=12
+
+\let\normaltext=\twelvepoint
+\let\smalltext=\tenpoint
+
+\normaltext
+
+%% encoding is Cork throughout
+\def\'#1{{\accent "01 #1}}
+\def\`#1{{\accent "00 #1}}
+\def\"#1{{\accent "04 #1}}
+\def\^#1{{\accent "02 #1}}
+\def\=#1{{\accent "09 #1}}
+\def\~#1{{\accent "03 #1}}
+\def\v#1{{\accent "07 #1}}
+\chardef\i='031
+\chardef\j='032
+\chardef\ae='346
+\chardef\AE="C6
+\chardef\oe="F7
+\chardef\OE="D7
+\chardef\o="F8
+\chardef\O="D8
+\chardef\aa="E5
+\chardef\AA="C5
+\def\.#1{\oalign{#1\crcr\hidewidth\the\textfont0.\hidewidth}}
+\def\c#1{{\edef\temp{\the\font}\setbox0=\hbox{\temp #1}%
+   \ifdim\ht0=1ex \accent"0B #1\else
+      {\ooalign{\hidewidth\char"0B\hidewidth\crcr \unhbox0}}\fi}}
+\def\GreekCap#1{\ifmmode\mathchar"010#1\else{\mita\char"0#1}\fi}
+\def\Gamma{\GreekCap 0}
+\def\Delta{\GreekCap 1}
+\def\Theta{\GreekCap 2}
+\def\Lambda{\GreekCap 3}
+\def\Xi{\GreekCap 4}
+\def\Pi{\GreekCap 5}
+\def\Sigma{\GreekCap 6}
+\def\Upsilon{\GreekCap 7}
+\def\Phi{\GreekCap 8}
+\def\Psi{\GreekCap 9}
+\def\Omega{\GreekCap A}
+\def\Omicron{\GreekCap A}
+\def\grave{\mathaccent"000}
+\def\acute{\mathaccent"001}
+\def\hat{\mathaccent"002}
+\def\tilde{\mathaccent"003}
+
